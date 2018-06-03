@@ -9,7 +9,7 @@ export default class Dashboard extends Component {
   }
   render () {
     return (
-      <div>Dashboard_Test</div>
+      <div>飢えた</div>
     )
   }
 }
