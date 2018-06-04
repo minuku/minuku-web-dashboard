@@ -1,0 +1,59 @@
+// This file is shared across the demos.
+
+import React from 'react'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+
+import InboxIcon from '@material-ui/icons/Inbox'
+import DateRangeIcon from '@material-ui/icons/DateRange'
+import LinearScaleIcon from '@material-ui/icons/LinearScale'
+import DomainIcon from '@material-ui/icons/Domain'
+import PersonalVideoIcon from '@material-ui/icons/PersonalVideo'
+import ViewListIcon from '@material-ui/icons/ViewList'
+
+export const mailFolderListItems = (
+  <div>
+    <ListItem button>
+      <ListItemIcon>
+        <InboxIcon />
+      </ListItemIcon>
+      <ListItemText primary="Project List" />
+    </ListItem>
+  </div>
+)
+
+export const otherMailFolderListItems = (
+  <div>
+    <ListItem button>
+      <ListItemIcon>
+        <LinearScaleIcon />
+      </ListItemIcon>
+      <ListItemText primary="Condition" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <DomainIcon />
+      </ListItemIcon>
+      <ListItemText primary="Situation" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <DateRangeIcon />
+      </ListItemIcon>
+      <ListItemText primary="Schedule" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <ViewListIcon />
+      </ListItemIcon>
+      <ListItemText primary="Data" />
+    </ListItem>
+    <ListItem button>
+      <ListItemIcon>
+        <PersonalVideoIcon />
+      </ListItemIcon>
+      <ListItemText primary="monitor" />
+    </ListItem>
+  </div>
+)
