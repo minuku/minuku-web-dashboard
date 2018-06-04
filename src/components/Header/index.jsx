@@ -8,9 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 
-const drawerWidth = 240
-
-const styles = theme => ({
+const styles = (theme, drawerWidth = 240) => ({
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
@@ -41,7 +39,7 @@ class AppBarComponent extends React.Component {
   }
   render() {
     const { classes } = this.props
-    const open = this.props.open
+    const open = this.props.open || false
     return (
       <AppBar
         position="absolute"

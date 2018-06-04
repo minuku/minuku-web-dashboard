@@ -1,17 +1,8 @@
 import React from 'react'
-import classNames from 'classnames'
 import { withStyles } from '@material-ui/core/styles'
 
-import { Header } from '../../components'
-
-import Drawer from '@material-ui/core/Drawer'
-import List from '@material-ui/core/List'
+import { Header, Sidebar } from '../../components'
 import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
-import IconButton from '@material-ui/core/IconButton'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import { mailFolderListItems, otherMailFolderListItems } from './tileData'
 
 const drawerWidth = 240
 
@@ -23,48 +14,6 @@ const styles = theme => ({
     overflow: 'hidden',
     position: 'relative',
     display: 'flex',
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing.unit * 7,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
-    },
   },
   toolbar: {
     display: 'flex',
@@ -82,7 +31,7 @@ const styles = theme => ({
 
 class Dashboard extends React.Component {
   state = {
-    open: false,
+    open: false
   }
   handleDrawerToggle = () => {
     this.setState({ open: !this.state.open })
@@ -91,38 +40,23 @@ class Dashboard extends React.Component {
     this.refs.mainPanel.scrollTop = 0
   }
   render() {
-    const { classes, theme } = this.props
-
+    const { classes } = this.props
     return (
       <div className={classes.root}>
-
         <Header
+          drawerWidth={drawerWidth}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.open} />
 
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
-          }}
-          open={this.state.open}
-        >
-          <div className={classes.toolbar}>
-            <IconButton onClick={this.handleDrawerToggle}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>{mailFolderListItems}</List>
-          <Divider />
-          <List>{otherMailFolderListItems}</List>
-        </Drawer>
+        <Sidebar
+          drawerWidth={drawerWidth}
+          handleDrawerToggle={this.handleDrawerToggle}
+          open={this.state.open} />
 
         <main className={classes.content} ref="mainPanel">
           <div className={classes.toolbar} />
           <Typography noWrap>{'You think water moves fast? You should see ice.'}</Typography>
         </main>
-
       </div>
     )
   }
