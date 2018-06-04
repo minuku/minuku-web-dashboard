@@ -1,11 +1,19 @@
 import React from 'react'
+import { Switch, Route, Redirect } from "react-router-dom"
 import { withStyles } from '@material-ui/core/styles'
+import dashboardRoutes from 'routes/dashboard.js'
 
-import { Header, Sidebar } from '../../components'
-import Typography from '@material-ui/core/Typography'
+import { Header, Sidebar } from 'components'
 
-const drawerWidth = 240
-
+const switchRoutes = (
+  <Switch>
+    {dashboardRoutes.map((prop, key) => {
+      if (prop.redirect)
+        return <Redirect from={prop.path} to={prop.to} key={key} />
+      return <Route path={prop.path} component={prop.component} key={key} />
+    })}
+  </Switch>
+)
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -44,18 +52,16 @@ class Dashboard extends React.Component {
     return (
       <div className={classes.root}>
         <Header
-          drawerWidth={drawerWidth}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.open} />
 
         <Sidebar
-          drawerWidth={drawerWidth}
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.open} />
 
         <main className={classes.content} ref="mainPanel">
           <div className={classes.toolbar} />
-          <Typography noWrap>{'You think water moves fast? You should see ice.'}</Typography>
+          <div className={classes.container}>{switchRoutes}</div>
         </main>
       </div>
     )

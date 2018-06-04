@@ -5,7 +5,7 @@ import { createBrowserHistory } from "history";
 import { Router, Route, Switch } from "react-router-dom";
 import registerServiceWorker from './registerServiceWorker';
 
-import indexRoute from './routes/index.js';
+import indexRoute from 'routes/index.js';
 const history = createBrowserHistory();
 
 ReactDOM.render(

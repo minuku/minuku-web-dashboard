@@ -1,6 +1,5 @@
-// This file is shared across the demos.
-
 import React from 'react'
+import { Link } from 'react-router-dom'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -14,7 +13,7 @@ import ViewListIcon from '@material-ui/icons/ViewList'
 
 export const mailFolderListItems = (
   <div>
-    <ListItem button>
+    <ListItem button component={Link} to='/profile'>
       <ListItemIcon>
         <InboxIcon />
       </ListItemIcon>
