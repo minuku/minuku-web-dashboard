@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "stable"
+os:
+  - linux
+script:
+  - yarn run build
+after_success:
+  - chmod ugo+x ./deploy.sh
+  - ./deploy.sh
