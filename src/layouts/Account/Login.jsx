@@ -15,10 +15,12 @@ const styles = theme => ({
     alignItems: `center`,
     justifyContent: `center`,
     height: '100vh',
-    position: 'relative'
+    position: 'relative',
+    padding: 20
   },
   card: {
-    width: 400,
+    width: `100%`,
+    maxWidth: 400,
     height: 250,
     padding: 15,
     display: `flex`,
