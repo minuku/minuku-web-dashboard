@@ -8,6 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import { Link } from "react-router-dom"
 
+import { Dialog } from 'components'
+
 const styles = theme => ({
   cardWrapper: {
     width: `100%`,
@@ -38,7 +40,16 @@ const styles = theme => ({
 class SimpleCard extends React.Component {
   state = {
     account: ``,
-    password: ``
+    password: ``,
+    open: false
+  }
+
+  handleClickOpen = () => {
+    this.setState({ open: true })
+  }
+
+  handleClose = () => {
+    this.setState({ open: false })
   }
   handleChange = name => event => {
     this.setState({
@@ -46,14 +57,16 @@ class SimpleCard extends React.Component {
     })
   }
   userLogin = () => {
-    fetch('http://minukutest.nctu.me/minukutest/login', {
+    fetch('https://reqres.in/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        loginName: this.state.account,
-        loginPassword: this.state.password,
+        // loginName: this.state.account,
+        // loginPassword: this.state.password,
+        "email": "peter@klaven",
+        "password": "cityslicka"
       })
     })
     .then((data) => {
@@ -61,6 +74,7 @@ class SimpleCard extends React.Component {
     })
     .catch((error) => {
       console.log('Request failure: ', error)
+      this.handleClickOpen()
     })
   }
   render () {
@@ -101,6 +115,13 @@ class SimpleCard extends React.Component {
             <Button variant="contained" color="primary" onClick={this.userLogin}>login</Button>
           </CardActions>
         </Card>
+        <Dialog
+          isOpen={this.state.open}
+          handleClose={this.handleClose}
+          handleClickOpen={this.handleClickOpen}
+          title={`Login Fail`}
+          content={`you may meet some login issue, please mail to armuro.`}
+        />
       </div>
     )
   }
