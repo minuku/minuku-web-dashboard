@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
-import { Link, Route } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const styles = theme => ({
   cardWrapper: {
@@ -44,7 +44,6 @@ class SimpleCard extends React.Component {
     })
   }
   userLogin = () => {
-    console.log(this.state)
     fetch('http://minukutest.nctu.me/minukutest/login', {
       method: 'POST',
       headers: {
@@ -92,7 +91,7 @@ class SimpleCard extends React.Component {
             />
 
             <Typography variant="caption" gutterBottom className={classes.pos}>
-              <Link to='/signup'>lick here to signup.</Link>
+              <Link to='/signup'>click here to signup.</Link>
             </Typography>
           </CardContent>
 
