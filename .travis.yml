@@ -5,6 +5,7 @@ os:
   - linux
 script:
   - yarn run build
+  - yarn run test
 after_success:
   - chmod ugo+x ./deploy.sh
   - ./deploy.sh

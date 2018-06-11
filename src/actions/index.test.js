@@ -2,7 +2,7 @@ import { fetchLoginWithRedux } from "./index.js"
 import { mockStore } from 'utils/mockStore.js'
 
 describe('user login', () => {
-  it('should success with token', async () => {
+  it('should success and return token', async () => {
     const token = `QpwL5tke4Pnpja7X`
     const store = mockStore()
     await store.dispatch(fetchLoginWithRedux())
