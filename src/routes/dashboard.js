@@ -7,7 +7,7 @@ const dashboardRoutes = [
     navbarName: "Profile",
     component: ProfilePage
   },
-  { redirect: true, path: "/", to: "/profile", navbarName: "Redirect" }
+  { redirect: true, path: "/dashboard", to: "/dashboard/profile", navbarName: "Redirect" }
 ]
 
 export default dashboardRoutes
