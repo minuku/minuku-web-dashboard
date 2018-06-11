@@ -1,5 +1,5 @@
 import LoginPage from 'layouts/Account/Login.jsx'
-import RegisterPage from 'layouts/Account/Register.jsx'
+import SignupPage from 'layouts/Account/Signup.jsx'
 
 const accountRoutes = [
   {
@@ -7,8 +7,8 @@ const accountRoutes = [
     component: LoginPage
   },
   {
-    path: "/register",
-    component: RegisterPage
+    path: "/signup",
+    component: SignupPage
   },
   { redirect: true, path: "/", to: "/login", navbarName: "Redirect" }
 ]

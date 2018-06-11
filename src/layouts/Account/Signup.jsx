@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
+import { Link, Route } from "react-router-dom"
 
 const styles = theme => ({
   cardWrapper: {
@@ -26,6 +27,9 @@ const styles = theme => ({
   },
   textField: {
     width: `100%`
+  },
+  pos: {
+    marginTop: 12
   }
 })
 
@@ -85,8 +89,8 @@ class SimpleCard extends React.Component {
               value={this.state.password}
               onChange={this.handleChange('password')}
             />
-            <Typography component="p2">
-              clich here to login.
+            <Typography variant="caption" gutterBottom className={classes.pos}>
+              <Link to='/login'>lick here to login.</Link>
             </Typography>
           </CardContent>
 
