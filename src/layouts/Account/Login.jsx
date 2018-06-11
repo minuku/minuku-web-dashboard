@@ -57,25 +57,7 @@ class SimpleCard extends React.Component {
     })
   }
   userLogin = () => {
-    fetch('https://reqres.in/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        // loginName: this.state.account,
-        // loginPassword: this.state.password,
-        "email": "peter@klaven",
-        "password": "cityslicka"
-      })
-    })
-    .then((data) => {
-      console.log('Request success: ', data)
-    })
-    .catch((error) => {
-      console.log('Request failure: ', error)
-      this.handleClickOpen()
-    })
+    this.props.dispatch()
   }
   render () {
     const { classes } = this.props

@@ -1,10 +1,10 @@
-import LoginPage from 'layouts/Account/Login.jsx'
+import { Login } from 'containers/Account/Login.js'
 import SignupPage from 'layouts/Account/Signup.jsx'
 
 const accountRoutes = [
   {
     path: "/login",
-    component: LoginPage
+    component: Login
   },
   {
     path: "/signup",
