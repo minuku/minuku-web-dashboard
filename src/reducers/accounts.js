@@ -3,7 +3,7 @@ const accounts = (state = [], action) => {
     case "LOGIN_REQUEST":
       return state
     case "LOGIN_SUCCESS":
-      return {...state, payload: action.payload}
+      return {...state, ...action.payload}
     default:
       return state
   }
