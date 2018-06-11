@@ -1,8 +1,8 @@
 import { combineReducers } from "redux"
-import accounts from "./accounts"
+import account from "./account"
 
 const minuku = combineReducers({
-  accounts
+  account
 })
 
 export default minuku

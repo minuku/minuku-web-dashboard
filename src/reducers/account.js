@@ -1,4 +1,4 @@
-const accounts = (state = [], action) => {
+const account = (state = [], action) => {
   switch (action.type) {
     case "LOGIN_REQUEST":
       return state
@@ -9,4 +9,4 @@ const accounts = (state = [], action) => {
   }
 }
 
-export default accounts
+export default account
