@@ -69,9 +69,9 @@ export function configureFakeBackend() {
           let newUser = JSON.parse(opts.body)
 
           // validation
-          let duplicateUser = users.filter(user => { return user.username === newUser.username }).length
+          let duplicateUser = users.filter(user => { return user.account === newUser.account }).length
           if (duplicateUser) {
-            reject('Username "' + newUser.username + '" is already taken')
+            reject('Username "' + newUser.account + '" is already taken')
             return
           }
 

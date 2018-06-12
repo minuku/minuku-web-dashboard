@@ -2,7 +2,7 @@ import { userService } from 'utils/userService'
 import { createBrowserHistory } from 'history'
 const history = createBrowserHistory()
 
-export const fetchLoginWithRedux = (user = {account: 'armuro', password: 'minuku'}) => {
+export const fetchLoginWithRedux = (user) => {
   const request = (user) => { return { type: "LOGIN_REQUEST", user } }
   const success = (payload) => { return { type: "LOGIN_SUCCESS", payload } }
   const failure = (error) => { return { type: "LOGIN_ERROR",  error } }
@@ -23,7 +23,7 @@ export const fetchLoginWithRedux = (user = {account: 'armuro', password: 'minuku
 }
 
 
-export const register = (user = {account: 'armuro', password: 'minuku'}) => {
+export const register = (user) => {
   const request = (user) => { return { type: `REGISTER_REQUEST`, user } }
   const success = (user) => { return { type: `REGISTER_SUCCESS`, user } }
   const failure = (error) => { return { type: `REGISTER_ERROR`, error } }
