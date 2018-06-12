@@ -12,7 +12,8 @@ export const fetchLoginWithRedux = (user) => {
     .then(
       user => {
         dispatch(success())
-        history.push('/dashboard')
+        console.log(localStorage.getItem('user'))
+        history.push('/dashboard/profile')
       },
       error => {
         dispatch(failure(error))

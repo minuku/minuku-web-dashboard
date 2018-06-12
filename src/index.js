@@ -21,18 +21,16 @@ const store = createStore(
 // setup fake backend
 configureFakeBackend()
 
+const RootComponent = indexRoute[1].component
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-        {
-          indexRoute.map((prop, key) => {
-            return <Route
-                    key={key}
-                    path={localStorage.getItem('user') ? prop.path : '/'}
-                    component={localStorage.getItem('user') ? prop.component : indexRoute[1].component}/>
-          })
-        }
+      {
+        indexRoute.map((prop, key) => {
+            return <Route key={key} path={prop.path} render={(props => localStorage.getItem('user') ? <prop.component/> : <RootComponent/> )} />
+        })
+      }
       </Switch>
     </Router>
   </Provider>,
