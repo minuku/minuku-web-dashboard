@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import { createBrowserHistory } from "history"
+import { history } from "utils/history"
 import { Router, Route, Switch } from "react-router-dom"
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
@@ -11,7 +11,6 @@ import reducers from './reducers'
 import { configureFakeBackend } from 'utils/fakeBackend'
 
 import indexRoute from 'routes/index.js'
-const history = createBrowserHistory()
 
 const store = createStore(
   reducers,

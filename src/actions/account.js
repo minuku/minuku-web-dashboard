@@ -1,6 +1,5 @@
 import { userService } from 'utils/userService'
-import { createBrowserHistory } from 'history'
-const history = createBrowserHistory()
+import { history } from "utils/history"
 
 export const fetchLoginWithRedux = (user) => {
   const request = (user) => { return { type: "LOGIN_REQUEST", user } }
