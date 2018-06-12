@@ -24,7 +24,10 @@ ReactDOM.render(
       <Switch>
         {
           indexRoute.map((prop, key) => {
-            return <Route path={prop.path} component={prop.component} key={key}></Route>
+            return <Route
+                    key={key}
+                    path={localStorage.getItem('user') ? prop.path : '/'}
+                    component={localStorage.getItem('user') ? prop.component : indexRoute[1].component}/>
           })
         }
       </Switch>

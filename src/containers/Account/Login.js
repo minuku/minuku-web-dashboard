@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import LoginComponent from 'layouts/Account/Login'
-import { fetchLoginWithRedux } from 'actions'
+import { fetchLoginWithRedux } from 'actions/account'
 
 const mapDispatchToProps = dispatch => ({
   dispatch: () => {
