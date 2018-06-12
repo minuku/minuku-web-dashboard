@@ -1,5 +1,5 @@
 import { Login } from 'containers/Account/Login.js'
-import SignupPage from 'layouts/Account/Signup.jsx'
+import { Signup } from 'containers/Account/Signup.js'
 
 const accountRoutes = [
   {
@@ -8,7 +8,7 @@ const accountRoutes = [
   },
   {
     path: "/signup",
-    component: SignupPage
+    component: Signup
   },
   { redirect: true, path: "/", to: "/login", navbarName: "Redirect" }
 ]

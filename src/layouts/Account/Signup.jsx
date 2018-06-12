@@ -46,22 +46,7 @@ class SimpleCard extends React.Component {
     })
   }
   userSignup = () => {
-    fetch('http://minukutest.nctu.me/minukutest/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        loginName: this.state.account,
-        loginPassword: this.state.password,
-      })
-    })
-    .then((data) => {
-      console.log('Request success: ', data)
-    })
-    .catch((error) => {
-      console.log('Request failure: ', error)
-    })
+    this.props.register()
   }
   render () {
     const { classes } = this.props

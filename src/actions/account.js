@@ -1,55 +1,46 @@
-export const fetchLoginWithRedux = () => {
+import { userService } from 'utils/userService'
+import { createBrowserHistory } from 'history'
+const history = createBrowserHistory()
+
+export const fetchLoginWithRedux = (user = {account: 'armuro', password: 'minuku'}) => {
   const request = (user) => { return { type: "LOGIN_REQUEST", user } }
   const success = (payload) => { return { type: "LOGIN_SUCCESS", payload } }
   const failure = (error) => { return { type: "LOGIN_ERROR",  error } }
 
-  const fetchLogin = () => {
-    const URL = `https://reqres.in/api/login`
-    return fetch(URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+  return dispatch => {
+    dispatch(request(user))
+    userService.login(user)
+    .then(
+      user => {
+        dispatch(success())
+        history.push('/dashboard')
       },
-      body: JSON.stringify({
-        "email": "peter@klaven",
-        "password": "cityslicka"
-      })
-    })
-    .then(response => Promise.all([response, response.json()]))
-  }
-
-  return (dispatch) => {
-    dispatch(request())
-    return fetchLogin().then(([response, json]) => {
-        if(response.status === 200){
-        dispatch(success(json))
+      error => {
+        dispatch(failure(error))
       }
-      else {
-        dispatch(failure())
-      }
-    })
+    )
   }
 }
 
 
-export const register = (user) => {
+export const register = (user = {account: 'armuro', password: 'minuku'}) => {
   const request = (user) => { return { type: `REGISTER_REQUEST`, user } }
-  // const success = (user) => { return { type: `REGISTER_SUCCESS`, user } }
-  // const failure = (error) => { return { type: `REGISTER_ERROR`, error } }
+  const success = (user) => { return { type: `REGISTER_SUCCESS`, user } }
+  const failure = (error) => { return { type: `REGISTER_ERROR`, error } }
   return dispatch => {
     dispatch(request(user))
-    // userService.register(user)
-    // .then(
-    //   user => {
-    //       dispatch(success())
-    //       // history.push('/dashboard')
-    //       // dispatch(alertActions.success('Registration successful'));
-    //   },
-    //   error => {
-    //     dispatch(failure(error))
-    //     // dispatch(alertActions.error(error))
-    //   }
-    // )
+    userService.register(user)
+    .then(
+      user => {
+          dispatch(success())
+          history.push('/login')
+          // dispatch(alertActions.success('Registration successful'));
+      },
+      error => {
+        dispatch(failure(error))
+        // dispatch(alertActions.error(error))
+      }
+    )
   }
 }
 

@@ -57,7 +57,7 @@ class SimpleCard extends React.Component {
     })
   }
   userLogin = () => {
-    this.props.dispatch()
+    this.props.login()
   }
   render () {
     const { classes } = this.props

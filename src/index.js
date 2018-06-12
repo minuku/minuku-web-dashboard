@@ -8,6 +8,7 @@ import thunk from 'redux-thunk'
 import { createStore, applyMiddleware } from 'redux'
 import registerServiceWorker from './registerServiceWorker'
 import reducers from './reducers'
+import { configureFakeBackend } from 'utils/fakeBackend'
 
 import indexRoute from 'routes/index.js'
 const history = createBrowserHistory()
@@ -17,6 +18,9 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(thunk)
 )
+
+// setup fake backend
+configureFakeBackend()
 
 ReactDOM.render(
   <Provider store={store}>
