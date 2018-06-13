@@ -11,9 +11,8 @@ export const fetchLoginWithRedux = (user) => {
     userService.login(user)
     .then(
       user => {
-        dispatch(success())
-        console.log(localStorage.getItem('user'))
-        history.push('/dashboard/profile')
+        dispatch(success(user))
+        history.push('/dashboard/')
       },
       error => {
         dispatch(failure(error))
@@ -32,7 +31,7 @@ export const register = (user) => {
     userService.register(user)
     .then(
       user => {
-          dispatch(success())
+          dispatch(success(user))
           history.push('/login')
           // dispatch(alertActions.success('Registration successful'));
       },

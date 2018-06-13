@@ -13,7 +13,7 @@ import ViewListIcon from '@material-ui/icons/ViewList'
 
 export const mailFolderListItems = (
   <div>
-    <ListItem button component={Link} to='/profile'>
+    <ListItem button component={Link} to='/dashboard/profile'>
       <ListItemIcon>
         <InboxIcon />
       </ListItemIcon>

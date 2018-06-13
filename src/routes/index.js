@@ -1,9 +1,7 @@
-import Account from "layouts/Account/index.jsx"
 import Dashboard from "layouts/Dashboard/index.jsx"
 
 const indexRoutes = [
-  { path: "/dashboard", component: Dashboard },
-  { path: "/", component: Account }
+  { path: "/dashboard", component: Dashboard }
 ]
 
 export default indexRoutes

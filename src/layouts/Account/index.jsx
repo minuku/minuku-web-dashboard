@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route, Redirect } from "react-router-dom"
 import AccountRoutes from 'routes/account.js'
 import { withStyles } from '@material-ui/core/styles'
+import { history } from "utils/history"
 
 const switchRoutes = (
   <Switch>
@@ -24,6 +25,9 @@ const styles = theme => ({
 })
 
 class Account extends React.Component {
+  componentDidMount () {
+    if (localStorage.getItem(`user`)) history.push('/dashboard/')
+  }
   render () {
     const { classes } = this.props
     return (
