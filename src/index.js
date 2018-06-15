@@ -1,23 +1,43 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import { createBrowserHistory } from "history";
-import { Router, Route, Switch } from "react-router-dom";
-import registerServiceWorker from './registerServiceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import { history } from "utils/history"
+import { Route, Router, Switch } from "react-router-dom"
 
-import indexRoute from 'routes/index.js';
-const history = createBrowserHistory();
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import reducers from './reducers'
+
+import PrivateRoute from 'containers/PrivateRoute.jsx'
+import Account from "layouts/Account/index.jsx"
+import indexRoute from 'routes'
+
+import { configureFakeBackend } from 'utils/fakeBackend'
+import registerServiceWorker from './registerServiceWorker'
+
+const store = createStore(
+  reducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(thunk)
+)
+
+// setup fake backend
+configureFakeBackend()
 
 ReactDOM.render(
-  <Router history={history}>
-    <Switch>
-      {
-        indexRoute.map((prop, key) => {
-          return <Route path={prop.path} component={prop.component} key={key}></Route>
-        })
-      }
-    </Switch>
-  </Router>,
+  <Provider store={store}>
+    <Router history={history}>
+      <Switch>
+        {
+          indexRoute.map((prop, key) => {
+              return <PrivateRoute key={key} path={prop.path} component={prop.component} />
+          })
+        }
+        <Route path="/" component={Account} />
+      </Switch>
+    </Router>
+  </Provider>,
   document.getElementById('root')
-);
-registerServiceWorker();
+)
+registerServiceWorker()
