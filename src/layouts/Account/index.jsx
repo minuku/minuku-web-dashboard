@@ -27,6 +27,7 @@ const styles = theme => ({
 class Account extends React.Component {
   componentDidMount () {
     if (localStorage.getItem(`user`)) history.push('/dashboard/')
+    console.log(`here`)
   }
   render () {
     const { classes } = this.props

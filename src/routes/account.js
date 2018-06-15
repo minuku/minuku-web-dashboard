@@ -9,7 +9,8 @@ const accountRoutes = [
   {
     path: "/signup",
     component: Signup
-  }
+  },
+  { redirect: true, path: "/", to: "/login", navbarName: "Redirect" }
 ]
 
 export default accountRoutes
