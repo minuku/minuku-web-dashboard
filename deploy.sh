@@ -1,5 +1,8 @@
 #!/bin/bash
 # Split on "/", ref: http://stackoverflow.com/a/5257398/689223
+
+cp ./build/index.html ./build/404.html
+
 REPO_SLUG_ARRAY=(${TRAVIS_REPO_SLUG//\// })
 REPO_OWNER=${REPO_SLUG_ARRAY[0]}
 REPO_NAME=${REPO_SLUG_ARRAY[1]}
