@@ -42,7 +42,7 @@ export const otherMailFolderListItems = (
       </ListItemIcon>
       <ListItemText primary="Schedule" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to='/dashboard/data'>
       <ListItemIcon>
         <ViewListIcon />
       </ListItemIcon>

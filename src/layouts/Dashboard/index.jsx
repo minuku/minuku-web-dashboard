@@ -33,7 +33,9 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    // padding: theme.spacing.unit * 3,
+
+    marginTop: 64
   }
 })
 
@@ -60,7 +62,7 @@ class Dashboard extends React.Component {
           open={this.state.open} />
 
         <main className={classes.content} ref="mainPanel">
-          <div className={classes.toolbar} />
+          {/* <div className={classes.toolbar} /> */}
           <div className={classes.container}>{switchRoutes}</div>
         </main>
       </div>

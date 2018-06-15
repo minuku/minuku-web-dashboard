@@ -16,6 +16,8 @@ import indexRoute from 'routes'
 import { configureFakeBackend } from 'utils/fakeBackend'
 import registerServiceWorker from './registerServiceWorker'
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+
 const store = createStore(
   reducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
@@ -25,19 +27,29 @@ const store = createStore(
 // setup fake backend
 configureFakeBackend()
 
+const theme = createMuiTheme({
+  typography: {
+    headline: {
+      fontSize: `1.25rem`,
+    },
+  },
+})
+
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Switch>
-        {
-          indexRoute.map((prop, key) => {
-              return <PrivateRoute key={key} path={prop.path} component={prop.component} />
-          })
-        }
-        <Route path="/" component={Account} />
-      </Switch>
-    </Router>
-  </Provider>,
+  <MuiThemeProvider theme={theme}>
+    <Provider store={store}>
+      <Router history={history}>
+        <Switch>
+          {
+            indexRoute.map((prop, key) => {
+                return <PrivateRoute key={key} path={prop.path} component={prop.component} />
+            })
+          }
+          <Route path="/" component={Account} />
+        </Switch>
+      </Router>
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('root')
 )
 registerServiceWorker()
