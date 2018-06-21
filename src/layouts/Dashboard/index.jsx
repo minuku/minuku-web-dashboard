@@ -35,7 +35,10 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     // padding: theme.spacing.unit * 3,
 
-    marginTop: 64
+    marginTop: 64,
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 56,
+    },
   }
 })
 

@@ -14,7 +14,11 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
   },
-  bar: {}
+  bar: {
+    [theme.breakpoints.down('sm')]: {
+      height: 64
+    },
+  }
 })
 
 class DataSection extends React.Component {
@@ -22,9 +26,9 @@ class DataSection extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <AppBar className={classes.bar} position="static" color="default">
+        <AppBar position="static" color="default">
           <Divider/>
-          <Toolbar>
+          <Toolbar className={classes.bar}>
             <Typography variant="headline" color="inherit">
               Data Section 專案資料設定
             </Typography>
