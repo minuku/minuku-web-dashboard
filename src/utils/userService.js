@@ -1,3 +1,4 @@
+import { authHeader } from 'utils/authHeader'
 const apiUrl = `http://localhost:3000`
 
 const login = (user) => {
@@ -30,6 +31,14 @@ const logout = () => {
   localStorage.removeItem('user')
 }
 
+const queryProfile = (user) => {
+  const requestOptions = {
+    method: 'GET',
+    headers: authHeader()
+  }
+  return fetch(`${apiUrl}/users/1`, requestOptions).then(handleResponse)
+}
+
 const handleResponse = (response) => {
   return response.json().then(data => {
     if (!response.ok) {
@@ -45,7 +54,10 @@ const handleResponse = (response) => {
   })
 }
 
+
+
 export const userService = {
     login,
-    register
+    register,
+    queryProfile
 }

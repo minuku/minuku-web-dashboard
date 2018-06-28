@@ -7,6 +7,9 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 
+// fake apiUrl
+import { userService } from 'utils/userService'
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -39,12 +42,36 @@ const styles = theme => ({
 
 class Porfile extends React.Component {
   state = {
-    name: 'Cat in the Hat',
-    email: ''
+    displayName: ``,
+    email: ``
   }
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
+    })
+  }
+  updateprofile () {
+    fetch(`https://minukutest.nctu.me/minukutest/queryProfile`, {
+      method: "POST",
+      body: JSON.stringify({signupAccount: `armuro`, userName: `yoarmuro`}),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+    })
+    .then((res) => {
+      console.log(res)
+      return res.text()
+    })
+  }
+  componentDidMount () {
+    // fetch(`https://minukutest.nctu.me/minukutest/queryProfile?signupAccount=armuro`)
+    // .then(res => console.log(res))
+    userService.queryProfile()
+    .then((res) => {
+      this.setState({
+        displayName: res.displayName
+      })
     })
   }
   render () {
