@@ -39,6 +39,15 @@ const queryProfile = (user) => {
   return fetch(`${apiUrl}/users/1`, requestOptions).then(handleResponse)
 }
 
+const updateProfile = (data) => {
+  const requestOptions = {
+    method: 'POST',
+    headers: { ...authHeader(), 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }
+  return fetch(`${apiUrl}/users/1`, requestOptions).then(handleResponse)
+}
+
 const handleResponse = (response) => {
   return response.json().then(data => {
     if (!response.ok) {
@@ -54,10 +63,9 @@ const handleResponse = (response) => {
   })
 }
 
-
-
 export const userService = {
     login,
     register,
-    queryProfile
+    queryProfile,
+    updateProfile
 }

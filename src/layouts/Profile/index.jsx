@@ -50,18 +50,10 @@ class Porfile extends React.Component {
       [name]: event.target.value,
     })
   }
-  updateprofile () {
-    fetch(`https://minukutest.nctu.me/minukutest/queryProfile`, {
-      method: "POST",
-      body: JSON.stringify({signupAccount: `armuro`, userName: `yoarmuro`}),
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "same-origin"
-    })
+  updateProfile = () => {
+    userService.updateProfile({displayName: this.state.displayName})
     .then((res) => {
       console.log(res)
-      return res.text()
     })
   }
   componentDidMount () {
@@ -108,7 +100,11 @@ class Porfile extends React.Component {
           </CardContent>
 
           <CardActions>
-            <Button variant="contained" size="small" color="primary">Update</Button>
+            <Button
+              onClick={this.updateProfile}
+              variant="contained"
+              size="small"
+              color="primary">Update</Button>
           </CardActions>
         </Card>
       </div>
