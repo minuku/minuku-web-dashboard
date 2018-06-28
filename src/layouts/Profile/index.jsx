@@ -57,8 +57,6 @@ class Porfile extends React.Component {
     })
   }
   componentDidMount () {
-    // fetch(`https://minukutest.nctu.me/minukutest/queryProfile?signupAccount=armuro`)
-    // .then(res => console.log(res))
     userService.queryProfile()
     .then((res) => {
       this.setState({
