@@ -14,6 +14,18 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Avatar from '@material-ui/core/Avatar'
 import red from '@material-ui/core/colors/red'
 
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogTitle from '@material-ui/core/DialogTitle'
+
+import FormLabel from '@material-ui/core/FormLabel'
+import FormControl from '@material-ui/core/FormControl'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import Checkbox from '@material-ui/core/Checkbox'
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -66,10 +78,29 @@ const styles = theme => ({
     marginRight: 8,
     backgroundColor: `rgba(100, 100, 100, 0.25)`,
     color: `rgba(100, 100, 100, 0.95)`,
+  },
+  formControl: {
+    margin: theme.spacing.unit * 3,
+  },
+  modalContent: {
+    display: `flex`
   }
 })
 
 class DataSection extends React.Component {
+  state = {
+    open: false,
+    gilad: true,
+    jason: false,
+    antoine: true,
+  }
+  toggleModal = () => {
+    this.setState({open: !this.state.open})
+  }
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked })
+  }
+
   render () {
     const { classes } = this.props
     return (
@@ -110,7 +141,7 @@ class DataSection extends React.Component {
                         </Avatar>
                       }
                       action={
-                        <IconButton className={classes.sectionActionBtn}>
+                        <IconButton className={classes.sectionActionBtn} onClick={this.toggleModal}>
                           <EditIcon />
                         </IconButton>
                       }
@@ -124,6 +155,97 @@ class DataSection extends React.Component {
             </Grid>
           </div>
 
+          <Dialog
+            open={this.state.open}
+            onClose={this.toggleModal}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">Label Selection: Phone</DialogTitle>
+            <DialogContent className={classes.modalContent}>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel component="legend">Assign responsibility</FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={this.state.gilad}
+                        onChange={this.handleChange('gilad')}
+                        value="gilad"
+                      />
+                    }
+                    label="Gilad Gray"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={this.state.jason}
+                        onChange={this.handleChange('jason')}
+                        value="jason"
+                      />
+                    }
+                    label="Jason Killian"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={this.state.antoine}
+                        onChange={this.handleChange('antoine')}
+                        value="antoine"
+                      />
+                    }
+                    label="Antoine Llorca"
+                  />
+                </FormGroup>
+                {/* <FormHelperText>Be careful</FormHelperText> */}
+              </FormControl>
+
+              <FormControl component="fieldset" className={classes.formControl}>
+                <FormLabel component="legend">Assign responsibility</FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={this.state.gilad}
+                        onChange={this.handleChange('gilad')}
+                        value="gilad"
+                      />
+                    }
+                    label="Gilad Gray"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={this.state.jason}
+                        onChange={this.handleChange('jason')}
+                        value="jason"
+                      />
+                    }
+                    label="Jason Killian"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={this.state.antoine}
+                        onChange={this.handleChange('antoine')}
+                        value="antoine"
+                      />
+                    }
+                    label="Antoine Llorca"
+                  />
+                </FormGroup>
+              </FormControl>
+            </DialogContent>
+
+            <DialogActions>
+              <Button onClick={this.toggleModal} color="primary">
+                close
+              </Button>
+              <Button onClick={this.toggleModal} color="primary" autoFocus>
+                update
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
       </div>
     )
