@@ -12,6 +12,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import IconButton from '@material-ui/core/IconButton'
 import CardHeader from '@material-ui/core/CardHeader'
 import Avatar from '@material-ui/core/Avatar'
+import red from '@material-ui/core/colors/red'
 
 const styles = theme => ({
   root: {
@@ -52,6 +53,9 @@ const styles = theme => ({
   paper: {
     height: 200,
     width: 360,
+  },
+  avatar: {
+    backgroundColor: red[200],
   },
   header: {
     padding: `6px 12px`
@@ -119,27 +123,6 @@ class DataSection extends React.Component {
               ))}
             </Grid>
           </div>
-
-            <div className={classes.section}>
-              <Grid container className={classes.sectionTitle} justify="flex-start" alignItems="center" pacing={4}>
-                <Button className={classes.labelBtn}>
-                  data collection
-                </Button>
-                <Typography variant="headline">運動資料</Typography>
-              </Grid>
-              <Grid
-                container
-                className={classes.sectionContent}
-                wrap="nowrap"
-                justify="flex-start"
-                spacing={16}>
-                {[0, 1, 2].map(value => (
-                  <Grid key={value} item>
-                    <Card className={classes.paper} />
-                  </Grid>
-                ))}
-              </Grid>
-            </div>
 
         </div>
       </div>
