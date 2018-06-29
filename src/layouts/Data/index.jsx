@@ -4,29 +4,61 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 'auto',
+    height: `100%`,
     zIndex: 1,
-    overflow: 'hidden',
+    overflow: 'scroll',
     position: 'relative',
     display: 'flex',
+    flexDirection: `column`
+  },
+  barContainer: {
+    boxShadow: `none`
   },
   bar: {
     [theme.breakpoints.down('sm')]: {
       height: 64
     },
+  },
+  sectionList: {
+    padding: 20
+  },
+  section: {
+    marginBottom: 32
+  },
+  sectionTitle: {
+    marginBottom: 8
+  },
+  paper: {
+    height: 180,
+    width: 320,
+  },
+  labelBtn: {
+    minHeight: 24,
+    padding: `4px 16px 2px`,
+    marginRight: 8,
+    backgroundColor: `rgba(100, 100, 100, 0.25)`,
+    color: `rgba(100, 100, 100, 0.95)`,
   }
 })
 
 class DataSection extends React.Component {
+  state = {
+    spacing: '16',
+  }
   render () {
+    const { spacing } = this.state
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar  className={classes.barContainer} position="static" color="default">
           <Divider/>
           <Toolbar className={classes.bar}>
             <Typography variant="headline" color="inherit">
@@ -35,6 +67,42 @@ class DataSection extends React.Component {
           </Toolbar>
           <Divider/>
         </AppBar>
+
+        <div className={classes.sectionList}>
+
+            <div className={classes.section}>
+              <Grid container className={classes.sectionTitle} justify="flex-start" alignItems="center" pacing={4}>
+                <Button className={classes.labelBtn}>
+                  data collection
+                </Button>
+                <Typography variant="headline">運動資料</Typography>
+              </Grid>
+              <Grid container className={classes.sectionContent} justify="flex-start" spacing={Number(spacing)}>
+                {[0, 1, 2].map(value => (
+                  <Grid key={value} item>
+                    <Paper className={classes.paper} />
+                  </Grid>
+                ))}
+              </Grid>
+            </div>
+
+            <div className={classes.section}>
+              <Grid container className={classes.sectionTitle} justify="flex-start" alignItems="center" pacing={4}>
+                <Button className={classes.labelBtn}>
+                  data collection
+                </Button>
+                <Typography variant="headline">運動資料</Typography>
+              </Grid>
+              <Grid container className={classes.sectionContent} justify="flex-start" spacing={Number(spacing)}>
+                {[0, 1, 2].map(value => (
+                  <Grid key={value} item>
+                    <Paper className={classes.paper} />
+                  </Grid>
+                ))}
+              </Grid>
+            </div>
+
+        </div>
       </div>
     )
   }

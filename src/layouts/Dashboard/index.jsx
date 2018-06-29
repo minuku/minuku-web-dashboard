@@ -39,6 +39,10 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       marginTop: 56,
     },
+  },
+  container: {
+    flex: 1,
+    height: `100%`
   }
 })
 
