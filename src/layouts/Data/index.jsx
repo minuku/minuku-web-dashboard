@@ -7,7 +7,11 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
+import Card from '@material-ui/core/Card'
+import EditIcon from '@material-ui/icons/Edit'
+import IconButton from '@material-ui/core/IconButton'
+import CardHeader from '@material-ui/core/CardHeader'
+import Avatar from '@material-ui/core/Avatar'
 
 const styles = theme => ({
   root: {
@@ -39,9 +43,18 @@ const styles = theme => ({
   sectionContent: {
     overflowX: 'scroll'
   },
+  sectionActionBtn: {
+    width: 36,
+    height: 36,
+    marginTop: 4,
+    marginRight: 6
+  },
   paper: {
-    height: 180,
-    width: 320,
+    height: 200,
+    width: 360,
+  },
+  header: {
+    padding: `6px 12px`
   },
   labelBtn: {
     minHeight: 24,
@@ -84,7 +97,24 @@ class DataSection extends React.Component {
               spacing={16}>
               {[0, 1, 2].map(value => (
                 <Grid key={value} item>
-                  <Paper className={classes.paper} />
+                  <Card className={classes.paper}>
+                    <CardHeader
+                      className={classes.header}
+                      avatar={
+                        <Avatar aria-label="Recipe" className={classes.avatar}>
+                          P
+                        </Avatar>
+                      }
+                      action={
+                        <IconButton className={classes.sectionActionBtn}>
+                          <EditIcon />
+                        </IconButton>
+                      }
+                      title="Phone"
+                      subheader="21 labels"
+                    />
+                    <Divider light />
+                  </Card>
                 </Grid>
               ))}
             </Grid>
@@ -105,7 +135,7 @@ class DataSection extends React.Component {
                 spacing={16}>
                 {[0, 1, 2].map(value => (
                   <Grid key={value} item>
-                    <Paper className={classes.paper} />
+                    <Card className={classes.paper} />
                   </Grid>
                 ))}
               </Grid>
