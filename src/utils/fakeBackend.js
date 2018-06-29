@@ -1,3 +1,4 @@
+import "babel-polyfill"
 let users = JSON.parse(localStorage.getItem('users')) || []
 
 export function configureFakeBackend() {
@@ -21,7 +22,9 @@ export function configureFakeBackend() {
               // if login details are valid return user details and fake jwt token
               let user = filteredUsers[0]
               let responseJson = {
+                  id: user.id,
                   account: user.account,
+                  displayName: user.displayName,
                   token: 'QpwL5tke4Pnpja7X'
               };
               resolve({ ok: true, json: () => Promise.resolve(responseJson) })
@@ -36,7 +39,7 @@ export function configureFakeBackend() {
         if (url.endsWith('/users') && opts.method === 'GET') {
           // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
           if (opts.headers && opts.headers.Authorization === 'Bearer QpwL5tke4Pnpja7X') {
-            resolve({ ok: true, json: () => Promise.resolve(users)});
+            resolve({ ok: true, json: () => Promise.resolve(users)})
           } else {
             // return 401 not authorised if token is null or invalid
             reject('Unauthorised')
@@ -47,7 +50,7 @@ export function configureFakeBackend() {
         // get user by id
         if (url.match(/\/users\/\d+$/) && opts.method === 'GET') {
           // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
-          if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
+          if (opts.headers && opts.headers.Authorization === 'Bearer QpwL5tke4Pnpja7X') {
             // find user by id in users array
             let urlParts = url.split('/')
             let id = parseInt(urlParts[urlParts.length - 1], 10)
@@ -55,7 +58,30 @@ export function configureFakeBackend() {
             let user = matchedUsers.length ? matchedUsers[0] : null
 
             // respond 200 OK with user
-            resolve({ ok: true, json: () => user})
+            resolve({ ok: true, json: () => Promise.resolve(user)})
+          } else {
+            // return 401 not authorised if token is null or invalid
+            reject('Unauthorised')
+          }
+          return
+        }
+
+        // update user by id
+        if (url.match(/\/users\/\d+$/) && opts.method === 'POST') {
+          // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
+          if (opts.headers && opts.headers.Authorization === 'Bearer QpwL5tke4Pnpja7X') {
+            // find user by id in users array
+            let urlParts = url.split('/')
+            let id = parseInt(urlParts[urlParts.length - 1], 10)
+            let matchedUsers = users.filter(user => { return user.id === id; })
+            let user = matchedUsers.length ? matchedUsers[0] : null
+
+            user.displayName = JSON.parse(opts.body).displayName
+            users[id] = user
+            localStorage.setItem('users', JSON.stringify(users))
+
+            // respond 200 OK with user
+            resolve({ ok: true, json: () => Promise.resolve(user)})
           } else {
             // return 401 not authorised if token is null or invalid
             reject('Unauthorised')
@@ -66,8 +92,11 @@ export function configureFakeBackend() {
         // register user
         if (url.endsWith('/users/register') && opts.method === 'POST') {
           // get new user object from post body
-          let newUser = JSON.parse(opts.body)
-
+          let newUser = {
+            account: JSON.parse(opts.body).account,
+            password: JSON.parse(opts.body).password,
+            displayName: 'initial'
+          }
           // validation
           let duplicateUser = users.filter(user => { return user.account === newUser.account }).length
           if (duplicateUser) {
