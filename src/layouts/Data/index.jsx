@@ -23,8 +23,10 @@ import FormLabel from '@material-ui/core/FormLabel'
 import FormControl from '@material-ui/core/FormControl'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
-import FormHelperText from '@material-ui/core/FormHelperText'
 import Checkbox from '@material-ui/core/Checkbox'
+
+import { labelData } from './labelFormat.js'
+import _ from 'lodash'
 
 const styles = theme => ({
   root: {
@@ -83,16 +85,14 @@ const styles = theme => ({
     margin: theme.spacing.unit * 3,
   },
   modalContent: {
-    display: `flex`
+    display: `flex`,
+    flexWrap: `wrap`
   }
 })
 
 class DataSection extends React.Component {
   state = {
-    open: false,
-    gilad: true,
-    jason: false,
-    antoine: true,
+    open: false
   }
   toggleModal = () => {
     this.setState({open: !this.state.open})
@@ -156,6 +156,7 @@ class DataSection extends React.Component {
           </div>
 
           <Dialog
+            maxWidth="md"
             open={this.state.open}
             onClose={this.toggleModal}
             aria-labelledby="alert-dialog-title"
@@ -163,78 +164,30 @@ class DataSection extends React.Component {
           >
             <DialogTitle id="alert-dialog-title">Label Selection: Phone</DialogTitle>
             <DialogContent className={classes.modalContent}>
-              <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel component="legend">Assign responsibility</FormLabel>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.gilad}
-                        onChange={this.handleChange('gilad')}
-                        value="gilad"
-                      />
+              {
+                _.map(labelData, (section, id) =>
+                <FormControl key={id} component="fieldset" className={classes.formControl}>
+                  <FormLabel component="legend">{id}</FormLabel>
+                  <FormGroup>
+                    {
+                      _.map(section, (name, label) =>
+                        <FormControlLabel
+                          key={label}
+                          control={
+                            <Checkbox
+                              checked={this.state.gilad}
+                              onChange={this.handleChange(label)}
+                              value={label}
+                            />
+                          }
+                          label={label}
+                        />
+                      )
                     }
-                    label="Gilad Gray"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.jason}
-                        onChange={this.handleChange('jason')}
-                        value="jason"
-                      />
-                    }
-                    label="Jason Killian"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.antoine}
-                        onChange={this.handleChange('antoine')}
-                        value="antoine"
-                      />
-                    }
-                    label="Antoine Llorca"
-                  />
-                </FormGroup>
-                {/* <FormHelperText>Be careful</FormHelperText> */}
-              </FormControl>
-
-              <FormControl component="fieldset" className={classes.formControl}>
-                <FormLabel component="legend">Assign responsibility</FormLabel>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.gilad}
-                        onChange={this.handleChange('gilad')}
-                        value="gilad"
-                      />
-                    }
-                    label="Gilad Gray"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.jason}
-                        onChange={this.handleChange('jason')}
-                        value="jason"
-                      />
-                    }
-                    label="Jason Killian"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={this.state.antoine}
-                        onChange={this.handleChange('antoine')}
-                        value="antoine"
-                      />
-                    }
-                    label="Antoine Llorca"
-                  />
-                </FormGroup>
-              </FormControl>
+                  </FormGroup>
+                </FormControl>
+                )
+              }
             </DialogContent>
 
             <DialogActions>
