@@ -39,6 +39,7 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       marginTop: 56,
     },
+    overflow: 'scroll'
   },
   container: {
     flex: 1,

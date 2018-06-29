@@ -36,6 +36,9 @@ const styles = theme => ({
   sectionTitle: {
     marginBottom: 8
   },
+  sectionContent: {
+    overflowX: 'scroll'
+  },
   paper: {
     height: 180,
     width: 320,
@@ -50,11 +53,7 @@ const styles = theme => ({
 })
 
 class DataSection extends React.Component {
-  state = {
-    spacing: '16',
-  }
   render () {
-    const { spacing } = this.state
     const { classes } = this.props
     return (
       <div className={classes.root}>
@@ -70,21 +69,26 @@ class DataSection extends React.Component {
 
         <div className={classes.sectionList}>
 
-            <div className={classes.section}>
-              <Grid container className={classes.sectionTitle} justify="flex-start" alignItems="center" pacing={4}>
-                <Button className={classes.labelBtn}>
-                  data collection
-                </Button>
-                <Typography variant="headline">運動資料</Typography>
-              </Grid>
-              <Grid container className={classes.sectionContent} justify="flex-start" spacing={Number(spacing)}>
-                {[0, 1, 2].map(value => (
-                  <Grid key={value} item>
-                    <Paper className={classes.paper} />
-                  </Grid>
-                ))}
-              </Grid>
-            </div>
+          <div className={classes.section}>
+            <Grid container className={classes.sectionTitle} justify="flex-start" alignItems="center" pacing={4}>
+              <Button className={classes.labelBtn}>
+                data collection
+              </Button>
+              <Typography variant="headline">睡眠資料</Typography>
+            </Grid>
+            <Grid
+              container
+              className={classes.sectionContent}
+              wrap="nowrap"
+              justify="flex-start"
+              spacing={16}>
+              {[0, 1, 2].map(value => (
+                <Grid key={value} item>
+                  <Paper className={classes.paper} />
+                </Grid>
+              ))}
+            </Grid>
+          </div>
 
             <div className={classes.section}>
               <Grid container className={classes.sectionTitle} justify="flex-start" alignItems="center" pacing={4}>
@@ -93,7 +97,12 @@ class DataSection extends React.Component {
                 </Button>
                 <Typography variant="headline">運動資料</Typography>
               </Grid>
-              <Grid container className={classes.sectionContent} justify="flex-start" spacing={Number(spacing)}>
+              <Grid
+                container
+                className={classes.sectionContent}
+                wrap="nowrap"
+                justify="flex-start"
+                spacing={16}>
                 {[0, 1, 2].map(value => (
                   <Grid key={value} item>
                     <Paper className={classes.paper} />
