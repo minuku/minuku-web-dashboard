@@ -82,7 +82,14 @@ const styles = theme => ({
     color: `rgba(100, 100, 100, 0.95)`,
   },
   formControl: {
+    width: `25%`,
     margin: theme.spacing.unit * 3,
+    [theme.breakpoints.down('sm')]: {
+      width: `100%`,
+    },
+    [theme.breakpoints.down('md')]: {
+      width: `40%`,
+    },
   },
   modalContent: {
     display: `flex`,
@@ -92,15 +99,32 @@ const styles = theme => ({
 
 class DataSection extends React.Component {
   state = {
-    open: false
+    open: false,
+    _labelingData: null
   }
   toggleModal = () => {
     this.setState({open: !this.state.open})
   }
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.checked })
+  handleChange = ({sectionId, labelId}) => event => {
+    let _data = this.state._labelingData
+    _data[sectionId][labelId][`active`] = !_data[sectionId][labelId][`active`]
+    this.setState({ _labelingData: _data })
   }
 
+  componentDidMount () {
+    let _labelingData = {}
+    _.map(labelData, (sec, secId) => {
+      _labelingData[secId] = {}
+      _.map(sec, (type, id) => {
+        _labelingData[secId][id] = {
+          active: false,
+          value: null,
+          type: type
+        }
+      })
+    })
+    this.setState({_labelingData: _labelingData})
+  }
   render () {
     const { classes } = this.props
     return (
@@ -165,22 +189,22 @@ class DataSection extends React.Component {
             <DialogTitle id="alert-dialog-title">Label Selection: Phone</DialogTitle>
             <DialogContent className={classes.modalContent}>
               {
-                _.map(labelData, (section, id) =>
-                <FormControl key={id} component="fieldset" className={classes.formControl}>
-                  <FormLabel component="legend">{id}</FormLabel>
+                _.map(this.state._labelingData, (section, sectionId) =>
+                <FormControl key={sectionId} component="fieldset" className={classes.formControl}>
+                  <FormLabel component="legend">{sectionId}</FormLabel>
                   <FormGroup>
                     {
-                      _.map(section, (name, label) =>
+                      _.map(section, (label, labelId) =>
                         <FormControlLabel
-                          key={label}
+                          key={labelId}
                           control={
                             <Checkbox
-                              checked={this.state.gilad}
-                              onChange={this.handleChange(label)}
-                              value={label}
+                              checked={label.active}
+                              onChange={this.handleChange({sectionId, labelId})}
+                              value={labelId}
                             />
                           }
-                          label={label}
+                          label={labelId}
                         />
                       )
                     }

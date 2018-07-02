@@ -1,5 +1,7 @@
 export const labelData = {
-  // "creationTime": "long",
+  "creationTime": {
+    "creationTime": "long",
+  },
   "ImageDataRecord": {
     "base64Data": "String",
   },
