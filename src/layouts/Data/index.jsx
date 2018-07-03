@@ -5,8 +5,10 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 import { datatype } from './dataType.js'
 import { mobileLabelData } from './labelFormat.js'
@@ -52,11 +54,14 @@ const styles = theme => ({
     backgroundColor: `rgba(100, 100, 100, 0.25)`,
     color: `rgba(100, 100, 100, 0.95)`,
   },
-  addButton: {
+  addCardButton: {
     height: 36,
     backgroundColor: theme.palette.secondary.main,
     margin: `0 16px`,
     padding: `4px 16px`
+  },
+  addSectionWrapper: {
+    marginTop: 100
   }
 })
 
@@ -107,6 +112,22 @@ class DataSection extends React.Component {
     list[sectionId].content.splice(cardId, 1)
     this.setState({list})
   }
+
+  addCollection = () => {
+    let list = this.state.list
+    list.push({
+      title: `運動資料`,
+      type: datatype[1],
+      content: []
+    })
+    this.setState({list})
+  }
+
+  deleteCollection = (collectionId) => {
+    let list = this.state.list
+    list.splice(collectionId, 1)
+    this.setState({list})
+  }
   render () {
     const { classes } = this.props
     return (
@@ -131,6 +152,9 @@ class DataSection extends React.Component {
                     {section.type}
                   </Button>
                   <Typography variant="headline">{section.title}</Typography>
+                  <IconButton onClick={() => this.deleteCollection(sid)}>
+                    <DeleteIcon />
+                  </IconButton>
                 </Grid>
                 <Grid
                   container
@@ -149,7 +173,7 @@ class DataSection extends React.Component {
                     )
                   }
                   <Grid item>
-                    <Button variant="contained" color="secondary" className={classes.addButton} onClick={() => this.addCard(sid)}>
+                    <Button variant="contained" color="secondary" className={classes.addCardButton} onClick={() => this.addCard(sid)}>
                       <AddIcon className={classes.addButtonIcon} />
                       Device
                     </Button>
@@ -158,6 +182,13 @@ class DataSection extends React.Component {
               </div>
             )
           }
+
+          <Grid container justify={'center'} className={classes.addSectionWrapper}>
+            <Button variant="contained" color="primary" className={classes.addSectionButton} onClick={this.addCollection}>
+              <AddIcon className={classes.addButtonIcon} />
+              add collection
+            </Button>
+          </Grid>
 
         </div>
       </div>
