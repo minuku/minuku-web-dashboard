@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button'
 
 import Card from '@material-ui/core/Card'
 import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
 import IconButton from '@material-ui/core/IconButton'
 import CardHeader from '@material-ui/core/CardHeader'
 import Avatar from '@material-ui/core/Avatar'
@@ -34,9 +35,7 @@ const styles = theme => ({
   },
   sectionActionBtn: {
     width: 36,
-    height: 36,
-    marginTop: 4,
-    marginRight: 6
+    height: 36
   },
   paper: {
     height: 200,
@@ -46,7 +45,9 @@ const styles = theme => ({
     backgroundColor: theme.palette.secondary.main
   },
   header: {
-    padding: `6px 12px`
+    padding: `12px 20px`,
+    display: `flex`,
+    alignItems: `center`
   },
   labelBtn: {
     minHeight: 24,
@@ -73,6 +74,7 @@ const styles = theme => ({
 
 class DataSectionDialog extends React.Component {
   state = {
+    labelCounter: 0,
     open: false,
     _labelingData: null
   }
@@ -80,9 +82,12 @@ class DataSectionDialog extends React.Component {
     this.setState({open: !this.state.open})
   }
   handleChange = ({sectionId, labelId}) => event => {
-    let _data = this.state._labelingData
-    _data[sectionId][labelId][`active`] = !_data[sectionId][labelId][`active`]
-    this.setState({ _labelingData: _data })
+    let _labelingData = this.state._labelingData
+    let labelCounter = this.state.labelCounter
+
+    labelCounter += _labelingData[sectionId][labelId][`active`] ? -1 : 1
+    _labelingData[sectionId][labelId][`active`] = !_labelingData[sectionId][labelId][`active`]
+    this.setState({ _labelingData, labelCounter })
   }
 
   componentDidMount () {
@@ -111,12 +116,18 @@ class DataSectionDialog extends React.Component {
             </Avatar>
           }
           action={
-            <IconButton className={classes.sectionActionBtn} onClick={this.toggleModal}>
-              <EditIcon />
-            </IconButton>
+            <div>
+              <IconButton className={classes.sectionActionBtn} onClick={this.toggleModal}>
+                <EditIcon />
+              </IconButton>
+
+              <IconButton className={classes.sectionActionBtn} onClick={this.props.deleteCard}>
+                <DeleteIcon />
+              </IconButton>
+            </div>
           }
           title={this.props.cardTitle}
-          // subheader="21 labels"
+          subheader={`${this.state.labelCounter} label selected`}
         />
         <Divider light />
 

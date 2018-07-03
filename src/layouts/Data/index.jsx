@@ -93,6 +93,20 @@ class DataSection extends React.Component {
       }
     ]
   }
+  addCard = (id) => {
+    let list = this.state.list
+    list[id].content.push({
+      cardTitle: `wearable`,
+      type: `wearable`
+    })
+    this.setState({list})
+  }
+
+  deleteCard = (sectionId, cardId) => {
+    let list = this.state.list
+    list[sectionId].content.splice(cardId, 1)
+    this.setState({list})
+  }
   render () {
     const { classes } = this.props
     return (
@@ -129,12 +143,13 @@ class DataSection extends React.Component {
                       <Grid key={cid} item>
                         <DataSectionLabelCard
                           data={mobileLabelData}
+                          deleteCard={() => this.deleteCard(sid, cid)}
                           cardTitle={card.cardTitle}/>
                       </Grid>
                     )
                   }
                   <Grid item>
-                    <Button variant="contained" color="secondary" className={classes.addButton}>
+                    <Button variant="contained" color="secondary" className={classes.addButton} onClick={() => this.addCard(sid)}>
                       <AddIcon className={classes.addButtonIcon} />
                       Device
                     </Button>
