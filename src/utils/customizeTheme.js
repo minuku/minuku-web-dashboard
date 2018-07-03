@@ -16,7 +16,7 @@ export const customizeTheme = {
     },
     secondary: {
       light: amber[300],
-      main: amber[600],
+      main: amber[500],
       dark: amber[800],
       contrastText: '#000',
     },

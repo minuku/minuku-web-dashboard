@@ -5,11 +5,14 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-
 import Grid from '@material-ui/core/Grid'
+import AddIcon from '@material-ui/icons/Add'
 
-import { labelData } from './labelFormat.js'
+import { datatype } from './dataType.js'
+import { mobileLabelData } from './labelFormat.js'
 import { DataSectionLabelCard } from 'components/Card'
+
+import _ from 'lodash'
 
 const styles = theme => ({
   root: {
@@ -39,7 +42,8 @@ const styles = theme => ({
     marginBottom: 8
   },
   sectionContent: {
-    overflowX: 'scroll'
+    overflowX: 'scroll',
+    alignItems: 'center'
   },
   labelBtn: {
     minHeight: 24,
@@ -47,10 +51,48 @@ const styles = theme => ({
     marginRight: 8,
     backgroundColor: `rgba(100, 100, 100, 0.25)`,
     color: `rgba(100, 100, 100, 0.95)`,
+  },
+  addButton: {
+    height: 36,
+    backgroundColor: theme.palette.secondary.main,
+    margin: `0 16px`,
+    padding: `4px 16px`
   }
 })
 
 class DataSection extends React.Component {
+  state = {
+    list: [
+      {
+        title: `睡眠資料`,
+        type: datatype[0],
+        content: [
+          {
+            cardTitle: `mobile`,
+            type: `mobile`
+          },
+          {
+            cardTitle: `wearable`,
+            type: `wearable`
+          }
+        ]
+      },
+      {
+        title: `運動資料`,
+        type: datatype[1],
+        content: [
+          {
+            cardTitle: `mobile`,
+            type: `mobile`
+          },
+          {
+            cardTitle: `wearable`,
+            type: `wearable`
+          }
+        ]
+      }
+    ]
+  }
   render () {
     const { classes } = this.props
     return (
@@ -67,28 +109,41 @@ class DataSection extends React.Component {
 
         <div className={classes.sectionList}>
 
-          <div className={classes.section}>
-            <Grid container className={classes.sectionTitle} justify="flex-start" alignItems="center" pacing={4}>
-              <Button className={classes.labelBtn}>
-                data collection
-              </Button>
-              <Typography variant="headline">睡眠資料</Typography>
-            </Grid>
-            <Grid
-              container
-              className={classes.sectionContent}
-              wrap="nowrap"
-              justify="flex-start"
-              spacing={16}>
-              {[0, 1, 2].map(value => (
-                <Grid key={value} item>
-                  <DataSectionLabelCard
-                    data={labelData}
-                    cardTitle={value}/>
+          {
+            _.map(this.state.list, (section, sid) =>
+              <div className={classes.section} key={sid}>
+                <Grid container className={classes.sectionTitle} justify="flex-start" alignItems="center" pacing={4}>
+                  <Button className={classes.labelBtn}>
+                    {section.type}
+                  </Button>
+                  <Typography variant="headline">{section.title}</Typography>
                 </Grid>
-              ))}
-            </Grid>
-          </div>
+                <Grid
+                  container
+                  spacing={16}
+                  wrap="nowrap"
+                  justify="flex-start"
+                  className={classes.sectionContent}>
+                  {
+                    _.map(section.content, (card, cid) =>
+                      <Grid key={cid} item>
+                        <DataSectionLabelCard
+                          data={mobileLabelData}
+                          cardTitle={card.cardTitle}/>
+                      </Grid>
+                    )
+                  }
+                  <Grid item>
+                    <Button variant="contained" color="secondary" className={classes.addButton}>
+                      <AddIcon className={classes.addButtonIcon} />
+                      Device
+                    </Button>
+                  </Grid>
+                </Grid>
+              </div>
+            )
+          }
+
         </div>
       </div>
     )

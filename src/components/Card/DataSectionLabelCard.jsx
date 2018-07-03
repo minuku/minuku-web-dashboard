@@ -8,7 +8,6 @@ import EditIcon from '@material-ui/icons/Edit'
 import IconButton from '@material-ui/core/IconButton'
 import CardHeader from '@material-ui/core/CardHeader'
 import Avatar from '@material-ui/core/Avatar'
-import red from '@material-ui/core/colors/red'
 
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
@@ -44,7 +43,7 @@ const styles = theme => ({
     width: 360,
   },
   avatar: {
-    backgroundColor: red[200],
+    backgroundColor: theme.palette.secondary.main
   },
   header: {
     padding: `6px 12px`
@@ -108,7 +107,7 @@ class DataSectionDialog extends React.Component {
           className={classes.header}
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              {this.props.cardTitle + 1}
+              {this.props.cardTitle.slice(0, 1)}
             </Avatar>
           }
           action={
@@ -116,7 +115,7 @@ class DataSectionDialog extends React.Component {
               <EditIcon />
             </IconButton>
           }
-          title={`device: ` + (this.props.cardTitle + 1)}
+          title={this.props.cardTitle}
           // subheader="21 labels"
         />
         <Divider light />

@@ -1,4 +1,4 @@
-export const labelData = {
+export const mobileLabelData = {
   "creationTime": {
     "creationTime": "long",
   },
