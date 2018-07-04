@@ -47,7 +47,7 @@ class ConditionDialog extends React.Component{
   }
 
   handleClose = () => {
-
+    
   }
 
   handleChange = () => {

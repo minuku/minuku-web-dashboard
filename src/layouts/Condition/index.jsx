@@ -101,15 +101,35 @@ class Condition extends React.Component {
   };
 
   handleEdit = (index) => {
-    this.state.conditionList[index].isOpen = true
+    let tmp = this.state.conditionList;
+    tmp[index].isOpen = true;
+    this.setState({conditionList: tmp});
   };
 
-  handleDelete = (name) => {
-    console.log('Delete' + name);
+  handleDelete = (index) => {
+    let tmp = this.state.conditionList;
+    tmp.splice(index, 1);
+    this.setState({conditionList: tmp});
   };
 
   handleAdd = () => {
-    console.log('Add');
+    let tmp = this.state.conditionList;
+    tmp.push({
+      isOpen: true,
+      name: 'New Condition',
+      schedule_from: false,
+      startHr: 8,
+      startMin: 30,
+      startM: 'AM',
+      endHr: 10,
+      endMin: 30,
+      endM: 'PM',
+      schedule_last: false,
+      duration: 10,
+      unit: 'minute',
+      rule: [],
+    });
+    this.setState({conditionList: tmp});
   };
 
   handleClose = () => {
