@@ -285,4 +285,4 @@ class ConditionDialog extends React.Component{
 
 }
 
-export default ConditionDialog
+export default withStyles(styles, { withTheme: true })(ConditionDialog)

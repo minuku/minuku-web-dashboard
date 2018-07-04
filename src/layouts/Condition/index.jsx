@@ -6,7 +6,6 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Button from '@material-ui/core/Button';
 import purple from '@material-ui/core/colors/purple';
 import yellow from '@material-ui/core/colors/yellow';
@@ -15,6 +14,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import EditIcon from '@material-ui/icons/Edit';
+import _ from 'lodash';
+import DeleteIcon from '@material-ui/icons/Delete'
+import ConditionDialog from 'components'
 
 const styles = theme => ({
   card: {
@@ -46,36 +48,69 @@ const theme = createMuiTheme({
 
 const conditionMenu = ['Moving', 'Riding bike', 'Static'];
 const optionMenu = ['weak light', 'lower noise', 'battery', 'speed', 'GPS', 'location'];
-const fromObj = {
-  startHr: 8,
-  startMin: 30,
-  startM: 'AM',
-  endHr: 10,
-  endMin: 30,
-  endM: 'PM',
-}
-const lastObj = {
-  duration: 10,
-  unit: 'minute'
-}
-const conditionObj = {
-  name: 'Condition',
-  schedule_from: fromObj,
-  schedule_last: lastObj,
-  rule: [],
-}
-const defaultCondition = [conditionObj]
 
 class Condition extends React.Component {
 
   state = { 
-    conditionList: defaultCondition.map(c => (
-      
-    )),
+    conditionList: [
+      {
+        isOpen: false,
+        name: '移動中',
+        schedule_from: false,
+        startHr: 8,
+        startMin: 30,
+        startM: 'AM',
+        endHr: 10,
+        endMin: 30,
+        endM: 'PM',
+        schedule_last: false,
+        duration: 10,
+        unit: 'minute',
+        rule: [],
+      },
+      {
+        isOpen: false,
+        name: '騎腳踏中',
+        schedule_from: false,
+        startHr: 8,
+        startMin: 30,
+        startM: 'AM',
+        endHr: 10,
+        endMin: 30,
+        endM: 'PM',
+        schedule_last: false,
+        duration: 10,
+        unit: 'minute',
+        rule: [],
+      },
+      {
+        isOpen: false,
+        name: '靜止中',
+        schedule_from: false,
+        startHr: 8,
+        startMin: 30,
+        startM: 'AM',
+        endHr: 10,
+        endMin: 30,
+        endM: 'PM',
+        schedule_last: false,
+        duration: 10,
+        unit: 'minute',
+        rule: [],
+      },
+    ],
   };
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  handleEdit = (name) => {
+    console.log('Edit' + name);
+  };
+
+  handleDelete = (name) => {
+    console.log('Delete' + name);
+  };
+
+  handleAdd = () => {
+    console.log('Add');
   };
 
   handleClose = () => {
@@ -94,16 +129,25 @@ class Condition extends React.Component {
           />
           <CardContent>
           <List>
-            {this.state.conditionList.map(condition => (
+            {
+              _.map(this.state.conditionList, (condition, cid) => 
               <ListItem divider disableGutters>
-                <ListItemText primary={condition}/>
+                <ListItemText primary={condition.name}/>
                 <ListItemSecondaryAction>
-                  <IconButton onClick={this.handleClickOpen}>
+                  <IconButton onClick={(e) => this.handleEdit(condition.name)}>
                     <EditIcon />
                   </IconButton>
+                  <IconButton onClick={(e) => this.handleDelete(condition.name)}>
+                    <DeleteIcon />
+                  </IconButton>
                 </ListItemSecondaryAction>
+                <ConditionDialog
+                  isOpen = {condition.isOpen}
+                  contentObj = {condition}
+                />
               </ListItem>
-            ))}
+              )
+            }
           </List>
           </CardContent>
           <CardActions className={classes.actions}>
@@ -111,7 +155,7 @@ class Condition extends React.Component {
               variant="contained" 
               color="secondary" 
               className={classes.margin}
-              onClick={this.handleClickOpen}
+              onClick={this.handleAdd}
             >
               + ADD
             </Button>
