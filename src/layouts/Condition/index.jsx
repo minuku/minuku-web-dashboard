@@ -16,7 +16,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import EditIcon from '@material-ui/icons/Edit';
 import _ from 'lodash';
 import DeleteIcon from '@material-ui/icons/Delete'
-import ConditionDialog from 'components'
+import ConditionDialog from 'components/ConditionDialog'
 
 const styles = theme => ({
   card: {
@@ -47,7 +47,6 @@ const theme = createMuiTheme({
 });
 
 const conditionMenu = ['Moving', 'Riding bike', 'Static'];
-const optionMenu = ['weak light', 'lower noise', 'battery', 'speed', 'GPS', 'location'];
 
 class Condition extends React.Component {
 
@@ -101,8 +100,8 @@ class Condition extends React.Component {
     ],
   };
 
-  handleEdit = (name) => {
-    console.log('Edit' + name);
+  handleEdit = (index) => {
+    this.state.conditionList[index].isOpen = true
   };
 
   handleDelete = (name) => {
@@ -130,19 +129,18 @@ class Condition extends React.Component {
           <CardContent>
           <List>
             {
-              _.map(this.state.conditionList, (condition, cid) => 
+              _.map(this.state.conditionList, (condition, index) => 
               <ListItem divider disableGutters>
                 <ListItemText primary={condition.name}/>
                 <ListItemSecondaryAction>
-                  <IconButton onClick={(e) => this.handleEdit(condition.name)}>
+                  <IconButton onClick={(e) => this.handleEdit(index)}>
                     <EditIcon />
                   </IconButton>
-                  <IconButton onClick={(e) => this.handleDelete(condition.name)}>
+                  <IconButton onClick={(e) => this.handleDelete(index)}>
                     <DeleteIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
                 <ConditionDialog
-                  isOpen = {condition.isOpen}
                   contentObj = {condition}
                 />
               </ListItem>
