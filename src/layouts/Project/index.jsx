@@ -25,48 +25,93 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   card: {
-    minWidth: 275,
-    width: '100%'
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    minWidth: 400,
+    width: '80%',
+    //maxWidth: 800
   },
   title: {
     marginBottom: 16,
     fontSize: 24,
   },
-  pos: {
-    marginBottom: 12,
+  formhead:{
+    fontSize: 14,
+    style: 'color=gray',
+    color: 'gray'
   },
   textField: {
     marginRight: theme.spacing.unit,
     width: 200,
+  },
+  Checkbox:{
+    color: 'primary'
   }
 })
 
+
 class Project extends React.Component {
   state = {
-    displayName: ``,
-    email: ``
+    checkedA: true,
+    checkedB: true,
+    checkedC: true
   }
 
   render () {
     const { classes } = this.props
     return (
       <div className={classes.root}>
+
+
         <Card className={classes.card}>
           <CardContent>
-            <Typography className={classes.title} color="black">
-              Project A
-            </Typography>
-            <Divider />  
-            <Checkbox/>
+              <Typography className={classes.title} color="black">
+                Project A
+              </Typography>
             <Divider />
-            <Checkbox/> <br/>
-            <Checkbox/> <br/>
-            <Checkbox/> <br/>
+              <table> 
+                <tr> 
+                  <th><Checkbox disabled/></th>
+                  <th><Typography className={classes.formhead}>
+                    Label       Action    Situation   Schedule    
+                  </Typography></th>
+                </tr>
+              </table>
+            <Divider />
+              <table>
+                <tr>
+                  <th><Checkbox
+                  checked={this.state.checkA}
+                  color='primary'
+                  /></th>
+                  <th><Typography className={classes.formhead}>
+                              收集運動資料    在家運動   每日兩次   
+                  </Typography></th>
+                </tr>
+              </table>
+
+              <table>
+                <tr>
+                  <th><Checkbox
+                  checked={this.state.checkB}
+                  color='primary'
+                  /></th>
+                  <th><Typography className={classes.formhead}>
+                                    發問卷    在家運動   每日兩次    
+                  </Typography></th>
+                </tr>
+              </table>    
+
+              <table>
+                <tr>
+                  <th><Checkbox
+                  checked={this.state.checkC}
+                  color='primary'
+                  /></th>
+                  <th><Typography className={classes.formhead}>
+                                 通知Admin    在家運動   每日兩次
+                  </Typography></th>
+                </tr>
+              </table>         
+            
           </CardContent>
           <CardActions>
             
