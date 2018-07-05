@@ -25,6 +25,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
 const styles = theme => ({
   card: {
@@ -55,12 +56,32 @@ const theme = createMuiTheme({
 });
 
 // Menu Item
-const conditionMenu = ['Moving', 'Riding bike', 'Static'];
 const hourInterval = Array(12).fill().map((value, index) => index + 1);
 const minInterval = Array(60).fill().map((value, index) => index + 1);
 const amPm = ['AM', 'PM'];
 const timeUnit = ['hour', 'minute', 'second'];
-const optionMenu = ['weak light', 'lower noise', 'battery', 'speed', 'GPS', 'location'];
+const optionMenu = [
+  {
+    name: 'weak light',
+    parameter: [],
+  },
+  {
+    name: 'lower noise',
+    parameter: [],
+  }, 
+  {
+    name: 'battery',
+    parameter: [30],
+  }, 
+  {
+    name: 'speed',
+    parameter: ['10', 'km'],
+  }, 
+  {
+    name: 'location',
+    parameter: ['your location'],
+  },
+];
 
 class Condition extends React.Component {
 
@@ -79,7 +100,16 @@ class Condition extends React.Component {
         schedule_last: false,
         duration: 10,
         unit: 'minute',
-        rule: [],
+        rule: [
+          {
+            name: "speed",
+            parameter: ['10', 'km'],
+          },
+          {
+            name: "location",
+            parameter: ['National Chiao Tung University'],
+          },
+        ],
       },
       {
         isOpen: false,
@@ -94,7 +124,12 @@ class Condition extends React.Component {
         schedule_last: false,
         duration: 10,
         unit: 'minute',
-        rule: [],
+        rule: [
+          {
+            name: "speed",
+            parameter:['30', 'km'],
+          },
+        ],
       },
       {
         isOpen: false,
@@ -109,9 +144,19 @@ class Condition extends React.Component {
         schedule_last: false,
         duration: 10,
         unit: 'minute',
-        rule: [],
+        rule: [
+          {
+            name: "speed",
+            parameter: [0, 'km'],
+          },
+          {
+            name: "lower noise",
+            parameter: [],
+          },
+        ],
       },
     ],
+    anchorEl: null,
   };
 
   handleEdit = (index) => {
@@ -152,15 +197,46 @@ class Condition extends React.Component {
     this.setState({conditionList: tmp});
   };
 
-  handleChange = (event) => {
+  handleChange = ({i, t}) => event => {
     let tmp = this.state.conditionList;
-    tmp[0][event.target.id] = event.target.value;
+    tmp[i][t] = event.target.value;
     this.setState({conditionList: tmp});
+  };
+
+  handleCheck = ({i, t}) => event => {
+    let tmp = this.state.conditionList;
+    tmp[i][t] = event.target.checked;
+    this.setState({conditionList: tmp});
+  };
+
+  handleChangeRule = ({i, ri, t}) => event => {
+    let tmp = this.state.conditionList;
+    tmp[i]['rule'][ri][t] = event.target.value;
+    this.setState({conditionList: tmp});
+  }
+  handleParChange = ({index, ruleIndex, parIndex}) => event =>{
+    let tmp = this.state.conditionList;
+    tmp[index]['rule'][ruleIndex]['parameter'][parIndex] = event.target.value;
+    this.setState({conditionList: tmp});
+  }
+  handleCloseMenu = () => {
+    //let tmp = this.state.conditionList;
+    /*tmp[index].rule.push({
+      name: event.target.value,
+      parameter: [],
+    });*/
+    this.setState({
+      //conditionList: tmp,
+      anchorEl: null,
+    });
+  };
+  handleAddRule = event => {
+    this.setState({ anchorEl: event.currentTarget });
   };
 
   render() {
     const { classes } = this.props;
-
+    const { anchorEl } = this.state;
     return (
       <div>
       <MuiThemeProvider theme={theme}>
@@ -188,12 +264,10 @@ class Condition extends React.Component {
               >
                 <DialogTitle>
                   <TextField
-                    id="name"
                     label="Name"
                     className={classes.textField}
                     value={condition.name}
-                    index={index}
-                    onChange={this.handleChange}
+                    onChange={this.handleChange({i: index, t: "name"})}
                     margin="normal"
                   />
                 </DialogTitle>
@@ -205,15 +279,15 @@ class Condition extends React.Component {
                       className={classes.listItem}
                     >
                       <Checkbox
-                        tabIndex={-1}
-                        disableRipple
+                        checked = {condition.schedule_from}
+                        onChange={this.handleCheck({i: index, t: "schedule_from"})}
                       />
                       <ListItemText primary='From' />
                       <TextField
-                        id=""
                         select
                         className={classes.textField}
-                        value='10'
+                        value={condition.startHr}
+                        onChange={this.handleChange({i: index, t: "startHr"})}
                         SelectProps={{
                           MenuProps: {
                             className: classes.menu,
@@ -229,10 +303,10 @@ class Condition extends React.Component {
                       </TextField>
                       <ListItemText primary='：' />
                       <TextField
-                        id="select-currency"
                         select
                         className={classes.textField}
-                        onChange={this.handleChange('name')}
+                        value={condition.startMin}
+                        onChange={this.handleChange({i: index, t: "startMin"})}
                         SelectProps={{
                           MenuProps: {
                             className: classes.menu,
@@ -248,11 +322,10 @@ class Condition extends React.Component {
                       </TextField>
                       <ListItemText primary=' ' />
                       <TextField
-                        id="select-currency"
                         select
                         className={classes.textField}
-                      
-                        onChange={this.handleChange('name')}
+                        value={condition.startM}
+                        onChange={this.handleChange({i: index, t: "startM"})}
                         SelectProps={{
                           MenuProps: {
                             className: classes.menu,
@@ -268,11 +341,10 @@ class Condition extends React.Component {
                       </TextField>
                       <ListItemText primary='to' />
                       <TextField
-                        id="select-currency"
                         select
                         className={classes.textField}
-                        v
-                        onChange={this.handleChange('name')}
+                        value={condition.endHr}
+                        onChange={this.handleChange({i: index, t: "endHr"})}
                         SelectProps={{
                           MenuProps: {
                             className: classes.menu,
@@ -288,11 +360,10 @@ class Condition extends React.Component {
                       </TextField>
                       <ListItemText primary='：' />
                       <TextField
-                        id="select-currency"
                         select
                         className={classes.textField}
-                        
-                        onChange={this.handleChange('currency')}
+                        value={condition.endMin}
+                        onChange={this.handleChange({i: index, t: "endMin"})}
                         SelectProps={{
                           MenuProps: {
                             className: classes.menu,
@@ -308,11 +379,10 @@ class Condition extends React.Component {
                       </TextField>
                       <ListItemText primary=' ' />
                       <TextField
-                        id="select-currency"
                         select
                         className={classes.textField}
-                        
-                        onChange={this.handleChange('currency')}
+                        value={condition.endM}
+                        onChange={this.handleChange({i: index, t: "endM"})}
                         SelectProps={{
                           MenuProps: {
                             className: classes.menu,
@@ -333,16 +403,16 @@ class Condition extends React.Component {
                       className={classes.listItem}
                     >
                       <Checkbox
-                        tabIndex={-1}
-                        disableRipple
+                        checked = {condition.schedule_last}
+                        onChange={this.handleCheck({i: index, t: "schedule_last"})}
                       />
                       <ListItemText primary='Last for' />
                       <TextField
                         id="select-currency"
                         select
                         className={classes.textField}
-                        
-                        onChange={this.handleChange('currency')}
+                        value={condition.duration}
+                        onChange={this.handleChange({i: index, t: "duration"})}
                         SelectProps={{
                           MenuProps: {
                             className: classes.menu,
@@ -356,33 +426,12 @@ class Condition extends React.Component {
                           </MenuItem>
                         ))}
                       </TextField>
-                      <ListItemText primary='：' />
-                      <TextField
-                        id="select-currency"
-                        select
-                        className={classes.textField}
-                        
-                        onChange={this.handleChange('currency')}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu,
-                          },
-                        }}
-                        margin="normal"
-                      >
-                        {minInterval.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </TextField>
                       <ListItemText primary=' ' />
                       <TextField
-                        id="select-currency"
                         select
                         className={classes.textField}
-                        
-                        onChange={this.handleChange('currency')}
+                        value={condition.unit}
+                        onChange={this.handleChange({i: index, t: "unit"})}
                         SelectProps={{
                           MenuProps: {
                             className: classes.menu,
@@ -404,43 +453,67 @@ class Condition extends React.Component {
                         Rule
                       </Typography>
                     </ListItem>
-                    <ListItem>
-                      <TextField
-                          id=""
-                          select
-                          className={classes.textField}
-                          SelectProps={{
-                            MenuProps: {
-                              className: classes.menu,
-                            },
-                          }}
-                          margin="normal"
-                        >
-                          {optionMenu.map(option => (
-                            <MenuItem key={option} value={option}>
-                              {option}
-                            </MenuItem>
-                          ))}
-                      </TextField>
-                      <IconButton>
-                          <CloseIcon />
-                      </IconButton>
-                    </ListItem>
+                    {
+                      _.map(condition.rule, (ruleObj, ruleIndex) =>
+                        <ListItem>
+                          <TextField
+                              select
+                              value = {ruleObj.name}
+                              className={classes.textField}
+                              onChange={this.handleChangeRule({i: index, ri: ruleIndex, t: "name"})}
+                              SelectProps={{
+                                MenuProps: {
+                                  className: classes.menu,
+                                },
+                              }}
+                              margin="normal"
+                            >
+                              {optionMenu.map(option => (
+                                <MenuItem key={option.name} value={option.name}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                          </TextField>
+                          <IconButton>
+                              <CloseIcon />
+                          </IconButton>
+                        </ListItem>
+                      )
+                    }
                     <ListItem>
                       <Button 
                         variant="contained" 
-                        color="primary" 
+                        color="secondary" 
+                        aria-owns={this.state.anchorEl ? 'simple-menu' : null}
+                        aria-haspopup="true"
+                        onClick = {this.handleAddRule}
                       >
                         + rule
                       </Button>
+                      <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={this.handleCloseMenu}
+                      >
+                        {optionMenu.map(option => 
+                          <MenuItem 
+                            key={option.name} 
+                            value={option.name}
+                            onClick={this.handleCloseMenu}
+                          >
+                            {option.name}
+                          </MenuItem>
+                        )}
+                      </Menu>
                     </ListItem>
                   </List>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={this.handleClose} color="primary">
+                  <Button onClick={(e) => this.handleClose(index)} color="primary">
                     cancel
                   </Button>
-                  <Button onClick={this.handleClose} color="primary" autoFocus>
+                  <Button onClick={(e) => this.handleClose(index)} color="primary" autoFocus>
                     done
                   </Button>
                 </DialogActions>
