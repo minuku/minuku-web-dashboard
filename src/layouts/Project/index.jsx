@@ -39,12 +39,39 @@ const styles = theme => ({
 
 
 class Project extends React.Component {
+
   state = {
+
     checkedA: true,
     checkedB: true,
-    checkedC: true
-  }
-//TO DO: import true data to table
+    checkedC: true,
+    
+    list: [                           //list of project
+      {
+        title: `Project A`,
+        list: [                       //list of setting
+          {
+            action: `收集運動資料`,
+            situation: `室外運動`,
+            schedule: `每日兩次`
+          },
+          {
+            action: `發問卷`,
+            situation: `室外運動`,
+            schedule: `每日兩次`
+          },
+          {
+            action: `通知Admin`,
+            situation: `室外運動`,
+            schedule: `每日兩次`
+          },
+        ] 
+      }
+    ] 
+
+  } //state end
+
+
   render () {
     const { classes } = this.props
     return (
