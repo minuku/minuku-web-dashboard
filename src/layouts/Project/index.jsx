@@ -3,18 +3,16 @@ import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
+import EditIcon from '@material-ui/icons/Edit';
 //import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 //import TextField from '@material-ui/core/TextField'
 import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import EditIcon from '@material-ui/icons/Edit';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 
 // fake apiUrl
@@ -34,8 +32,8 @@ const styles = theme => ({
     marginBottom: 16,
     fontSize: 24,
   },
-  Checkbox:{
-    color: 'primary'
+  listhead: {
+    fontSize: 14
   },
 })
 
@@ -57,90 +55,51 @@ class Project extends React.Component {
                 Project A
               </Typography>
             <Divider />
-              
-              <Paper className={classes.root}>
-                <Table className={classes.table}>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>
-                      <Checkbox
-                        disabled
-                        color="primary"
-                      />
-                      </TableCell>
-                      <TableCell>Label</TableCell>
-                      <TableCell>Action</TableCell>
-                      <TableCell>Situation</TableCell>
-                      <TableCell>Schedule</TableCell>
-                      <TableCell></TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    
-                      
-                    <TableRow>
-                      <TableCell>
-                      <Checkbox
-                        color="primary"
-                      />
-                      </TableCell>
-                      <TableCell></TableCell>
-                      <TableCell>收集運動資料</TableCell>
-                      <TableCell>在家運動</TableCell>
-                      <TableCell>每日兩次</TableCell>
-                      <TableCell>
-                        <IconButton className={classes.button}>
-                          <EditIcon />
-                        </IconButton>  
-                      </TableCell>
-                    </TableRow>
 
-                    <TableRow>
-                      <TableCell>
-                      <Checkbox
-                        color="primary"
-                      />
-                      </TableCell>
-                      <TableCell></TableCell>
-                      <TableCell>發問卷</TableCell>
-                      <TableCell>在家運動</TableCell>
-                      <TableCell>每日兩次</TableCell>
-                      <TableCell>
-                        <IconButton className={classes.button}>
-                          <EditIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
+            <List>
+            <ListItem >
 
-                    <TableRow>
-                      <TableCell>
-                      <Checkbox
-                        color="primary"
-                      />
-                      </TableCell>
-                      <TableCell></TableCell>
-                      <TableCell>通知Admin</TableCell>
-                      <TableCell>在家運動</TableCell>
-                      <TableCell>每日兩次</TableCell>
-                      <TableCell>
-                        <IconButton className={classes.button}>
-                          <EditIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                      
-               
-                  </TableBody>
-                </Table>
-              </Paper>
+              <Checkbox disabled/>
+              <ListItemText primary="Label" />
+              <ListItemText primary="Action"/>
+              <ListItemText primary="Situation"/>
+              <ListItemText primary="Schedule" />
+              <ListItemText primary="      " />
+            </ListItem>
 
+            <Divider/>
 
-            <Divider />
-               
-            
+            <ListItem >
+              <Checkbox />
+              <ListItemText primary="      " />
+              <ListItemText primary="收集運動資料"/>
+              <ListItemText primary="在家運動"/>
+              <ListItemText primary="每日兩次" />
+              <ListItemIcon><IconButton><EditIcon/></IconButton></ListItemIcon>
+            </ListItem>
+
+            <ListItem >
+              <Checkbox />
+              <ListItemText primary="      " />
+              <ListItemText primary="發問卷"/>
+              <ListItemText primary="在家運動"/>
+              <ListItemText primary="每日兩次" />
+              <ListItemIcon><IconButton><EditIcon/></IconButton></ListItemIcon>
+            </ListItem>
+
+            <ListItem >
+              <Checkbox />
+              <ListItemText primary="      " />
+              <ListItemText primary="通知Admin"/>
+              <ListItemText primary="在家運動"/>
+              <ListItemText primary="每日兩次" />
+              <ListItemIcon><IconButton><EditIcon/></IconButton></ListItemIcon>
+            </ListItem>
+                          
+
+            </List>
           </CardContent>
-          <CardActions>
-            
+          <CardActions>     
           </CardActions>
         </Card>
       </div>
