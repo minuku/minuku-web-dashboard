@@ -4,9 +4,6 @@ import Divider from '@material-ui/core/Divider'
 import Button from '@material-ui/core/Button'
 
 import Card from '@material-ui/core/Card'
-import EditIcon from '@material-ui/icons/Edit'
-import DeleteIcon from '@material-ui/icons/Delete'
-import IconButton from '@material-ui/core/IconButton'
 import CardHeader from '@material-ui/core/CardHeader'
 import Avatar from '@material-ui/core/Avatar'
 
@@ -21,6 +18,7 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
+import { MenuIcon } from 'components/ActionIcon'
 import _ from 'lodash'
 
 const styles = theme => ({
@@ -73,10 +71,23 @@ const styles = theme => ({
 })
 
 class DataSectionDialog extends React.Component {
-  state = {
-    labelCounter: 0,
-    open: false,
-    _labelingData: null
+  constructor (props) {
+    super(props)
+    this.state = {
+      labelCounter: 0,
+      open: false,
+      _labelingData: null,
+      menuActions: [
+        {
+          name: 'edit',
+          function: this.toggleModal
+        },
+        {
+          name: 'delete',
+          function: this.props.deleteCard
+        }
+      ]
+    }
   }
   toggleModal = () => {
     this.setState({open: !this.state.open})
@@ -106,6 +117,7 @@ class DataSectionDialog extends React.Component {
   }
   render () {
     const { classes } = this.props
+
     return (
       <Card className={classes.paper}>
         <CardHeader
@@ -116,15 +128,7 @@ class DataSectionDialog extends React.Component {
             </Avatar>
           }
           action={
-            <div>
-              <IconButton className={classes.sectionActionBtn} onClick={this.toggleModal}>
-                <EditIcon />
-              </IconButton>
-
-              <IconButton className={classes.sectionActionBtn} onClick={this.props.deleteCard}>
-                <DeleteIcon />
-              </IconButton>
-            </div>
+            <MenuIcon list={this.state.menuActions}/>
           }
           title={this.props.cardTitle}
           subheader={`${this.state.labelCounter} label selected`}
