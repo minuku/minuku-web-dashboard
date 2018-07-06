@@ -20,14 +20,10 @@ export default class MenuComponent extends React.Component {
 
   handleMenuClose = (f = null) => {
     this.setState({ anchorEl: null })
-    if (f !== null) {
-      f()  
-    }
+    if (f !== null) f()
   }
 
-  componentDidMount () {
-    console.log(this.props.list)
-  }
+  componentDidMount () {}
   render () {
     const { anchorEl } = this.state
 
@@ -45,7 +41,7 @@ export default class MenuComponent extends React.Component {
           id="long-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
-          onClose={this.handleMenuClose}
+          onClose={() => this.handleMenuClose(null)}
           PaperProps={{
             style: {
               maxHeight: ITEM_HEIGHT * 4,
