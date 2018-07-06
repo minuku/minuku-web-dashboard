@@ -26,6 +26,7 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import TimeInput from 'material-ui-time-picker';
 
 const styles = theme => ({
   card: {
@@ -54,11 +55,12 @@ const theme = createMuiTheme({
     secondary: yellow
   },
 });
+const defaultStart = new Date(2018, 11, 24, 10, 33, 30, 0);
+const defaultEnd = new Date(2018, 11, 24, 12, 33, 30, 0);
 
 // Menu Item
 const hourInterval = Array(12).fill().map((value, index) => index + 1);
 const minInterval = Array(60).fill().map((value, index) => index + 1);
-const amPm = ['AM', 'PM'];
 const timeUnit = ['hour', 'minute', 'second'];
 const optionMenu = [
   {
@@ -91,12 +93,8 @@ class Condition extends React.Component {
         isOpen: false,
         name: '移動中',
         schedule_from: false,
-        startHr: 8,
-        startMin: 30,
-        startM: 'AM',
-        endHr: 10,
-        endMin: 30,
-        endM: 'PM',
+        startTime: defaultStart,
+        endTime: defaultEnd,
         schedule_last: false,
         duration: 10,
         unit: 'minute',
@@ -115,12 +113,8 @@ class Condition extends React.Component {
         isOpen: false,
         name: '騎腳踏中',
         schedule_from: false,
-        startHr: 8,
-        startMin: 30,
-        startM: 'AM',
-        endHr: 10,
-        endMin: 30,
-        endM: 'PM',
+        startTime: defaultStart,
+        endTime: defaultEnd,
         schedule_last: false,
         duration: 10,
         unit: 'minute',
@@ -135,12 +129,8 @@ class Condition extends React.Component {
         isOpen: false,
         name: '靜止中',
         schedule_from: false,
-        startHr: 8,
-        startMin: 30,
-        startM: 'AM',
-        endHr: 10,
-        endMin: 30,
-        endM: 'PM',
+        startTime: defaultStart,
+        endTime: defaultEnd,
         schedule_last: false,
         duration: 10,
         unit: 'minute',
@@ -177,12 +167,8 @@ class Condition extends React.Component {
       isOpen: true,
       name: 'New Condition',
       schedule_from: false,
-      startHr: 8,
-      startMin: 30,
-      startM: 'AM',
-      endHr: 10,
-      endMin: 30,
-      endM: 'PM',
+      startTime: defaultStart,
+      endTime: defaultEnd,
       schedule_last: false,
       duration: 10,
       unit: 'minute',
@@ -234,6 +220,12 @@ class Condition extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
+  handleTimeChange = ({time, index, mode}) => {
+    let tmp = this.state.conditionList;
+    tmp[index][mode] = time;
+    this.setState({conditionList: tmp});
+  }
+
   render() {
     const { classes } = this.props;
     const { anchorEl } = this.state;
@@ -283,119 +275,17 @@ class Condition extends React.Component {
                         onChange={this.handleCheck({i: index, t: "schedule_from"})}
                       />
                       <ListItemText primary='From' />
-                      <TextField
-                        select
-                        className={classes.textField}
-                        value={condition.startHr}
-                        onChange={this.handleChange({i: index, t: "startHr"})}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu,
-                          },
-                        }}
-                        margin="normal"
-                      >
-                        {hourInterval.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                      <ListItemText primary='：' />
-                      <TextField
-                        select
-                        className={classes.textField}
-                        value={condition.startMin}
-                        onChange={this.handleChange({i: index, t: "startMin"})}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu,
-                          },
-                        }}
-                        margin="normal"
-                      >
-                        {minInterval.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                      <ListItemText primary=' ' />
-                      <TextField
-                        select
-                        className={classes.textField}
-                        value={condition.startM}
-                        onChange={this.handleChange({i: index, t: "startM"})}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu,
-                          },
-                        }}
-                        margin="normal"
-                      >
-                        {amPm.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </TextField>
+                      <TimeInput
+                        mode='12h'
+                        onChange={(time) => this.handleTimeChange({time: time, index: index, mode: 'startTime'})}
+                        value={condition.startTime}
+                      />
                       <ListItemText primary='to' />
-                      <TextField
-                        select
-                        className={classes.textField}
-                        value={condition.endHr}
-                        onChange={this.handleChange({i: index, t: "endHr"})}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu,
-                          },
-                        }}
-                        margin="normal"
-                      >
-                        {hourInterval.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                      <ListItemText primary='：' />
-                      <TextField
-                        select
-                        className={classes.textField}
-                        value={condition.endMin}
-                        onChange={this.handleChange({i: index, t: "endMin"})}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu,
-                          },
-                        }}
-                        margin="normal"
-                      >
-                        {minInterval.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </TextField>
-                      <ListItemText primary=' ' />
-                      <TextField
-                        select
-                        className={classes.textField}
-                        value={condition.endM}
-                        onChange={this.handleChange({i: index, t: "endM"})}
-                        SelectProps={{
-                          MenuProps: {
-                            className: classes.menu,
-                          },
-                        }}
-                        margin="normal"
-                      >
-                        {amPm.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
-                      </TextField>
+                      <TimeInput
+                        mode='12h'
+                        onChange={(time) => this.handleTimeChange({time: time, index: index, mode: 'endTime'})}
+                        value={condition.endTime}
+                      />
                     </ListItem>
                     <ListItem
                       role={undefined}

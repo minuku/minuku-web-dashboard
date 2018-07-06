@@ -8,6 +8,7 @@
     "@material-ui/icons": "^1.1.0",
     "loadash": "^1.0.0",
     "material-ui": "^0.20.1",
+    "material-ui-time-picker": "^1.0.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-redux": "^5.0.7",

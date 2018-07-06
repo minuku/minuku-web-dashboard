@@ -4711,6 +4711,13 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+material-ui-time-picker@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/material-ui-time-picker/-/material-ui-time-picker-1.0.0.tgz#11c420b90db7ba02e529a566184cdd783024915e"
+  dependencies:
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
+
 material-ui@^0.20.1:
   version "0.20.1"
   resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-0.20.1.tgz#a0f0f9f801be76a13cf3da9b319a1b97b28925c7"
