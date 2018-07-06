@@ -50,17 +50,20 @@ class Project extends React.Component {
       {
         title: `Project A`,
         list: [                       //list of setting
-          {
+          { id: 0,
+            checked: false,
             action: `收集運動資料`,
             situation: `室外運動`,
             schedule: `每日兩次`
           },
-          {
+          { id:1,
+            checked: false,
             action: `發問卷`,
             situation: `室外運動`,
             schedule: `每日兩次`
           },
-          {
+          { id:2,
+            checked: false,
             action: `通知Admin`,
             situation: `室外運動`,
             schedule: `每日兩次`
@@ -97,7 +100,7 @@ class Project extends React.Component {
             <Divider/>
 
             <ListItem >
-              <Checkbox />
+              <Checkbox color="primary"/>
               <ListItemText primary="      " />
               <ListItemText primary="收集運動資料"/>
               <ListItemText primary="在家運動"/>
@@ -106,7 +109,7 @@ class Project extends React.Component {
             </ListItem>
 
             <ListItem >
-              <Checkbox />
+              <Checkbox color="primary"/>
               <ListItemText primary="      " />
               <ListItemText primary="發問卷"/>
               <ListItemText primary="在家運動"/>
@@ -115,7 +118,7 @@ class Project extends React.Component {
             </ListItem>
 
             <ListItem >
-              <Checkbox />
+              <Checkbox color="primary"/>
               <ListItemText primary="      " />
               <ListItemText primary="通知Admin"/>
               <ListItemText primary="在家運動"/>
