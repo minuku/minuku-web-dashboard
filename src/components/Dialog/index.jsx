@@ -9,10 +9,6 @@ import Button from '@material-ui/core/Button'
 export default class DialogComponent extends React.Component {
   state = {}
 
-  handleClickOpen = () => {
-    this.props.handleClickOpen()
-  }
-
   handleClose = () => {
     this.props.handleClose()
   }

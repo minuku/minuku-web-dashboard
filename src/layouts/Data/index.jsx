@@ -1,8 +1,5 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -14,8 +11,9 @@ import TextField from '@material-ui/core/TextField'
 import { datatype } from './dataType.js'
 import { mobileLabelData } from './labelFormat.js'
 import { DataSectionLabelCard } from 'components/Card'
-
+import SectionHeader from 'components/Header/SectionHeader'
 import Dialog from 'components/Dialog'
+
 import _ from 'lodash'
 
 const styles = theme => ({
@@ -27,14 +25,6 @@ const styles = theme => ({
     position: 'relative',
     display: 'flex',
     flexDirection: `column`
-  },
-  barContainer: {
-    boxShadow: `none`
-  },
-  bar: {
-    [theme.breakpoints.down('sm')]: {
-      height: 64
-    },
   },
   sectionList: {
     padding: 20
@@ -83,20 +73,6 @@ class DataSection extends React.Component {
             type: `wearable`
           }
         ]
-      },
-      {
-        title: `運動資料`,
-        type: datatype[1],
-        content: [
-          {
-            cardTitle: `mobile`,
-            type: `mobile`
-          },
-          {
-            cardTitle: `wearable`,
-            type: `wearable`
-          }
-        ]
       }
     ],
     name: ``,
@@ -124,7 +100,7 @@ class DataSection extends React.Component {
     let list = this.state.list
     list.push({
       title: title,
-      type: datatype[1],
+      type: datatype[0],
       content: []
     })
     this.setState({list})
@@ -134,19 +110,6 @@ class DataSection extends React.Component {
     let list = this.state.list
     list.splice(collectionId, 1)
     this.setState({list})
-  }
-
-  toggleCollectionDialog = () => {
-    this.setState({
-      collectionDialogIsShow: !this.state.collectionDialogIsShow
-    })
-  }
-
-  toggleCardDialog = (sid) => {
-    this.setState({
-      sectionId: sid,
-      cardDialogIsShow: !this.state.cardDialogIsShow
-    })
   }
 
   toggleDialog = (id = null, type = `collection`) => {
@@ -163,8 +126,10 @@ class DataSection extends React.Component {
     ) : (
       this.addCard(this.state.sectionId, this.state.name)
     )
+    this.setState({ name: `` })
     this.toggleDialog()
   }
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
@@ -175,18 +140,9 @@ class DataSection extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <AppBar  className={classes.barContainer} position="static" color="default">
-          <Divider/>
-          <Toolbar className={classes.bar}>
-            <Typography variant="headline" color="inherit">
-              Data Section 專案資料設定
-            </Typography>
-          </Toolbar>
-          <Divider/>
-        </AppBar>
+        <SectionHeader title={`Data Section 專案資料設定`} />
 
         <div className={classes.sectionList}>
-
           {
             _.map(this.state.list, (section, sid) =>
               <div className={classes.section} key={sid}>
@@ -199,12 +155,7 @@ class DataSection extends React.Component {
                     <DeleteIcon />
                   </IconButton>
                 </Grid>
-                <Grid
-                  container
-                  spacing={16}
-                  wrap="nowrap"
-                  justify="flex-start"
-                  className={classes.sectionContent}>
+                <Grid container spacing={16} wrap="nowrap" justify="flex-start" className={classes.sectionContent}>
                   {
                     _.map(section.content, (card, cid) =>
                       <Grid key={cid} item>
@@ -237,7 +188,7 @@ class DataSection extends React.Component {
 
         <Dialog
           isOpen={this.state.isDialogShow}
-          title={`New elemets Setting`}
+          title={`New ${this.state.type} Setting`}
           content={<TextField
             id="name"
             label="Name"
@@ -247,7 +198,6 @@ class DataSection extends React.Component {
             margin="normal"
           />}
           handleSubmit={this.createElement}
-          handleClickOpen={this.toggleDialog}
           handleClose={this.toggleDialog}
         />
 
