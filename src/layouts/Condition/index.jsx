@@ -209,7 +209,7 @@ class Condition extends React.Component {
     tmp[index]['rule'][ruleIndex]['parameter'][parIndex] = event.target.value;
     this.setState({conditionList: tmp});
   }
-  handleCloseMenu = () => {
+  handleCloseMenu = event => {
     //let tmp = this.state.conditionList;
     /*tmp[index].rule.push({
       name: event.target.value,
@@ -219,9 +219,15 @@ class Condition extends React.Component {
       //conditionList: tmp,
       anchorEl: null,
     });
+    console.log(event.target.value);
   };
-  handleAddRule = event => {
-    this.setState({ anchorEl: event.currentTarget });
+  handleAddRule = (index) => {
+    let tmp = this.state.conditionList;
+    tmp[index].rule.push({
+      name: "speed",
+      parameter: [0, 'km'],
+    });
+    this.setState({conditionList: tmp});
   };
 
   handleTimeChange = ({time, index, mode}) => {
@@ -313,7 +319,7 @@ class Condition extends React.Component {
                         }}
                         margin="normal"
                       >
-                        { (condition.unit == 'hour') ? (
+                        { (condition.unit === 'hour') ? (
                             hourInterval.map(option => 
                               <MenuItem key={option} value={option}>
                                 {option}
@@ -388,26 +394,10 @@ class Condition extends React.Component {
                         color="secondary" 
                         aria-owns={this.state.anchorEl ? 'simple-menu' : null}
                         aria-haspopup="true"
-                        onClick = {this.handleAddRule}
+                        onClick = {() => this.handleAddRule(index)}
                       >
                         + rule
                       </Button>
-                      <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl)}
-                        onClose={this.handleCloseMenu}
-                      >
-                        {optionMenu.map(option => 
-                          <MenuItem 
-                            key={option.name} 
-                            value={option.name}
-                            onClick={this.handleCloseMenu}
-                          >
-                            {option.name}
-                          </MenuItem>
-                        )}
-                      </Menu>
                     </ListItem>
                   </List>
                 </DialogContent>
