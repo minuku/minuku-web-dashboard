@@ -14,6 +14,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio';
 
 // fake apiUrl
 //import { userService } from 'utils/userService'
@@ -107,27 +113,24 @@ class Project extends React.Component {
               <ListItemText primary="每日兩次" />
               <ListItemIcon><IconButton><EditIcon/></IconButton></ListItemIcon>
             </ListItem>
-
-            <ListItem >
-              <Checkbox color="primary"/>
-              <ListItemText primary="      " />
-              <ListItemText primary="發問卷"/>
-              <ListItemText primary="在家運動"/>
-              <ListItemText primary="每日兩次" />
-              <ListItemIcon><IconButton><EditIcon/></IconButton></ListItemIcon>
-            </ListItem>
-
-            <ListItem >
-              <Checkbox color="primary"/>
-              <ListItemText primary="      " />
-              <ListItemText primary="通知Admin"/>
-              <ListItemText primary="在家運動"/>
-              <ListItemText primary="每日兩次" />
-              <ListItemIcon><IconButton><EditIcon/></IconButton></ListItemIcon>
-            </ListItem>
                           
-
             </List>
+
+            <Grid container className={classes.root} spacing={16}>
+              <Grid item xs={true}>
+                <Grid container className={classes.demo} direction="column" spacing={24}>
+                  {[0, 1, 2].map(value => (
+                    <Grid key={value} item >
+                      <Paper className={classes.paper} >
+                        <Typography> {`Hi${value}`} </Typography>
+                        <Typography> {this.state.list[0].list[`${value}`].action} </Typography>
+                      </Paper>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Grid>
+           </Grid>
+
           </CardContent>
           <CardActions>     
           </CardActions>
