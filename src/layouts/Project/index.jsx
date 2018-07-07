@@ -65,14 +65,14 @@ class Project extends React.Component {
           { id:1,
             checked: false,
             action: `發問卷`,
-            situation: `室外運動`,
-            schedule: `每日兩次`
+            situation: `室內運動`,
+            schedule: `每日三次`
           },
           { id:2,
             checked: false,
             action: `通知Admin`,
-            situation: `室外運動`,
-            schedule: `每日兩次`
+            situation: `進入睡眠`,
+            schedule: `每日一次`
           },
         ] 
       }
@@ -85,56 +85,43 @@ class Project extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <Card className={classes.card}>
-          <CardContent>
-              <Typography className={classes.title} color="black">
-                Project A
-              </Typography>
-            <Divider />
-
-            <List>
-            <ListItem >
-
-              <Checkbox disabled/>
-              <ListItemText primary="Label" />
-              <ListItemText primary="Action"/>
-              <ListItemText primary="Situation"/>
-              <ListItemText primary="Schedule" />
-              <ListItemText primary="      " />
-            </ListItem>
-
-            <Divider/>
-
-            <ListItem >
-              <Checkbox color="primary"/>
-              <ListItemText primary="      " />
-              <ListItemText primary="收集運動資料"/>
-              <ListItemText primary="在家運動"/>
-              <ListItemText primary="每日兩次" />
-              <ListItemIcon><IconButton><EditIcon/></IconButton></ListItemIcon>
-            </ListItem>
-                          
-            </List>
-
-            <Grid container className={classes.root} spacing={16}>
-              <Grid item xs={true}>
-                <Grid container className={classes.demo} direction="column" spacing={24}>
-                  {[0, 1, 2].map(value => (
-                    <Grid key={value} item >
-                      <Paper className={classes.paper} >
-                        <Typography> {`Hi${value}`} </Typography>
-                        <Typography> {this.state.list[0].list[`${value}`].action} </Typography>
-                      </Paper>
-                    </Grid>
-                  ))}
+  
+        <Grid container className={classes.root} spacing={16}>
+          <Grid item xs={true}>
+            <Grid container className={classes.demo} direction="column" spacing={24}>
+              {[0, 1, 2].map(value => (
+                <Grid key={value} item >
+                  <Paper className={classes.paper} >
+                    <Typography> {`TEST NUMBER:${value}`} </Typography>
+                    <Typography> {this.state.list[0].title} </Typography>
+                    <List>
+                      <ListItem >
+                        <Checkbox disabled/>
+                        <ListItemText primary="Label" />
+                        <ListItemText primary="Action"/>
+                        <ListItemText primary="Situation"/>
+                        <ListItemText primary="Schedule" />
+                        <ListItemText primary="      " />
+                      </ListItem>
+                      <Divider/>
+                        {[0,1,2].map(val => (
+                            <ListItem >
+                              <Checkbox color="primary"/>
+                              <ListItemText primary="      " />
+                              <ListItemText primary={this.state.list[0].list[`${val}`].action}/>
+                              <ListItemText primary={this.state.list[0].list[`${val}`].situation}/>
+                              <ListItemText primary={this.state.list[0].list[`${val}`].schedule} />
+                              <ListItemIcon><IconButton><EditIcon/></IconButton></ListItemIcon>
+                            </ListItem>
+                        ))}
+                    </List>
+                  </Paper>
                 </Grid>
-              </Grid>
-           </Grid>
+              ))}
+            </Grid>
+          </Grid>
+        </Grid>
 
-          </CardContent>
-          <CardActions>     
-          </CardActions>
-        </Card>
       </div>
     )
   }
