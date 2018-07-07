@@ -9,11 +9,13 @@ import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
+import TextField from '@material-ui/core/TextField'
 
 import { datatype } from './dataType.js'
 import { mobileLabelData } from './labelFormat.js'
 import { DataSectionLabelCard } from 'components/Card'
 
+import Dialog from 'components/Dialog'
 import _ from 'lodash'
 
 const styles = theme => ({
@@ -96,12 +98,17 @@ class DataSection extends React.Component {
           }
         ]
       }
-    ]
+    ],
+    name: ``,
+    sectionId: 0,
+    type: `collection`,
+    isDialogShow: false
   }
-  addCard = (id) => {
+  addCard = (id, title) => {
+    console.log(id)
     let list = this.state.list
     list[id].content.push({
-      cardTitle: `wearable`,
+      cardTitle: title,
       type: `wearable`
     })
     this.setState({list})
@@ -113,10 +120,10 @@ class DataSection extends React.Component {
     this.setState({list})
   }
 
-  addCollection = () => {
+  addCollection = (title) => {
     let list = this.state.list
     list.push({
-      title: `運動資料`,
+      title: title,
       type: datatype[1],
       content: []
     })
@@ -128,6 +135,42 @@ class DataSection extends React.Component {
     list.splice(collectionId, 1)
     this.setState({list})
   }
+
+  toggleCollectionDialog = () => {
+    this.setState({
+      collectionDialogIsShow: !this.state.collectionDialogIsShow
+    })
+  }
+
+  toggleCardDialog = (sid) => {
+    this.setState({
+      sectionId: sid,
+      cardDialogIsShow: !this.state.cardDialogIsShow
+    })
+  }
+
+  toggleDialog = (id = null, type = `collection`) => {
+    this.setState({
+      sectionId: id,
+      type: type,
+      isDialogShow: !this.state.isDialogShow
+    })
+  }
+
+  createElement = (type = this.state.type) => {
+    type === `collection` ? (
+      this.addCollection(this.state.name)
+    ) : (
+      this.addCard(this.state.sectionId, this.state.name)
+    )
+    this.toggleDialog()
+  }
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    })
+  }
+
   render () {
     const { classes } = this.props
     return (
@@ -173,7 +216,7 @@ class DataSection extends React.Component {
                     )
                   }
                   <Grid item>
-                    <Button variant="contained" color="secondary" className={classes.addCardButton} onClick={() => this.addCard(sid)}>
+                    <Button variant="contained" color="secondary" className={classes.addCardButton} onClick={() => this.toggleDialog(sid, `card`)}>
                       <AddIcon className={classes.addButtonIcon} />
                       Device
                     </Button>
@@ -184,13 +227,30 @@ class DataSection extends React.Component {
           }
 
           <Grid container justify={'center'} className={classes.addSectionWrapper}>
-            <Button variant="contained" color="primary" className={classes.addSectionButton} onClick={this.addCollection}>
+            <Button variant="contained" color="primary" className={classes.addSectionButton} onClick={() => this.toggleDialog(`collection`)}>
               <AddIcon className={classes.addButtonIcon} />
               add collection
             </Button>
           </Grid>
 
         </div>
+
+        <Dialog
+          isOpen={this.state.isDialogShow}
+          title={`New elemets Setting`}
+          content={<TextField
+            id="name"
+            label="Name"
+            className={this.props.classes.textField}
+            value={this.state.name}
+            onChange={this.handleChange('name')}
+            margin="normal"
+          />}
+          handleSubmit={this.createElement}
+          handleClickOpen={this.toggleDialog}
+          handleClose={this.toggleDialog}
+        />
+
       </div>
     )
   }
