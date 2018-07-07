@@ -25,7 +25,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import TimeInput from 'material-ui-time-picker';
 
 const styles = theme => ({
@@ -150,7 +149,6 @@ class Condition extends React.Component {
         ],
       },
     ],
-    anchorEl: null,
   };
 
   handleEdit = (index) => {
@@ -209,18 +207,6 @@ class Condition extends React.Component {
     tmp[index]['rule'][ruleIndex]['parameter'][parIndex] = event.target.value;
     this.setState({conditionList: tmp});
   }
-  handleCloseMenu = event => {
-    //let tmp = this.state.conditionList;
-    /*tmp[index].rule.push({
-      name: event.target.value,
-      parameter: [],
-    });*/
-    this.setState({
-      //conditionList: tmp,
-      anchorEl: null,
-    });
-    console.log(event.target.value);
-  };
   handleAddRule = (index) => {
     let tmp = this.state.conditionList;
     tmp[index].rule.push({
@@ -236,9 +222,14 @@ class Condition extends React.Component {
     this.setState({conditionList: tmp});
   }
 
+  handleCross = ({index, ruleIndex}) => {
+    let tmp = this.state.conditionList;
+    tmp[index].rule.splice(ruleIndex, 1);
+    this.setState({conditionList: tmp});
+  }
+
   render() {
     const { classes } = this.props;
-    const { anchorEl } = this.state;
     return (
       <div>
       <MuiThemeProvider theme={theme}>
@@ -382,7 +373,7 @@ class Condition extends React.Component {
                                 </MenuItem>
                               ))}
                           </TextField>
-                          <IconButton>
+                          <IconButton onClick = {() => this.handleCross({index, ruleIndex})}>
                               <CloseIcon />
                           </IconButton>
                         </ListItem>
