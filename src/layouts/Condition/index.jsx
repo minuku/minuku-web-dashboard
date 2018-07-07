@@ -41,6 +41,9 @@ const styles = theme => ({
     justifyContent: 'center',
     marginBottom: '10px',
   },
+  timePick: {
+    width: 82,
+  },
   cssRoot: {
     color: theme.palette.getContrastText(purple[700]),
     backgroundColor: purple[700],
@@ -48,6 +51,7 @@ const styles = theme => ({
       backgroundColor: purple[900],
     },
   },
+  
 });
 
 const theme = createMuiTheme({
@@ -59,8 +63,8 @@ const defaultStart = new Date(2018, 11, 24, 10, 33, 30, 0);
 const defaultEnd = new Date(2018, 11, 24, 12, 33, 30, 0);
 
 // Menu Item
-const hourInterval = Array(12).fill().map((value, index) => index + 1);
-const minInterval = Array(60).fill().map((value, index) => index + 1);
+const hourInterval = Array(24).fill().map((value, index) => index + 1);
+const minInterval = Array(60).fill().map((value, index) => index);
 const timeUnit = ['hour', 'minute', 'second'];
 const optionMenu = [
   {
@@ -250,10 +254,7 @@ class Condition extends React.Component {
                     <DeleteIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
-              <Dialog
-                open={condition.isOpen}
-                onClose={(e) => this.handleClose(index)}
-              >
+              <Dialog open={condition.isOpen} className={classes.dialog}>
                 <DialogTitle>
                   <TextField
                     label="Name"
@@ -279,12 +280,14 @@ class Condition extends React.Component {
                         mode='12h'
                         onChange={(time) => this.handleTimeChange({time: time, index: index, mode: 'startTime'})}
                         value={condition.startTime}
+                        className = {classes.timePick}
                       />
                       <ListItemText primary='to' />
                       <TimeInput
                         mode='12h'
                         onChange={(time) => this.handleTimeChange({time: time, index: index, mode: 'endTime'})}
                         value={condition.endTime}
+                        className = {classes.timePick}
                       />
                     </ListItem>
                     <ListItem
@@ -310,11 +313,20 @@ class Condition extends React.Component {
                         }}
                         margin="normal"
                       >
-                        {hourInterval.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
+                        { (condition.unit == 'hour') ? (
+                            hourInterval.map(option => 
+                              <MenuItem key={option} value={option}>
+                                {option}
+                              </MenuItem>
+                            )
+                          ) : (
+                            minInterval.map(option => 
+                              <MenuItem key={option} value={option}>
+                                {option}
+                              </MenuItem>
+                            )
+                          )
+                        }
                       </TextField>
                       <ListItemText primary=' ' />
                       <TextField
