@@ -75,6 +75,29 @@ class Project extends React.Component {
             schedule: `每日一次`
           },
         ] 
+      },
+      {
+        title: `Project B`,
+        list: [                       //list of setting
+          { id: 0,
+            checked: false,
+            action: `偵測光線`,
+            situation: `室內`,
+            schedule: `每日兩次`
+          },
+          { id:1,
+            checked: false,
+            action: `紀錄GPS座標`,
+            situation: `出門`,
+            schedule: `每日一次`
+          },
+          { id:2,
+            checked: false,
+            action: `紀錄加速度`,
+            situation: `坐上交通工具`,
+            schedule: `每日一次`
+          },
+        ] 
       }
     ] 
 
@@ -89,11 +112,11 @@ class Project extends React.Component {
         <Grid container className={classes.root} spacing={16}>
           <Grid item xs={true}>
             <Grid container className={classes.demo} direction="column" spacing={24}>
-              {[0, 1, 2].map(value => (
+              {[0, 1].map(value => (
                 <Grid key={value} item >
                   <Paper className={classes.paper} >
                     <Typography> {`TEST NUMBER:${value}`} </Typography>
-                    <Typography> {this.state.list[0].title} </Typography>
+                    <Typography> {this.state.list[value].title} </Typography>
                     <List>
                       <ListItem >
                         <Checkbox disabled/>
@@ -108,9 +131,9 @@ class Project extends React.Component {
                             <ListItem >
                               <Checkbox color="primary"/>
                               <ListItemText primary="      " />
-                              <ListItemText primary={this.state.list[0].list[`${val}`].action}/>
-                              <ListItemText primary={this.state.list[0].list[`${val}`].situation}/>
-                              <ListItemText primary={this.state.list[0].list[`${val}`].schedule} />
+                              <ListItemText primary={this.state.list[value].list[`${val}`].action}/>
+                              <ListItemText primary={this.state.list[value].list[`${val}`].situation}/>
+                              <ListItemText primary={this.state.list[value].list[`${val}`].schedule} />
                               <ListItemIcon><IconButton><EditIcon/></IconButton></ListItemIcon>
                             </ListItem>
                         ))}
