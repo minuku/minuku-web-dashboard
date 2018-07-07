@@ -18,6 +18,7 @@
     "surge": "^0.20.1"
   },
   "devDependencies": {
+    "prettier": "1.13.7",
     "react-scripts": "1.1.4"
   },
   "scripts": {
