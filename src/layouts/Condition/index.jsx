@@ -355,27 +355,7 @@ class Condition extends React.Component {
                     {
                       _.map(condition.rule, (ruleObj, ruleIndex) =>
                         <ListItem>
-                          <TextField
-                              select
-                              value = {ruleObj.name}
-                              className={classes.textField}
-                              onChange={this.handleChangeRule({i: index, ri: ruleIndex, t: "name"})}
-                              SelectProps={{
-                                MenuProps: {
-                                  className: classes.menu,
-                                },
-                              }}
-                              margin="normal"
-                            >
-                              {optionMenu.map(option => (
-                                <MenuItem key={option.name} value={option.name}>
-                                  {option.name}
-                                </MenuItem>
-                              ))}
-                          </TextField>
-                          <IconButton onClick = {() => this.handleCross({index, ruleIndex})}>
-                              <CloseIcon />
-                          </IconButton>
+                          
                         </ListItem>
                       )
                     }
