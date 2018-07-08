@@ -1,8 +1,5 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
 import EditIcon from '@material-ui/icons/Edit';
 //import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
@@ -11,21 +8,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import { Table } from 'material-ui';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
-import TableBody from '@material-ui/core/TableBody';
-import TableHead from '@material-ui/core/TableHead';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 // fake apiUrl
@@ -50,20 +36,22 @@ const options = [
   'Clear',
 ];
 
-const projectConfig = [
+var projectConfig = [
   { 
+    id: 0,
     checked: false,
     action: `收集運動資料`,
     situation: `室外運動`,
     schedule: `每日兩次`
   },
   { 
+    id: 1,
     checked: false,
     action: `發問卷`,
     situation: `室內運動`,
     schedule: `每日三次`
   },
-  { 
+  { id: 2,
     checked: false,
     action: `通知Admin`,
     situation: `進入睡眠`,
@@ -126,9 +114,15 @@ class Project extends React.Component {
 
   } ;
 
-  handleEditClick = () => {
-    projectConfig[0].action = '已更改';
-    alert('Editing function is unfinished, I am working on it QQ' );
+  handleEditClick = (v) => {
+    //alert(v.action);
+    v.action = `已更改`;
+    //alert(v.action);
+    alert(`Editing function is unfinished, I am working on it QQ` );
+  };
+
+  handleSelectClick = (v) =>{
+    v.checked=!v.checked;
   };
 
   handleTest = () =>{
@@ -137,6 +131,7 @@ class Project extends React.Component {
 
   render () {
     const { classes } = this.props
+    
     return (
       <div className={classes.root}>
   
@@ -165,13 +160,13 @@ class Project extends React.Component {
                         {projectConfig.map(val => (  
                           <ListItem >
                             <Grid container className={classes.headerlist} direction="row" spacing={0}>
-                              <Grid item xs>  <Checkbox color="primary"/> </Grid>
+                              <Grid item xs> <Checkbox color="primary" onClick={() => this.handleSelectClick(val)}/> </Grid>
                               <Grid item xs={4}></Grid>
                               <Grid item xs={2}>{val.action}</Grid>
                               <Grid item xs={2}>{val.situation}</Grid>
                               <Grid item xs={2}>{val.schedule} </Grid>
                               <Grid item xs> <ListItemSecondaryAction>
-                                <IconButton onClick={() => this.handleEditClick()}> <EditIcon/></IconButton>
+                                <IconButton onClick={() => this.handleEditClick(val)}> <EditIcon/></IconButton>
                               </ListItemSecondaryAction> </Grid>
                             </Grid>
                           </ListItem>
