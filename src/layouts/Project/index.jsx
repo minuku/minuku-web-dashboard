@@ -20,6 +20,12 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import { Table } from 'material-ui';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import TableBody from '@material-ui/core/TableBody';
+import TableHead from '@material-ui/core/TableHead';
 
 // fake apiUrl
 //import { userService } from 'utils/userService'
@@ -29,14 +35,8 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'flex-start'
   },
-  card: {
-    minWidth: 400,
-    width: '80%',
-    //maxWidth: 800
-  },
   title: {
-    marginBottom: 16,
-    fontSize: 24,
+    fontSize: 30,
   },
   listhead: {
     fontSize: 14
@@ -47,12 +47,8 @@ const styles = theme => ({
 class Project extends React.Component {
 
   state = {
-
-    checkedA: true,
-    checkedB: true,
-    checkedC: true,
-    
-    list: [                           //list of project
+    showingProjectId: 0,
+    PJlist: [                           //list of project
       {
         title: `Project A`,
         list: [                       //list of setting
@@ -101,7 +97,8 @@ class Project extends React.Component {
       }
     ] 
 
-  } //state end
+  } ;
+
 
 
   render () {
@@ -109,33 +106,40 @@ class Project extends React.Component {
     return (
       <div className={classes.root}>
   
-        <Grid container className={classes.root} spacing={16}>
-          <Grid item xs={true}>
-            <Grid container className={classes.demo} direction="column" spacing={24}>
-              {[0, 1].map(value => (
+        <Grid container className={classes.root} spacing={0}>
+          <Grid item xs>
+            <Grid container className={classes.demo} direction="column" spacing={0}>
+              {[0].map(value => (
                 <Grid key={value} item >
-                  <Paper className={classes.paper} >
-                    <Typography> {`TEST NUMBER:${value}`} </Typography>
-                    <Typography> {this.state.list[value].title} </Typography>
+                  <Paper className={classes.paper} >   
                     <List>
+                      <ListItem>
+                        <Typography className={classes.title}> {this.state.PJlist[value].title} </Typography>
+                      </ListItem>
                       <ListItem >
-                        <Checkbox disabled/>
-                        <ListItemText primary="Label" />
-                        <ListItemText primary="Action"/>
-                        <ListItemText primary="Situation"/>
-                        <ListItemText primary="Schedule" />
-                        <ListItemText primary="      " />
+                        <Grid container className={classes.headerlist} direction="row" spacing={0}>
+                          <Grid item xs></Grid>
+                          <Grid item xs={4}>Label</Grid>
+                          <Grid item xs={2}>Action</Grid>
+                          <Grid item xs={2}>Situation</Grid>
+                          <Grid item xs={2}>Schedule</Grid>
+                          <Grid item xs></Grid>
+                        </Grid>
                       </ListItem>
                       <Divider/>
-                        {[0,1,2].map(val => (
+                        {[0,1,2].map(val => (  
                             <ListItem >
-                              <Checkbox color="primary"/>
-                              <ListItemText primary="      " />
-                              <ListItemText primary={this.state.list[value].list[`${val}`].action}/>
-                              <ListItemText primary={this.state.list[value].list[`${val}`].situation}/>
-                              <ListItemText primary={this.state.list[value].list[`${val}`].schedule} />
-                              <ListItemIcon><IconButton><EditIcon/></IconButton></ListItemIcon>
-                            </ListItem>
+                            <Grid container className={classes.headerlist} direction="row" spacing={0}>
+                              <Grid item xs>  <Checkbox color="primary"/> </Grid>
+                              <Grid item xs={4}></Grid>
+                              <Grid item xs={2}>{this.state.PJlist[value].list[`${val}`].action}</Grid>
+                              <Grid item xs={2}>{this.state.PJlist[value].list[`${val}`].situation}</Grid>
+                              <Grid item xs={2}>{this.state.PJlist[value].list[`${val}`].schedule}</Grid>
+                              <Grid item xs> <ListItemSecondaryAction>
+                                <IconButton> <EditIcon /></IconButton>
+                              </ListItemSecondaryAction> </Grid>
+                            </Grid>
+                          </ListItem>
                         ))}
                     </List>
                   </Paper>
