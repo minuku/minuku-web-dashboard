@@ -26,6 +26,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 // fake apiUrl
 //import { userService } from 'utils/userService'
@@ -43,6 +44,32 @@ const styles = theme => ({
   },
 })
 
+const options = [
+  'Delete',
+  'Rename',
+  'Clear',
+];
+
+const projectConfig = [
+  { 
+    checked: false,
+    action: `收集運動資料`,
+    situation: `室外運動`,
+    schedule: `每日兩次`
+  },
+  { 
+    checked: false,
+    action: `發問卷`,
+    situation: `室內運動`,
+    schedule: `每日三次`
+  },
+  { 
+    checked: false,
+    action: `通知Admin`,
+    situation: `進入睡眠`,
+    schedule: `每日一次`
+  },
+];
 
 class Project extends React.Component {
 
@@ -99,7 +126,14 @@ class Project extends React.Component {
 
   } ;
 
+  handleEditClick = () => {
+    projectConfig[0].action = '已更改';
+    alert('Editing function is unfinished, I am working on it QQ' );
+  };
 
+  handleTest = () =>{
+    alert(4);
+  };
 
   render () {
     const { classes } = this.props
@@ -114,7 +148,8 @@ class Project extends React.Component {
                   <Paper className={classes.paper} >   
                     <List>
                       <ListItem>
-                        <Typography className={classes.title}> {this.state.PJlist[value].title} </Typography>
+                        <Typography className={classes.title}> {this.state.PJlist[value].title}</Typography>
+                        <ListItemSecondaryAction><IconButton><MoreVertIcon/></IconButton></ListItemSecondaryAction>
                       </ListItem>
                       <ListItem >
                         <Grid container className={classes.headerlist} direction="row" spacing={0}>
@@ -127,16 +162,16 @@ class Project extends React.Component {
                         </Grid>
                       </ListItem>
                       <Divider/>
-                        {[0,1,2].map(val => (  
-                            <ListItem >
+                        {projectConfig.map(val => (  
+                          <ListItem >
                             <Grid container className={classes.headerlist} direction="row" spacing={0}>
                               <Grid item xs>  <Checkbox color="primary"/> </Grid>
                               <Grid item xs={4}></Grid>
-                              <Grid item xs={2}>{this.state.PJlist[value].list[`${val}`].action}</Grid>
-                              <Grid item xs={2}>{this.state.PJlist[value].list[`${val}`].situation}</Grid>
-                              <Grid item xs={2}>{this.state.PJlist[value].list[`${val}`].schedule}</Grid>
+                              <Grid item xs={2}>{val.action}</Grid>
+                              <Grid item xs={2}>{val.situation}</Grid>
+                              <Grid item xs={2}>{val.schedule} </Grid>
                               <Grid item xs> <ListItemSecondaryAction>
-                                <IconButton> <EditIcon /></IconButton>
+                                <IconButton onClick={() => this.handleEditClick()}> <EditIcon/></IconButton>
                               </ListItemSecondaryAction> </Grid>
                             </Grid>
                           </ListItem>
@@ -148,7 +183,7 @@ class Project extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-
+        
       </div>
     )
   }
