@@ -17,7 +17,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import _ from 'lodash';
 import DeleteIcon from '@material-ui/icons/Delete'
 import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -26,6 +25,7 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
 import TimeInput from 'material-ui-time-picker';
+import Rule from 'components/Rule'
 
 const styles = theme => ({
   card: {
@@ -65,28 +65,6 @@ const defaultEnd = new Date(2018, 11, 24, 12, 33, 30, 0);
 const hourInterval = Array(24).fill().map((value, index) => index + 1);
 const minInterval = Array(60).fill().map((value, index) => index);
 const timeUnit = ['hour', 'minute', 'second'];
-const optionMenu = [
-  {
-    name: 'weak light',
-    parameter: [],
-  },
-  {
-    name: 'lower noise',
-    parameter: [],
-  }, 
-  {
-    name: 'battery',
-    parameter: [30],
-  }, 
-  {
-    name: 'speed',
-    parameter: ['10', 'km'],
-  }, 
-  {
-    name: 'location',
-    parameter: ['your location'],
-  },
-];
 
 class Condition extends React.Component {
 
@@ -103,11 +81,11 @@ class Condition extends React.Component {
         unit: 'minute',
         rule: [
           {
-            name: "speed",
+            name: "transportation",
             parameter: ['10', 'km'],
           },
           {
-            name: "location",
+            name: "accelerometer",
             parameter: ['National Chiao Tung University'],
           },
         ],
@@ -123,7 +101,7 @@ class Condition extends React.Component {
         unit: 'minute',
         rule: [
           {
-            name: "speed",
+            name: "gravity",
             parameter:['30', 'km'],
           },
         ],
@@ -139,11 +117,11 @@ class Condition extends React.Component {
         unit: 'minute',
         rule: [
           {
-            name: "speed",
+            name: "gyroscope",
             parameter: [0, 'km'],
           },
           {
-            name: "lower noise",
+            name: "light",
             parameter: [],
           },
         ],
@@ -210,7 +188,7 @@ class Condition extends React.Component {
   handleAddRule = (index) => {
     let tmp = this.state.conditionList;
     tmp[index].rule.push({
-      name: "speed",
+      name: "transportation",
       parameter: [0, 'km'],
     });
     this.setState({conditionList: tmp});
@@ -355,7 +333,11 @@ class Condition extends React.Component {
                     {
                       _.map(condition.rule, (ruleObj, ruleIndex) =>
                         <ListItem>
-                          
+                          <Rule 
+                            ruleObj = {ruleObj}
+                            handleChangeRule = {() => this.handleChangeRule({i: index, ri: ruleIndex, t: 'name'})}
+                            handleCross = {() => this.handleCross({index, ruleIndex})}
+                          />
                         </ListItem>
                       )
                     }
