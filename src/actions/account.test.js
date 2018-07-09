@@ -1,4 +1,4 @@
-import { fetchLoginWithRedux, register } from "./account.js";
+import { login, register } from "./account.js";
 import { mockStore } from "utils/mockStore.js";
 
 describe("user login", () => {
@@ -16,7 +16,7 @@ describe("user login", () => {
     const user = { account: "armuro", password: "minuku" };
     // const token = `QpwL5tke4Pnpja7X`
     const store = mockStore();
-    await store.dispatch(fetchLoginWithRedux(user));
+    await store.dispatch(login(user));
     const actions = store.getActions();
 
     expect(actions[0]).toEqual({ type: "LOGIN_REQUEST", user: user });
