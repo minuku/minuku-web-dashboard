@@ -29,11 +29,6 @@ class DataCollectionElm extends React.Component {
     name: `temp`,
     type: 'EUR'
   }
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    })
-  }
   render () {
     const { classes } = this.props
     return (
