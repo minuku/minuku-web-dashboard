@@ -1,6 +1,6 @@
 import { userService } from "utils/userService";
 import { history } from "utils/history";
-// let url = `https://minukutest.nctu.me/minukutest`;
+let url = `https://minukutest.nctu.me/minukutest`;
 
 export const login = user => {
   const request = user => {
@@ -41,18 +41,16 @@ export const register = user => {
     dispatch(request(user));
 
     if (process.env.NODE_ENV === "production") {
-      fetch(`https://minukutest.nctu.me/minukutest/signup`, {
+      fetch(`${url}/signup`, {
         headers: {
-          "Access-Control-Allow-Origin": "*",
           Accept: "application/json",
           "Content-Type": "application/json"
         },
         method: "POST",
         body: {
-          account: "test@test.com",
-          username: "armuro",
-          password: "minuku",
-          email: "test@test.com"
+          account: user.account,
+          username: ``,
+          password: user.password
         }
       })
         .then(res => console.log(res))
