@@ -1,16 +1,12 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Avatar from "@material-ui/core/Avatar";
-
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "components/Dialog";
 
 import FormLabel from "@material-ui/core/FormLabel";
 import FormControl from "@material-ui/core/FormControl";
@@ -136,51 +132,35 @@ class DataSectionDialog extends React.Component {
         <Divider light />
 
         <Dialog
-          maxWidth="md"
-          open={this.state.open}
-          onClose={this.toggleModal}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            Label Selection: Phone
-          </DialogTitle>
-          <DialogContent className={classes.modalContent}>
-            {_.map(this.state._labelingData, (section, sectionId) => (
-              <FormControl
-                key={sectionId}
-                component="fieldset"
-                className={classes.formControl}
-              >
-                <FormLabel component="legend">{sectionId}</FormLabel>
-                <FormGroup>
-                  {_.map(section, (label, labelId) => (
-                    <FormControlLabel
-                      key={labelId}
-                      control={
-                        <Checkbox
-                          checked={label.active}
-                          onChange={this.handleChange({ sectionId, labelId })}
-                          value={labelId}
-                        />
-                      }
-                      label={labelId}
-                    />
-                  ))}
-                </FormGroup>
-              </FormControl>
-            ))}
-          </DialogContent>
-
-          <DialogActions>
-            <Button onClick={this.toggleModal} color="primary">
-              close
-            </Button>
-            <Button onClick={this.toggleModal} color="primary" autoFocus>
-              update
-            </Button>
-          </DialogActions>
-        </Dialog>
+          isOpen={this.state.open}
+          title={`Label Selection`}
+          content={_.map(this.state._labelingData, (section, sectionId) => (
+            <FormControl
+              key={sectionId}
+              component="fieldset"
+              className={classes.formControl}
+            >
+              <FormLabel component="legend">{sectionId}</FormLabel>
+              <FormGroup>
+                {_.map(section, (label, labelId) => (
+                  <FormControlLabel
+                    key={labelId}
+                    control={
+                      <Checkbox
+                        checked={label.active}
+                        onChange={this.handleChange({ sectionId, labelId })}
+                        value={labelId}
+                      />
+                    }
+                    label={labelId}
+                  />
+                ))}
+              </FormGroup>
+            </FormControl>
+          ))}
+          handleSubmit={this.toggleModal}
+          handleClose={this.toggleModal}
+        />
       </Card>
     );
   }
