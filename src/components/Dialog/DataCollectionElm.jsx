@@ -2,7 +2,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import MenuItem from '@material-ui/core/MenuItem'
-import { dataCollectionType } from './DataCollectionType'
+import { dataCollectionCategory } from './DataCollectionCategory'
 
 const styles = theme => ({
   container: {
@@ -42,7 +42,7 @@ class DataCollectionElm extends React.Component {
           id="title"
           label="title"
           className={classes.textField}
-          value={this.props.title}
+          value={this.props.dataCollectionTitle}
           onChange={this.props.handleChange('dataCollectionTitle')}
           margin="normal"
         />
@@ -51,8 +51,8 @@ class DataCollectionElm extends React.Component {
           id="select-data-type"
           label="type"
           className={classes.textField}
-          value={this.props.dataCollectionType}
-          onChange={this.props.handleChange('dataCollectionType')}
+          value={this.props.dataCollectionCategory}
+          onChange={this.props.handleChange('dataCollectionCategory')}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
@@ -60,7 +60,7 @@ class DataCollectionElm extends React.Component {
           }}
           margin="normal"
         >
-          {dataCollectionType[this.props.type].map(option => (
+          {dataCollectionCategory[this.props.type].map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>

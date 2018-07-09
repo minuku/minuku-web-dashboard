@@ -1,4 +1,4 @@
-export const dataCollectionType = {
+export const dataCollectionCategory = {
   'collection': [
     {
       value: 'dataCollection',

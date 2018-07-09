@@ -1,5 +1,7 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import SectionHeader from 'components/Header/SectionHeader'
+
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
@@ -7,10 +9,8 @@ import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-// import { datatype } from './dataType.js'
 import { mobileLabelData } from './labelFormat.js'
 import { DataSectionLabelCard } from 'components/Card'
-import SectionHeader from 'components/Header/SectionHeader'
 import Dialog from 'components/Dialog'
 import DataCollectionElm from 'components/Dialog/DataCollectionElm'
 
@@ -64,33 +64,18 @@ const styles = theme => ({
 
 class DataSection extends React.Component {
   state = {
-    list: [
-      {
-        title: `睡眠資料`,
-        type: `dataCollection`,
-        content: [
-          {
-            cardTitle: `mobile`,
-            type: `mobile`
-          },
-          {
-            cardTitle: `wearable`,
-            type: `wearable`
-          }
-        ]
-      }
-    ],
+    list: [],
     dataCollectionTitle: ``,
-    dataCollectionType: ``,
+    dataCollectionCategory: ``,
     sectionId: 0,
-    type: `collection`,
+    elementType: `collection`,
     isDialogShow: false
   }
-  addCard = (id, title) => {
+  addCard = (sectionId, title) => {
     let list = this.state.list
-    list[id].content.push({
+    list[sectionId].content.push({
       cardTitle: title,
-      type: this.state.dataCollectionType
+      type: this.state.dataCollectionCategory
     })
     this.setState({list})
   }
@@ -105,7 +90,7 @@ class DataSection extends React.Component {
     let list = this.state.list
     list.push({
       title: title,
-      type: this.state.dataCollectionType,
+      type: this.state.dataCollectionCategory,
       content: []
     })
     this.setState({list})
@@ -117,27 +102,27 @@ class DataSection extends React.Component {
     this.setState({list})
   }
 
-  toggleDialog = (id = null, type = `collection`) => {
+  toggleDialog = (id = null, elementType = `collection`) => {
     this.setState({
       sectionId: id,
-      type: type,
+      elementType: elementType,
       isDialogShow: !this.state.isDialogShow
     })
   }
 
-  createElement = (type = this.state.type) => {
-    type === `collection` ? (
+  createElement = () => {
+    this.state.elementType === `collection` ? (
       this.addCollection(this.state.dataCollectionTitle)
     ) : (
       this.addCard(this.state.sectionId, this.state.dataCollectionTitle)
     )
-    this.setState({ dataCollectionTitle: `` })
+    this.setState({ dataCollectionTitle: ``, dataCollectionCategory: `` })
     this.toggleDialog()
   }
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
+      [name]: event.target.value
     })
   }
 
@@ -194,18 +179,17 @@ class DataSection extends React.Component {
 
         <Dialog
           isOpen={this.state.isDialogShow}
-          title={`New ${this.state.type} Setting`}
+          title={`New ${this.state.elementType} Setting`}
           content={
             <DataCollectionElm
-              title={this.state.dataCollectionTitle}
-              dataCollectionType={this.state.dataCollectionType}
-              type={this.state.type}
+              dataCollectionTitle={this.state.dataCollectionTitle}
+              dataCollectionCategory={this.state.dataCollectionCategory}
+              type={this.state.elementType}
               handleChange={this.handleChange}/>
-            }
+          }
           handleSubmit={this.createElement}
           handleClose={this.toggleDialog}
         />
-
       </div>
     )
   }
