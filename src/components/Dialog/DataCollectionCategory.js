@@ -1,26 +1,26 @@
 export const dataCollectionCategory = {
-  'collection': [
+  collection: [
     {
-      value: 'dataCollection',
-      label: 'datacollection',
+      value: "dataCollection",
+      label: "datacollection"
     },
     {
-      value: 'questionnaire',
-      label: 'questionnaire',
-    },
+      value: "questionnaire",
+      label: "questionnaire"
+    }
   ],
-  'card': [
+  card: [
     {
-      value: 'mobile',
-      label: 'mobile',
+      value: "mobile",
+      label: "mobile"
     },
     {
-      value: 'wearable',
-      label: 'wearable',
+      value: "wearable",
+      label: "wearable"
     },
     {
-      value: 'pad',
-      label: 'pad',
+      value: "pad",
+      label: "pad"
     }
   ]
-}
+};

@@ -1,29 +1,29 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import SectionHeader from 'components/Header/SectionHeader'
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import SectionHeader from "components/Header/SectionHeader";
 
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import Grid from '@material-ui/core/Grid'
-import AddIcon from '@material-ui/icons/Add'
-import DeleteIcon from '@material-ui/icons/Delete'
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import Grid from "@material-ui/core/Grid";
+import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-import { mobileLabelData } from './labelFormat.js'
-import { DataSectionLabelCard } from 'components/Card'
-import Dialog from 'components/Dialog'
-import DataCollectionElm from 'components/Dialog/DataCollectionElm'
+import { mobileLabelData } from "./labelFormat.js";
+import { DataSectionLabelCard } from "components/Card";
+import Dialog from "components/Dialog";
+import DataCollectionElm from "components/Dialog/DataCollectionElm";
 
-import _ from 'lodash'
+import _ from "lodash";
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     height: `100%`,
     zIndex: 1,
-    overflow: 'scroll',
-    position: 'relative',
-    display: 'flex',
+    overflow: "scroll",
+    position: "relative",
+    display: "flex",
     flexDirection: `column`
   },
   sectionList: {
@@ -36,15 +36,15 @@ const styles = theme => ({
     marginBottom: 8
   },
   sectionContent: {
-    overflowX: 'scroll',
-    alignItems: 'center'
+    overflowX: "scroll",
+    alignItems: "center"
   },
   labelBtn: {
     minHeight: 24,
     padding: `4px 16px 2px`,
     marginRight: 8,
     backgroundColor: `rgba(100, 100, 100, 0.25)`,
-    color: `rgba(100, 100, 100, 0.95)`,
+    color: `rgba(100, 100, 100, 0.95)`
   },
   addCardButton: {
     height: 36,
@@ -58,9 +58,9 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
+    width: 200
   }
-})
+});
 
 class DataSection extends React.Component {
   state = {
@@ -70,111 +70,128 @@ class DataSection extends React.Component {
     sectionId: 0,
     elementType: `collection`,
     isDialogShow: false
-  }
+  };
   addCard = (sectionId, title) => {
-    let list = this.state.list
+    let list = this.state.list;
     list[sectionId].content.push({
       cardTitle: title,
       type: this.state.dataCollectionCategory
-    })
-    this.setState({list})
-  }
+    });
+    this.setState({ list });
+  };
 
   deleteCard = (sectionId, cardId) => {
-    let list = this.state.list
-    list[sectionId].content.splice(cardId, 1)
-    this.setState({list})
-  }
+    let list = this.state.list;
+    list[sectionId].content.splice(cardId, 1);
+    this.setState({ list });
+  };
 
-  addCollection = (title) => {
-    let list = this.state.list
+  addCollection = title => {
+    let list = this.state.list;
     list.push({
       title: title,
       type: this.state.dataCollectionCategory,
       content: []
-    })
-    this.setState({list})
-  }
+    });
+    this.setState({ list });
+  };
 
-  deleteCollection = (collectionId) => {
-    let list = this.state.list
-    list.splice(collectionId, 1)
-    this.setState({list})
-  }
+  deleteCollection = collectionId => {
+    let list = this.state.list;
+    list.splice(collectionId, 1);
+    this.setState({ list });
+  };
 
   toggleDialog = (id = null, elementType = `collection`) => {
     this.setState({
       sectionId: id,
       elementType: elementType,
       isDialogShow: !this.state.isDialogShow
-    })
-  }
+    });
+  };
 
   createElement = () => {
-    this.state.elementType === `collection` ? (
-      this.addCollection(this.state.dataCollectionTitle)
-    ) : (
-      this.addCard(this.state.sectionId, this.state.dataCollectionTitle)
-    )
-    this.setState({ dataCollectionTitle: ``, dataCollectionCategory: `` })
-    this.toggleDialog()
-  }
-
+    this.state.elementType === `collection`
+      ? this.addCollection(this.state.dataCollectionTitle)
+      : this.addCard(this.state.sectionId, this.state.dataCollectionTitle);
+    this.setState({ dataCollectionTitle: ``, dataCollectionCategory: `` });
+    this.toggleDialog();
+  };
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
-    })
-  }
+    });
+  };
 
-  render () {
-    const { classes } = this.props
+  render() {
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <SectionHeader title={`Data Section 專案資料設定`} />
 
         <div className={classes.sectionList}>
-          {
-            _.map(this.state.list, (section, sid) =>
-              <div className={classes.section} key={sid}>
-                <Grid container className={classes.sectionTitle} justify="flex-start" alignItems="center" pacing={4}>
-                  <Button className={classes.labelBtn}>
-                    {section.type}
-                  </Button>
-                  <Typography variant="headline">{section.title}</Typography>
-                  <IconButton onClick={() => this.deleteCollection(sid)}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Grid>
-                <Grid container spacing={16} wrap="nowrap" justify="flex-start" className={classes.sectionContent}>
-                  {
-                    _.map(section.content, (card, cid) =>
-                      <Grid key={cid} item>
-                        <DataSectionLabelCard
-                          data={mobileLabelData}
-                          deleteCard={() => this.deleteCard(sid, cid)}
-                          cardTitle={card.cardTitle}
-                          cardType={card.type}/>
-                      </Grid>
-                    )
-                  }
-                  <Grid item>
-                    <Button variant="contained" color="secondary" className={classes.addCardButton} onClick={() => this.toggleDialog(sid, `card`)}>
-                      <AddIcon className={classes.addButtonIcon} />
-                      Device
-                    </Button>
+          {_.map(this.state.list, (section, sid) => (
+            <div className={classes.section} key={sid}>
+              <Grid
+                container
+                className={classes.sectionTitle}
+                justify="flex-start"
+                alignItems="center"
+                pacing={4}
+              >
+                <Button className={classes.labelBtn}>{section.type}</Button>
+                <Typography variant="headline">{section.title}</Typography>
+                <IconButton onClick={() => this.deleteCollection(sid)}>
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
+              <Grid
+                container
+                spacing={16}
+                wrap="nowrap"
+                justify="flex-start"
+                className={classes.sectionContent}
+              >
+                {_.map(section.content, (card, cid) => (
+                  <Grid key={cid} item>
+                    <DataSectionLabelCard
+                      data={mobileLabelData}
+                      deleteCard={() => this.deleteCard(sid, cid)}
+                      cardTitle={card.cardTitle}
+                      cardType={card.type}
+                    />
                   </Grid>
+                ))}
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.addCardButton}
+                    onClick={() => this.toggleDialog(sid, `card`)}
+                  >
+                    <AddIcon className={classes.addButtonIcon} />
+                    Device
+                  </Button>
                 </Grid>
-              </div>
-            )
-          }
+              </Grid>
+            </div>
+          ))}
 
-          <Grid container justify={'center'} className={classes.addSectionWrapper}>
-            <Button variant="contained" color="primary" className={classes.addSectionButton} onClick={() => this.toggleDialog(`collection`)}>
+          <Grid
+            container
+            justify={"center"}
+            className={classes.addSectionWrapper}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.addSectionButton}
+              onClick={() => this.toggleDialog(`collection`)}
+            >
               <AddIcon className={classes.addButtonIcon} />
               add collection
             </Button>
           </Grid>
-
         </div>
 
         <Dialog
@@ -185,14 +202,15 @@ class DataSection extends React.Component {
               dataCollectionTitle={this.state.dataCollectionTitle}
               dataCollectionCategory={this.state.dataCollectionCategory}
               type={this.state.elementType}
-              handleChange={this.handleChange}/>
+              handleChange={this.handleChange}
+            />
           }
           handleSubmit={this.createElement}
           handleClose={this.toggleDialog}
         />
       </div>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(DataSection)
+export default withStyles(styles)(DataSection);

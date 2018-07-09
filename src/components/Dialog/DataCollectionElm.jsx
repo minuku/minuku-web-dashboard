@@ -1,36 +1,36 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import TextField from '@material-ui/core/TextField'
-import MenuItem from '@material-ui/core/MenuItem'
-import { dataCollectionCategory } from './DataCollectionCategory'
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import { dataCollectionCategory } from "./DataCollectionCategory";
 
 const styles = theme => ({
   container: {
     flexGrow: 1,
     height: `100%`,
     zIndex: 1,
-    overflow: 'scroll',
-    position: 'relative',
-    display: 'flex',
+    overflow: "scroll",
+    position: "relative",
+    display: "flex",
     flexDirection: `column`
   },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
+    width: 200
   },
   menu: {
-    width: 200,
+    width: 200
   }
-})
+});
 
 class DataCollectionElm extends React.Component {
   state = {
     name: `temp`,
-    type: 'EUR'
-  }
-  render () {
-    const { classes } = this.props
+    type: "EUR"
+  };
+  render() {
+    const { classes } = this.props;
     return (
       <form className={classes.container} noValidate autoComplete="off">
         <TextField
@@ -38,7 +38,7 @@ class DataCollectionElm extends React.Component {
           label="title"
           className={classes.textField}
           value={this.props.dataCollectionTitle}
-          onChange={this.props.handleChange('dataCollectionTitle')}
+          onChange={this.props.handleChange("dataCollectionTitle")}
           margin="normal"
         />
         <TextField
@@ -47,11 +47,11 @@ class DataCollectionElm extends React.Component {
           label="type"
           className={classes.textField}
           value={this.props.dataCollectionCategory}
-          onChange={this.props.handleChange('dataCollectionCategory')}
+          onChange={this.props.handleChange("dataCollectionCategory")}
           SelectProps={{
             MenuProps: {
-              className: classes.menu,
-            },
+              className: classes.menu
+            }
           }}
           margin="normal"
         >
@@ -62,8 +62,8 @@ class DataCollectionElm extends React.Component {
           ))}
         </TextField>
       </form>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(DataCollectionElm)
+export default withStyles(styles)(DataCollectionElm);
