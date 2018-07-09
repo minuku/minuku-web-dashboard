@@ -6,13 +6,13 @@ import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
-import TextField from '@material-ui/core/TextField'
 
-import { datatype } from './dataType.js'
+// import { datatype } from './dataType.js'
 import { mobileLabelData } from './labelFormat.js'
 import { DataSectionLabelCard } from 'components/Card'
 import SectionHeader from 'components/Header/SectionHeader'
 import Dialog from 'components/Dialog'
+import DataCollectionElm from 'components/Dialog/DataCollectionElm'
 
 import _ from 'lodash'
 
@@ -54,6 +54,11 @@ const styles = theme => ({
   },
   addSectionWrapper: {
     marginTop: 100
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
   }
 })
 
@@ -62,7 +67,7 @@ class DataSection extends React.Component {
     list: [
       {
         title: `睡眠資料`,
-        type: datatype[0],
+        type: `dataCollection`,
         content: [
           {
             cardTitle: `mobile`,
@@ -75,17 +80,17 @@ class DataSection extends React.Component {
         ]
       }
     ],
-    name: ``,
+    dataCollectionTitle: ``,
+    dataCollectionType: ``,
     sectionId: 0,
     type: `collection`,
     isDialogShow: false
   }
   addCard = (id, title) => {
-    console.log(id)
     let list = this.state.list
     list[id].content.push({
       cardTitle: title,
-      type: `wearable`
+      type: this.state.dataCollectionType
     })
     this.setState({list})
   }
@@ -100,7 +105,7 @@ class DataSection extends React.Component {
     let list = this.state.list
     list.push({
       title: title,
-      type: datatype[0],
+      type: this.state.dataCollectionType,
       content: []
     })
     this.setState({list})
@@ -122,11 +127,11 @@ class DataSection extends React.Component {
 
   createElement = (type = this.state.type) => {
     type === `collection` ? (
-      this.addCollection(this.state.name)
+      this.addCollection(this.state.dataCollectionTitle)
     ) : (
-      this.addCard(this.state.sectionId, this.state.name)
+      this.addCard(this.state.sectionId, this.state.dataCollectionTitle)
     )
-    this.setState({ name: `` })
+    this.setState({ dataCollectionTitle: `` })
     this.toggleDialog()
   }
 
@@ -162,7 +167,8 @@ class DataSection extends React.Component {
                         <DataSectionLabelCard
                           data={mobileLabelData}
                           deleteCard={() => this.deleteCard(sid, cid)}
-                          cardTitle={card.cardTitle}/>
+                          cardTitle={card.cardTitle}
+                          cardType={card.type}/>
                       </Grid>
                     )
                   }
@@ -189,14 +195,13 @@ class DataSection extends React.Component {
         <Dialog
           isOpen={this.state.isDialogShow}
           title={`New ${this.state.type} Setting`}
-          content={<TextField
-            id="name"
-            label="Name"
-            className={this.props.classes.textField}
-            value={this.state.name}
-            onChange={this.handleChange('name')}
-            margin="normal"
-          />}
+          content={
+            <DataCollectionElm
+              title={this.state.dataCollectionTitle}
+              dataCollectionType={this.state.dataCollectionType}
+              type={this.state.type}
+              handleChange={this.handleChange}/>
+            }
           handleSubmit={this.createElement}
           handleClose={this.toggleDialog}
         />

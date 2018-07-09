@@ -124,13 +124,13 @@ class DataSectionDialog extends React.Component {
           className={classes.header}
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              {this.props.cardTitle.slice(0, 1)}
+              {this.props.cardType.slice(0, 1)}
             </Avatar>
           }
           action={
             <MenuIcon list={this.state.menuActions}/>
           }
-          title={this.props.cardTitle}
+          title={`${this.props.cardTitle} / ${this.props.cardType}`}
           subheader={`${this.state.labelCounter} label selected`}
         />
         <Divider light />
