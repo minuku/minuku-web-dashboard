@@ -1,7 +1,8 @@
 import { userService } from "utils/userService";
 import { history } from "utils/history";
+// let url = `https://minukutest.nctu.me/minukutest`;
 
-export const fetchLoginWithRedux = user => {
+export const login = user => {
   const request = user => {
     return { type: "LOGIN_REQUEST", user };
   };
@@ -38,17 +39,37 @@ export const register = user => {
   };
   return dispatch => {
     dispatch(request(user));
-    userService.register(user).then(
-      user => {
-        dispatch(success(user));
-        history.push("/login");
-        // dispatch(alertActions.success('Registration successful'));
-      },
-      error => {
-        dispatch(failure(error));
-        // dispatch(alertActions.error(error))
-      }
-    );
+
+    if (process.env.NODE_ENV === "production") {
+      fetch(`https://minukutest.nctu.me/minukutest/signup`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: {
+          account: "test@test.com",
+          username: "armuro",
+          password: "minuku",
+          email: "test@test.com"
+        }
+      })
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+    } else if (process.env.NODE_ENV === "development") {
+      userService.register(user).then(
+        user => {
+          dispatch(success(user));
+          history.push("/login");
+          // dispatch(alertActions.success('Registration successful'));
+        },
+        error => {
+          dispatch(failure(error));
+          // dispatch(alertActions.error(error))
+        }
+      );
+    }
   };
 };
 
