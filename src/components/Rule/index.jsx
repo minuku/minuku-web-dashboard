@@ -9,8 +9,12 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import purple from '@material-ui/core/colors/purple';
 
+import DropDown from './dropDown.jsx';
+import OneInput from './oneInput.jsx';
+import ThreeInput from './threeInput.jsx';
+import FourInput from './fourInput.jsx';
 
-
+import ListItem from '@material-ui/core/ListItem';
 
 const styles = theme => ({
   cssRoot: {
@@ -23,6 +27,8 @@ const styles = theme => ({
   
 });
 
+const streamGenMenu = ['transportation', 'accelerometer', 'rotation', 'gravity', 'gyroscope', 'light', 'magnetic', 'pressure', 'proximity', 'temperature', 'humidity',];
+
 class Rule extends React.Component{
 
   render(){
@@ -31,6 +37,7 @@ class Rule extends React.Component{
 
     return (
       <div>
+        <ListItem>
         <TextField
           select
           value = {this.props.ruleObj.name}
@@ -44,16 +51,31 @@ class Rule extends React.Component{
           margin="normal"
         >
           {
-            streamGenerator.map(option => 
-            <MenuItem value={option.name} >
-              {option.name}
+            streamGenMenu.map(option => 
+            <MenuItem value={option} >
+              {option}
             </MenuItem>
             )
           }
         </TextField>
+        {
+          (
+            () => {
+              switch (streamGenerator[this.props.ruleObj.name]['inputType']) {
+                case 'DropDown':  return (<DropDown menuValue = {this.props.ruleObj.mode} />);
+                case 'OneInput':  return (<OneInput inputValue = {this.props.ruleObj.parameter}/>);
+                case 'ThreeInput':return (<ThreeInput inputValue = {this.props.ruleObj.parameter}/>);
+                case 'FourInput': return (<FourInput inputValue = {this.props.ruleObj.parameter}/>);
+                default:          return (<div></div>);
+              }
+            }
+          )()
+        }
+        
         <IconButton onClick = {this.props.handleCross}>
             <CloseIcon />
         </IconButton>
+        </ ListItem>
       </div>
     )
 

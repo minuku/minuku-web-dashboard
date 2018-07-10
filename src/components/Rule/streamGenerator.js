@@ -1,70 +1,36 @@
-export const streamGenerator = [
-  {
-    name: 'transportation',
-    inputStyle: 'dropDown',
+export const streamGenerator = {
+  transportation: {
+    inputType: 'DropDown',
+    menu: ['in a vehicle', 'on bicycle', 'on foot', 'static'],
   },
-  {
-    name: 'accelerometer',
-    inputStyle: 'threeInput',
+  accelerometer: {
+    inputType: 'ThreeInput',
   },
-  {
-    name: 'rotation',
-    inputStyle: 'fourInput',
+  rotation: {
+    inputType: 'FourInput',
   },
-  {
-    name: 'gravity',
-    inputStyle: 'threeInput',
+  gravity: {
+    inputType: 'ThreeInput',
   },
-  {
-    name: 'gyroscope',
-    inputStyle: 'threeInput',
+  gyroscope: {
+    inputType: 'ThreeInput',
   },
-  {
-    name: 'light',
-    inputStyle: 'oneInput',
+  light: {
+    inputType: 'OneInput',
   },
-  {
-    name: 'magnetic',
-    inputStyle: 'threeInput',
+  magnetic: {
+    inputType: 'ThreeInput',
   },
-  {
-    name: 'pressure',
-    inputStyle: 'oneInput',
+  pressure: {
+    inputType: 'OneInput',
   },
-  {
-    name: 'proximity',
-    inputStyle: 'oneInput',
+  proximity: {
+    inputType: 'OneInput',
   },
-  {
-    name: 'temperature',
-    inputStyle: 'oneInput',
+  temperature: {
+    inputType: 'OneInput',
   },
-  {
-    name: 'humidity',
-    inputStyle: 'oneInput',
+  humidity: {
+    inputType: 'OneInput',
   },
-  {
-    name: 'appUsage',
-    inputStyle: 'dropDown',
-  },
-  {
-    name: 'ringer',
-    inputStyle: 'dropDown',
-  },
-  {
-    name: 'battery',
-    inputStyle: 'dropDown',
-  },
-  {
-    name: 'battery',
-    inputStyle: 'dropDown',
-  },
-  {
-    name: 'telephony',
-    inputStyle: 'dropDown',
-  },
-  {
-    name: 'connectivity',
-    inputStyle: 'dropDown',
-  },
-]
+}
