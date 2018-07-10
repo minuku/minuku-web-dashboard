@@ -15,15 +15,40 @@ export const login = user => {
 
   return dispatch => {
     dispatch(request(user));
-    userService.login(user).then(
-      user => {
-        dispatch(success(user));
-        history.push("/dashboard/");
-      },
-      error => {
-        dispatch(failure(error));
-      }
-    );
+    if (process.env.NODE_ENV === "production") {
+      fetch(`${url}/login`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        method: "POST",
+        body: JSON.stringify({
+          account: user.account,
+          password: user.password
+        })
+      })
+        .then(resp => {
+          try {
+            return resp.json();
+          } catch (err) {}
+          return resp.text();
+        })
+        .then(data => {
+          localStorage.setItem("user", JSON.stringify(user));
+          history.push("/dashboard/");
+        })
+        .catch(err => console.log(err));
+    } else if (process.env.NODE_ENV === "development") {
+      userService.login(user).then(
+        user => {
+          dispatch(success(user));
+          history.push("/dashboard/");
+        },
+        error => {
+          dispatch(failure(error));
+        }
+      );
+    }
   };
 };
 
@@ -47,13 +72,21 @@ export const register = user => {
           "Content-Type": "application/json"
         },
         method: "POST",
-        body: {
+        body: JSON.stringify({
           account: user.account,
           username: ``,
           password: user.password
-        }
+        })
       })
-        .then(res => console.log(res))
+        .then(resp => {
+          try {
+            return resp.json();
+          } catch (err) {}
+          return resp.text();
+        })
+        .then(data => {
+          history.push("/login");
+        })
         .catch(err => console.log(err));
     } else if (process.env.NODE_ENV === "development") {
       userService.register(user).then(
