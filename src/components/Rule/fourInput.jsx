@@ -35,6 +35,7 @@ class FourInput extends React.Component{
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e)=>this.props.handleChange(0, this.props.ruleIndex, e)}
           margin="normal"
         />
         <TextField
@@ -44,6 +45,7 @@ class FourInput extends React.Component{
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e)=>this.props.handleChange(1, this.props.ruleIndex, e)}
           margin="normal"
         />
         <TextField
@@ -53,6 +55,7 @@ class FourInput extends React.Component{
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e)=>this.props.handleChange(2, this.props.ruleIndex, e)}
           margin="normal"
         />
         <TextField
@@ -62,6 +65,7 @@ class FourInput extends React.Component{
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e)=>this.props.handleChange(3, this.props.ruleIndex, e)}
           margin="normal"
         />
         
@@ -74,6 +78,7 @@ class FourInput extends React.Component{
             shrink: true,
           }}
           margin="normal"
+          onChange={(e)=>this.props.handleChange(4, this.props.ruleIndex, e)}
         />
         <TextField
           type="number"
@@ -83,6 +88,7 @@ class FourInput extends React.Component{
             shrink: true,
           }}
           margin="normal"
+          onChange={(e)=>this.props.handleChange(5, this.props.ruleIndex, e)}
         />
         <TextField
           type="number"
@@ -92,6 +98,7 @@ class FourInput extends React.Component{
             shrink: true,
           }}
           margin="normal"
+          onChange={(e)=>this.props.handleChange(6, this.props.ruleIndex, e)}
         />
         <TextField
           type="number"
@@ -101,6 +108,7 @@ class FourInput extends React.Component{
             shrink: true,
           }}
           margin="normal"
+          onChange={(e)=>this.props.handleChange(7, this.props.ruleIndex, e)}
         />
         </ListItem>
       </div>

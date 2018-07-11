@@ -31,6 +31,14 @@ const streamGenMenu = ['transportation', 'accelerometer', 'rotation', 'gravity',
 
 class Rule extends React.Component{
 
+  state={
+    ruleObj: this.props.ruleObj,
+  }
+
+  handleParaChange = (id, ruleId, e) => {
+    this.props.handleParaChange(id, ruleId, e.target.value);
+  }
+
   render(){
 
     const { classes } = this.props;
@@ -62,12 +70,32 @@ class Rule extends React.Component{
           (
             () => {
               switch (streamGenerator[this.props.ruleObj.name]['inputType']) {
-                case 'DropDown':  return (<DropDown menuValue = {this.props.ruleObj.mode} />);
-                case 'OneInput':  return (<OneInput inputValue = {this.props.ruleObj.parameter}/>);
-                case 'ThreeInput':return (<ThreeInput inputValue = {this.props.ruleObj.parameter}/>);
-                case 'FourInput': return (<FourInput inputValue = {this.props.ruleObj.parameter}/>);
+                case 'DropDown':  return (
+                                    <DropDown 
+                                      menuValue = {this.props.ruleObj.parameter}
+                                      handleChange={this.handleParaChange}
+                                      ruleIndex = {this.props.ruleIndex}
+                                    />);
+                case 'OneInput':  return (
+                                    <OneInput 
+                                      inputValue = {this.props.ruleObj.parameter}
+                                      handleChange={this.handleParaChange}
+                                      ruleIndex = {this.props.ruleIndex}
+                                    />);
+                case 'ThreeInput':return (
+                                    <ThreeInput 
+                                      inputValue = {this.props.ruleObj.parameter}
+                                      handleChange={this.handleParaChange}
+                                      ruleIndex = {this.props.ruleIndex}
+                                    />);
+                case 'FourInput': return (
+                                    <FourInput 
+                                      inputValue = {this.props.ruleObj.parameter}
+                                      handleChange={this.handleParaChange}
+                                      ruleIndex = {this.props.ruleIndex}
+                                    />);
                 default:          return (<div></div>);
-              }
+            }
             }
           )()
         }

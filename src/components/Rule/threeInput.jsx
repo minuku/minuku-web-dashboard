@@ -36,6 +36,7 @@ class ThreeInput extends React.Component{
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e)=>this.props.handleChange(0, this.props.ruleIndex, e)}
           margin="normal"
         />
         <TextField
@@ -46,6 +47,7 @@ class ThreeInput extends React.Component{
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e)=>this.props.handleChange(1, this.props.ruleIndex, e)}
           margin="normal"
         />
         <TextField
@@ -56,6 +58,7 @@ class ThreeInput extends React.Component{
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e)=>this.props.handleChange(2, this.props.ruleIndex, e)}
           margin="normal"
         />
         <ListItemText primary='-' />
@@ -67,6 +70,7 @@ class ThreeInput extends React.Component{
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e)=>this.props.handleChange(3, this.props.ruleIndex, e)}
           margin="normal"
         />
         <TextField
@@ -77,6 +81,7 @@ class ThreeInput extends React.Component{
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e)=>this.props.handleChange(4, this.props.ruleIndex, e)}
           margin="normal"
         />
         <TextField
@@ -87,6 +92,7 @@ class ThreeInput extends React.Component{
           InputLabelProps={{
             shrink: true,
           }}
+          onChange={(e)=>this.props.handleChange(5, this.props.ruleIndex, e)}
           margin="normal"
         />
         </ListItem>

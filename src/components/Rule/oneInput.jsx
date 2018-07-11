@@ -35,6 +35,7 @@ class OneInput extends React.Component{
             shrink: true,
           }}
           margin="normal"
+          onChange={(e)=>this.props.handleChange(0, this.props.ruleIndex, e)}
         />
         <ListItemText primary='-' />
         <TextField
@@ -45,6 +46,7 @@ class OneInput extends React.Component{
             shrink: true,
           }}
           margin="normal"
+          onChange={(e)=>this.props.handleChange(1, this.props.ruleIndex, e)}
         />
         </ ListItem>
       </div>

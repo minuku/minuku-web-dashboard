@@ -19,7 +19,7 @@ const styles = theme => ({
 });
 
 class DropDown extends React.Component{
-
+  
   render(){
 
     const { classes } = this.props;
@@ -28,7 +28,7 @@ class DropDown extends React.Component{
       <div>
         <TextField
           select
-          value = {this.props.menuValue}
+          value = {this.props.menuValue[0]}
           className={classes.textField}      
           SelectProps={{
             MenuProps: {
@@ -36,6 +36,7 @@ class DropDown extends React.Component{
             },
           }}
           margin="normal"
+          onChange={(e)=>this.props.handleChange(0, this.props.ruleIndex, e)}
         >
           {
             streamGenerator['transportation']['menu'].map(option => 

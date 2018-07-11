@@ -78,7 +78,7 @@ class Condition extends React.Component {
         rule: [
           {
             name: "transportation",
-            mode: 'on foot',
+            parameter: ['on foot'],
           },
           {
             name: "accelerometer",
@@ -157,18 +157,8 @@ class Condition extends React.Component {
     let tmp = this.state.conditionList;
     tmp[index].isOpen = false;
     this.setState({conditionList: tmp});
+    console.log(this.state.conditionList[index]['rule']);
   };
-  handleParChange = ({index, ruleIndex, parIndex}) => event =>{
-    let tmp = this.state.conditionList;
-    tmp[index]['rule'][ruleIndex]['parameter'][parIndex] = event.target.value;
-    this.setState({conditionList: tmp});
-  }
-
-  handleParaChange = ({index, ruleIndex, paraIndex}) => event => {
-    let tmp = this.state.conditionList;
-    tmp[index]['rule'][ruleIndex]['parameter'][paraIndex] = event.target.value;
-    this.setState({conditionList: tmp});
-  }
 
   render() {
     const { classes } = this.props;

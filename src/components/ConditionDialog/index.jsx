@@ -19,12 +19,27 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 
 const styles = theme => ({
+  dialog: {
+    width: `100%`,
+  },
+  listItemGroup: {
+    width: '760px',
+  },
+  listItemText: {
+    textAlign: `left`,
+    width: `auto`
+  },
   cssRoot: {
     color: theme.palette.getContrastText(purple[700]),
     backgroundColor: purple[700],
     '&:hover': {
       backgroundColor: purple[900],
     },
+  },
+  TimeLabelGroup: {
+    display: `flex`,
+    alignItems: `center`,
+    marginRight: 50
   },
   
 });
@@ -76,10 +91,17 @@ class ConditionDialog extends React.Component{
     let tmp = this.state.conObj;
     tmp.rule.push({
       name: "transportation",
-      parameter: [0, 'km'],
+      parameter: ['on foot'],
     });
     this.setState({conObj: tmp});
   };
+
+  handleParaChange = (id, ruleId, value) => {
+    let tmp = this.state.conObj;
+    tmp['rule'][ruleId]['parameter'][id] = value;
+    this.setState({conObj: tmp});
+    console.log(value)
+  }
 
   render(){
 
@@ -87,7 +109,11 @@ class ConditionDialog extends React.Component{
 
     return(
       <div>
-        <Dialog open={this.props.isOpen} className={classes.dialog}>
+        <Dialog 
+          open={this.props.isOpen} 
+          className={classes.dialog} 
+          maxWidth={`md`}
+        >
           <DialogTitle>
             <TextField
               label="Name"
@@ -98,7 +124,7 @@ class ConditionDialog extends React.Component{
             />
           </DialogTitle>
           <DialogContent>
-            <List disablePadding>
+            <List disablePadding classesName={classes.listItemGroup}>
               <ListItem
                 className={classes.listItem}
                 disableGutters
@@ -107,20 +133,22 @@ class ConditionDialog extends React.Component{
                   checked = {this.state.conObj.schedule_from}
                   onChange={this.handleCheck("schedule_from")}
                 />
-                <ListItemText primary='From' />
-                <TimeInput
-                  mode='12h'
-                  onChange={(time) => this.handleTimeChange({time: time, mode: 'startTime'})}
-                  value={this.state.conObj.startTime}
-                  className = {classes.timePick}
-                />
-                <ListItemText primary='to' />
-                <TimeInput
-                  mode='12h'
-                  onChange={(time) => this.handleTimeChange({time: time, mode: 'endTime'})}
-                  value={this.state.conObj.endTime}
-                  className = {classes.timePick}
-                />
+                <div className={classes.TimeLabelGroup}>
+                  <ListItemText primary='From' className={classes.listItemText}/>
+                  <TimeInput
+                    mode='12h'
+                    onChange={(time) => this.handleTimeChange({time: time, mode: 'startTime'})}
+                    value={this.state.conObj.startTime}
+                    className = {classes.timePick}
+                  />
+                  <ListItemText primary='to' className={classes.listItemText}/>
+                  <TimeInput
+                    mode='12h'
+                    onChange={(time) => this.handleTimeChange({time: time, mode: 'endTime'})}
+                    value={this.state.conObj.endTime}
+                    className = {classes.timePick}
+                  />
+                </div>
               </ListItem>
               <ListItem
                 disableGutters
@@ -130,55 +158,57 @@ class ConditionDialog extends React.Component{
                   checked = {this.state.conObj.schedule_last}
                   onChange={this.handleCheck("schedule_last")}
                 />
-                <ListItemText primary='Last for' />
-                <TextField
-                  id="select-currency"
-                  select
-                  className={classes.textField}
-                  value={this.state.conObj.duration}
-                  onChange={this.handleChange("duration")}
-                  SelectProps={{
-                    MenuProps: {
-                      className: classes.menu,
-                    },
-                  }}
-                  margin="normal"
-                >
-                  { (this.state.conObj.unit === 'hour') ? (
-                      hourInterval.map(option => 
-                        <MenuItem key={option} value={option}>
-                          {option}
-                        </MenuItem>
+                <div className={classes.TimeLabelGroup}>
+                  <ListItemText primary='Last for' className={classes.listItemText}/>
+                  <TextField
+                    id="select-currency"
+                    select
+                    className={classes.textField}
+                    value={this.state.conObj.duration}
+                    onChange={this.handleChange("duration")}
+                    SelectProps={{
+                      MenuProps: {
+                        className: classes.menu,
+                      },
+                    }}
+                    margin="normal"
+                  >
+                    { (this.state.conObj.unit === 'hour') ? (
+                        hourInterval.map(option => 
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        )
+                      ) : (
+                        minInterval.map(option => 
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        )
                       )
-                    ) : (
-                      minInterval.map(option => 
-                        <MenuItem key={option} value={option}>
-                          {option}
-                        </MenuItem>
-                      )
-                    )
-                  }
-                </TextField>
-                <ListItemText primary=' ' />
-                <TextField
-                  select
-                  className={classes.textField}
-                  value={this.state.conObj.unit}
-                  onChange={this.handleChange("unit")}
-                  SelectProps={{
-                    MenuProps: {
-                      className: classes.menu,
-                    },
-                  }}
-                  margin="normal"
-                >
-                  {timeUnit.map(option => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </ListItem>
+                    }
+                  </TextField>
+                  <ListItemText primary=' ' className={classes.listItemText}/>
+                  <TextField
+                    select
+                    className={classes.textField}
+                    value={this.state.conObj.unit}
+                    onChange={this.handleChange("unit")}
+                    SelectProps={{
+                      MenuProps: {
+                        className: classes.menu,
+                      },
+                    }}
+                    margin="normal"
+                  >
+                    {timeUnit.map(option => (
+                      <MenuItem key={option} value={option}>
+                        {option}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                </div>
+                </ListItem>
               <ListItem
                 divider = {true}
               >
@@ -191,8 +221,10 @@ class ConditionDialog extends React.Component{
                   <ListItem disableGutters>
                     <Rule 
                       ruleObj = {ruleObj}
+                      ruleIndex = {ruleIndex}
                       handleChangeRule = {() => this.handleChangeRule({ri: ruleIndex, t: 'name'})}
                       handleCross = {() => this.handleCross(ruleIndex)}
+                      handleParaChange = {this.handleParaChange}
                     />
                   </ListItem>
                 )
