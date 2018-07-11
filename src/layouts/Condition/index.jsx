@@ -53,6 +53,21 @@ const styles = theme => ({
     "&:hover": {
       backgroundColor: purple[900]
     }
+  },
+  dialog: {
+    width: `100%`
+  },
+  listItemGroup: {
+    width: 640
+  },
+  ListItemText: {
+    textAlign: `left`,
+    width: `auto`
+  },
+  TimeLabelGroup: {
+    display: `flex`,
+    alignItems: `center`,
+    marginRight: 50
   }
 });
 
@@ -232,7 +247,11 @@ class Condition extends React.Component {
                         <DeleteIcon />
                       </IconButton>
                     </ListItemSecondaryAction>
-                    <Dialog open={condition.isOpen} className={classes.dialog}>
+                    <Dialog
+                      open={condition.isOpen}
+                      className={classes.dialog}
+                      maxWidth={`md`}
+                    >
                       <DialogTitle>
                         <TextField
                           label="Name"
@@ -243,7 +262,7 @@ class Condition extends React.Component {
                         />
                       </DialogTitle>
                       <DialogContent>
-                        <List>
+                        <List className={classes.listItemGroup}>
                           <ListItem
                             role={undefined}
                             dense
@@ -256,32 +275,42 @@ class Condition extends React.Component {
                                 t: "schedule_from"
                               })}
                             />
-                            <ListItemText primary="From" />
-                            <TimeInput
-                              mode="12h"
-                              onChange={time =>
-                                this.handleTimeChange({
-                                  time: time,
-                                  index: index,
-                                  mode: "startTime"
-                                })
-                              }
-                              value={condition.startTime}
-                              className={classes.timePick}
-                            />
-                            <ListItemText primary="to" />
-                            <TimeInput
-                              mode="12h"
-                              onChange={time =>
-                                this.handleTimeChange({
-                                  time: time,
-                                  index: index,
-                                  mode: "endTime"
-                                })
-                              }
-                              value={condition.endTime}
-                              className={classes.timePick}
-                            />
+                            <div className={classes.TimeLabelGroup}>
+                              <ListItemText
+                                primary="From"
+                                className={classes.ListItemText}
+                              />
+                              <TimeInput
+                                mode="12h"
+                                onChange={time =>
+                                  this.handleTimeChange({
+                                    time: time,
+                                    index: index,
+                                    mode: "startTime"
+                                  })
+                                }
+                                value={condition.startTime}
+                                className={classes.timePick}
+                              />
+                            </div>
+                            <div className={classes.TimeLabelGroup}>
+                              <ListItemText
+                                primary="to"
+                                className={classes.ListItemText}
+                              />
+                              <TimeInput
+                                mode="12h"
+                                onChange={time =>
+                                  this.handleTimeChange({
+                                    time: time,
+                                    index: index,
+                                    mode: "endTime"
+                                  })
+                                }
+                                value={condition.endTime}
+                                className={classes.timePick}
+                              />
+                            </div>
                           </ListItem>
                           <ListItem
                             role={undefined}
@@ -295,57 +324,64 @@ class Condition extends React.Component {
                                 t: "schedule_last"
                               })}
                             />
-                            <ListItemText primary="Last for" />
-                            <TextField
-                              id="select-currency"
-                              select
-                              className={classes.textField}
-                              value={condition.duration}
-                              onChange={this.handleChange({
-                                i: index,
-                                t: "duration"
-                              })}
-                              SelectProps={{
-                                MenuProps: {
-                                  className: classes.menu
-                                }
-                              }}
-                              margin="normal"
-                            >
-                              {condition.unit === "hour"
-                                ? hourInterval.map(option => (
-                                    <MenuItem key={option} value={option}>
-                                      {option}
-                                    </MenuItem>
-                                  ))
-                                : minInterval.map(option => (
-                                    <MenuItem key={option} value={option}>
-                                      {option}
-                                    </MenuItem>
-                                  ))}
-                            </TextField>
-                            <ListItemText primary=" " />
-                            <TextField
-                              select
-                              className={classes.textField}
-                              value={condition.unit}
-                              onChange={this.handleChange({
-                                i: index,
-                                t: "unit"
-                              })}
-                              SelectProps={{
-                                MenuProps: {
-                                  className: classes.menu
-                                }
-                              }}
-                              margin="normal"
-                            >
-                              {timeUnit.map(option => (
-                                <MenuItem key={option} value={option}>
-                                  {option}
-                                </MenuItem>
-                              ))}
-                            </TextField>
+                            <div className={classes.TimeLabelGroup}>
+                              <ListItemText
+                                primary="Last for"
+                                className={classes.ListItemText}
+                              />
+                              <TextField
+                                id="select-currency"
+                                select
+                                className={classes.textField}
+                                value={condition.duration}
+                                onChange={this.handleChange({
+                                  i: index,
+                                  t: "duration"
+                                })}
+                                SelectProps={{
+                                  MenuProps: {
+                                    className: classes.menu
+                                  }
+                                }}
+                                margin="normal"
+                              >
+                                {condition.unit === "hour"
+                                  ? hourInterval.map(option => (
+                                      <MenuItem key={option} value={option}>
+                                        {option}
+                                      </MenuItem>
+                                    ))
+                                  : minInterval.map(option => (
+                                      <MenuItem key={option} value={option}>
+                                        {option}
+                                      </MenuItem>
+                                    ))}
+                              </TextField>
+                            </div>
+                            <div className={classes.TimeLabelGroup}>
+                              <ListItemText primary=" " />
+                              <TextField
+                                select
+                                className={classes.textField}
+                                value={condition.unit}
+                                onChange={this.handleChange({
+                                  i: index,
+                                  t: "unit"
+                                })}
+                                SelectProps={{
+                                  MenuProps: {
+                                    className: classes.menu
+                                  }
+                                }}
+                                margin="normal"
+                              >
+                                {timeUnit.map(option => (
+                                  <MenuItem key={option} value={option}>
+                                    {option}
+                                  </MenuItem>
+                                ))}
+                              </TextField>
+                            </div>
                           </ListItem>
                           <ListItem divider={true}>
                             <Typography variant="subheading">Rule</Typography>
