@@ -53,6 +53,12 @@ const styles = theme => ({
     "&:hover": {
       backgroundColor: purple[900]
     }
+  },
+  dialog: {
+    width: `100%`
+  },
+  listItemGroup: {
+    width: 640
   }
 });
 
@@ -232,7 +238,11 @@ class Condition extends React.Component {
                         <DeleteIcon />
                       </IconButton>
                     </ListItemSecondaryAction>
-                    <Dialog open={condition.isOpen} className={classes.dialog}>
+                    <Dialog
+                      open={condition.isOpen}
+                      className={classes.dialog}
+                      maxWidth={`md`}
+                    >
                       <DialogTitle>
                         <TextField
                           label="Name"
@@ -243,7 +253,7 @@ class Condition extends React.Component {
                         />
                       </DialogTitle>
                       <DialogContent>
-                        <List>
+                        <List className={classes.listItemGroup}>
                           <ListItem
                             role={undefined}
                             dense
