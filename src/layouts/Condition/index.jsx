@@ -151,7 +151,21 @@ class Condition extends React.Component {
       rule: [],
     });
     this.setState({conditionList: tmp});
-  };
+    fetch('https://minukutest.nctu.me/minukutest/sleep/createCondition', {  
+      method: 'POST',  
+      headers: "Content-Type:application/json", 
+      body: JSON.stringify({
+        account: "jim@test.com",
+        conditionName: "test_03"
+      })
+    })
+    .then(function (data) {  
+      console.log('Request success: ', data);  
+    })  
+    .catch(function (error) {  
+      console.log('Request failure: ', error);  
+    });
+    };
 
   handleClose = (index) => {
     let tmp = this.state.conditionList;
