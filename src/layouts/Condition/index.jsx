@@ -153,10 +153,12 @@ class Condition extends React.Component {
     this.setState({conditionList: tmp});
     fetch('https://minukutest.nctu.me/minukutest/sleep/createCondition', {  
       method: 'POST',  
-      headers: "Content-Type:application/json", 
+      headers:{
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         account: "jim@test.com",
-        conditionName: "test_03"
+        conditionName: "test_05"
       })
     })
     .then(function (data) {  
