@@ -24,7 +24,7 @@ export const mailFolderListItems = (
 
 export const otherMailFolderListItems = (
   <div>
-    <ListItem button>
+    <ListItem button component={Link} to='/dashboard/condition'>
       <ListItemIcon>
         <LinearScaleIcon />
       </ListItemIcon>

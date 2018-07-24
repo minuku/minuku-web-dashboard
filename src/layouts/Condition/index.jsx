@@ -135,13 +135,14 @@ class Condition extends React.Component {
     let tmp = this.state.conditionList;
     tmp.splice(index, 1);
     this.setState({conditionList: tmp});
+
   };
 
   handleAdd = () => {
     let tmp = this.state.conditionList;
     tmp.push({
       isOpen: true,
-      name: 'New Condition',
+      name: '新的情境',
       schedule_from: false,
       startTime: defaultStart,
       endTime: defaultEnd,
@@ -151,29 +152,16 @@ class Condition extends React.Component {
       rule: [],
     });
     this.setState({conditionList: tmp});
-    fetch('https://minukutest.nctu.me/minukutest/sleep/createCondition', {  
-      method: 'POST',  
-      headers:{
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        account: "jim@test.com",
-        conditionName: "test_05"
-      })
-    })
-    .then(function (data) {  
-      console.log('Request success: ', data);  
-    })  
-    .catch(function (error) {  
-      console.log('Request failure: ', error);  
-    });
     };
+  
+  changeTestName = (text) => {
+    this.setState({testName: text});
+  }
 
   handleClose = (index) => {
     let tmp = this.state.conditionList;
     tmp[index].isOpen = false;
     this.setState({conditionList: tmp});
-    console.log(this.state.conditionList[index]['rule']);
   };
 
   render() {
