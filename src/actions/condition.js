@@ -1,8 +1,29 @@
-import { initCondition, updateCondition, addCondition, deleteCondition } from "../constants/constants.js"
+import { initCondition, 
+         updateCondition, 
+         addCondition, 
+         deleteCondition } 
+from "../constants/constants.js"
 
-export const onInitCondition
+export const onInitCondition = () => ({
+  type: initCondition,
+})
 
-export const onFetchInitCondition = (payload) => (
+export const onUpdateCondition = (payload) => ({
+  type: updateCondition,
+  payload
+})
+
+export const onAddCondition = (payload) => ({
+  type: addCondition,
+  payload
+})
+
+export const onDeleteCondition = (payload) => ({
+  type: deleteCondition,
+  payload
+})
+
+/*export const onFetchInitCondition = (payload) => (
   {
     type: initCondition,
     payload,
@@ -32,4 +53,4 @@ export const onFetchDeleteCondition = (payload) => (
     payload,
     callBack: (response, dispatch) => dispatch(onDeleteCondition(response)),
   }
-);
+);*/
