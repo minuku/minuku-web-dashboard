@@ -20,7 +20,7 @@ class PrivateRoute extends React.Component {
     if (isLogin) {
       this.setState(state => ({ ...state, isLoading: true }));
 
-      isAuthed = localStorage.getItem(`user`);
+      isAuthed = localStorage.getItem(`token`);
     }
     if (!isAuthed) {
       console.log(`not authed`);
@@ -66,7 +66,7 @@ class PrivateRoute extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  isLogin: localStorage.getItem(`user`)
+  isLogin: localStorage.getItem(`token`)
 });
 
 const mapDispatchToProps = dispatch => ({});

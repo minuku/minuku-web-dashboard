@@ -15,10 +15,9 @@ export const login = user => {
 
   return dispatch => {
     dispatch(request(user));
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV !== "production") {
       fetch(`${url}/login`, {
         headers: {
-          Accept: "application/json",
           "Content-Type": "application/json"
         },
         method: "POST",
@@ -27,17 +26,17 @@ export const login = user => {
           password: user.password
         })
       })
-        .then(resp => {
-          try {
-            return resp.json();
-          } catch (err) {}
-          return resp.text();
-        })
-        .then(data => {
-          localStorage.setItem("user", JSON.stringify(user));
-          history.push("/dashboard/");
-        })
-        .catch(err => console.log(err));
+      .then(resp => {
+        try {
+          return resp.json();
+        } catch (err) {}
+        return resp.text();
+      })
+      .then(data => {
+        localStorage.setItem("token", data.access_token);
+        history.push("/dashboard/");
+      })
+      .catch(err => console.log(`err`, err));
     } else if (process.env.NODE_ENV === "development") {
       userService.login(user).then(
         user => {
@@ -65,7 +64,7 @@ export const register = user => {
   return dispatch => {
     dispatch(request(user));
 
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV !== "production") {
       fetch(`${url}/signup`, {
         headers: {
           Accept: "application/json",

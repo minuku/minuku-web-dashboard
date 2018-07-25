@@ -15,6 +15,7 @@ import Dialog from "components/Dialog";
 import DataCollectionElm from "components/Dialog/DataCollectionElm";
 
 import _ from "lodash";
+let url = `https://minukutest.nctu.me/minukutest`;
 
 const styles = theme => ({
   root: {
@@ -87,19 +88,28 @@ class DataSection extends React.Component {
   };
 
   addCollection = title => {
-    let list = this.state.list;
-    list.push({
-      title: title,
-      type: this.state.dataCollectionCategory,
-      content: []
-    });
-    this.setState({ list });
+    let token = localStorage.getItem(`token`)
+    fetch(`${url}/project/project1/situation/situation1/datacollection?token=${token}`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ "datacollectionName": title }),
+      method: "POST",
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log("error", err))
   };
 
   deleteCollection = collectionId => {
-    let list = this.state.list;
-    list.splice(collectionId, 1);
-    this.setState({ list });
+    let token = localStorage.getItem(`token`)
+    fetch(`${url}/project/project1/situation/situation1/datacollection/datacollection1?token=${token}`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "DELETE",
+    })
+    .then(res => console.log(res))
+    .catch(err => console.log("error", err))
   };
 
   toggleDialog = (id = null, elementType = `collection`) => {
@@ -123,6 +133,28 @@ class DataSection extends React.Component {
     });
   };
 
+  componentDidMount () {
+    let token = localStorage.getItem(`token`)
+    fetch(`${url}/project/project1/situation/situation1/datacollection?token=${token}`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "GET",
+    })
+    .then(res => res.json())
+    .then(res => {
+      let list = []
+      res.forEach((collection) => list.push({
+        title: collection,
+        type: `dataCollection`,
+        content: []
+      }))
+      this.setState({ list })
+    })
+    .catch(err => {
+      console.log("error", err)
+    })
+  }
   render() {
     const { classes } = this.props;
     return (
