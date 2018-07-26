@@ -93,16 +93,19 @@ class DataSection extends React.Component {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ "datacollectionName": title }),
+      body: JSON.stringify({
+        "datacollectionName": title,
+        "datacollectionType": this.state.dataCollectionCategory
+      }),
       method: "POST",
     })
     .then(res => console.log(res))
     .catch(err => console.log("error", err))
   };
 
-  deleteCollection = collectionId => {
+  deleteCollection = title => {
     let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection/datacollection1?token=${token}`, {
+    fetch(`${url}/project/project1/situation/situation1/datacollection/${title}?token=${token}`, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -173,7 +176,7 @@ class DataSection extends React.Component {
               >
                 <Button className={classes.labelBtn}>{section.type}</Button>
                 <Typography variant="headline">{section.title}</Typography>
-                <IconButton onClick={() => this.deleteCollection(sid)}>
+                <IconButton onClick={() => this.deleteCollection(section.title)}>
                   <DeleteIcon />
                 </IconButton>
               </Grid>
