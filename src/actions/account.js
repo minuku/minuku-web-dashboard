@@ -1,4 +1,4 @@
-import { userService } from "utils/userService";
+// import { userService } from "utils/userService";
 import { history } from "utils/history";
 let url = `https://minukutest.nctu.me/minukutest`;
 
@@ -15,39 +15,40 @@ export const login = user => {
 
   return dispatch => {
     dispatch(request(user));
-    if (process.env.NODE_ENV === "production") {
-      fetch(`${url}/login`, {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify({
-          account: user.account,
-          password: user.password
-        })
+    fetch(`${url}/login`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify({
+        account: user.account,
+        password: user.password
       })
-      .then(resp => {
-        try {
-          return resp.json();
-        } catch (err) {}
-        return resp.text();
-      })
-      .then(data => {
-        localStorage.setItem("token", data.access_token);
-        history.push("/dashboard/");
-      })
-      .catch(err => console.log(`err`, err));
-    } else if (process.env.NODE_ENV === "development") {
-      userService.login(user).then(
-        user => {
-          dispatch(success(user));
-          history.push("/dashboard/");
-        },
-        error => {
-          dispatch(failure(error));
-        }
-      );
-    }
+    })
+    .then(resp => {
+      try {
+        return resp.json();
+      } catch (err) {}
+      return resp.text();
+    })
+    .then(data => {
+      dispatch(success(user));
+      localStorage.setItem("token", data.access_token);
+      history.push("/dashboard/");
+    })
+    .catch(err => {
+      dispatch(failure(err));
+      console.log(`err`, err)
+    });
+    // userService.login(user).then(
+    //   user => {
+    //     dispatch(success(user));
+    //     history.push("/dashboard/");
+    //   },
+    //   error => {
+    //     dispatch(failure(error));
+    //   }
+    // );
   };
 };
 
@@ -64,46 +65,46 @@ export const register = user => {
   return dispatch => {
     dispatch(request(user));
 
-    if (process.env.NODE_ENV === "production") {
-      fetch(`${url}/signup`, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        method: "POST",
-        body: JSON.stringify({
-          account: user.account,
-          username: ``,
-          password: user.password
-        })
+    fetch(`${url}/signup`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify({
+        account: user.account,
+        username: ``,
+        password: user.password
       })
-        .then(resp => {
-          try {
-            return resp.json();
-          } catch (err) {}
-          return resp.text();
-        })
-        .then(data => {
-          history.push("/login");
-        })
-        .catch(err => console.log(err));
-    } else if (process.env.NODE_ENV === "development") {
-      userService.register(user).then(
-        user => {
-          dispatch(success(user));
-          history.push("/login");
-          // dispatch(alertActions.success('Registration successful'));
-        },
-        error => {
-          dispatch(failure(error));
-          // dispatch(alertActions.error(error))
-        }
-      );
-    }
+    })
+      .then(resp => {
+        try {
+          return resp.json();
+        } catch (err) {}
+        return resp.text();
+      })
+      .then(data => {
+        dispatch(success(user));
+        history.push("/login");
+      })
+      .catch(err => {
+        console.log(err)
+        dispatch(failure(err));
+      });
+    // userService.register(user).then(
+    //   user => {
+    //     dispatch(success(user));
+    //     history.push("/login");
+    //     // dispatch(alertActions.success('Registration successful'));
+    //   },
+    //   error => {
+    //     dispatch(failure(error));
+    //     // dispatch(alertActions.error(error))
+    //   }
+    // );
   };
 };
 
 export const logout = () => {
-  // userService.logout()
   return { type: "LOGOUT" };
 };

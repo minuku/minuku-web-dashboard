@@ -15,7 +15,6 @@ import Dialog from "components/Dialog";
 import DataCollectionElm from "components/Dialog/DataCollectionElm";
 
 import _ from "lodash";
-let url = `https://minukutest.nctu.me/minukutest`;
 
 const styles = theme => ({
   root: {
@@ -87,34 +86,12 @@ class DataSection extends React.Component {
     this.setState({ list });
   };
 
-  addCollection = title => {
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        "datacollectionName": title,
-        "datacollectionType": this.state.dataCollectionCategory
-      }),
-      method: "POST",
-    })
-    .then(res => console.log(res))
-    .then(() => this.getcollection())
-    .catch(err => console.log("error", err))
-  };
-
-  deleteCollection = title => {
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${title}?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "DELETE",
-    })
-    .then(res => console.log(res))
-    .then(() => this.getcollection())
-    .catch(err => console.log("error", err))
+  createElement = () => {
+    this.state.elementType === `collection`
+      ? this.addCollection(this.state.dataCollectionTitle)
+      : this.addCard(this.state.sectionId, this.state.dataCollectionTitle);
+    this.setState({ dataCollectionTitle: ``, dataCollectionCategory: `` });
+    this.toggleDialog();
   };
 
   toggleDialog = (id = null, elementType = `collection`) => {
@@ -125,44 +102,45 @@ class DataSection extends React.Component {
     });
   };
 
-  createElement = () => {
-    this.state.elementType === `collection`
-      ? this.addCollection(this.state.dataCollectionTitle)
-      : this.addCard(this.state.sectionId, this.state.dataCollectionTitle);
-    this.setState({ dataCollectionTitle: ``, dataCollectionCategory: `` });
-    this.toggleDialog();
-  };
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
     });
   };
 
+  getcollection = () => {
+    this.props.getDatacollections()
+  }
+
+  addCollection = async title => {
+    await this.props.addDatacollection({
+      title: title,
+      dataCollectionCategory: this.state.dataCollectionCategory
+    })
+    this.getcollection()
+  };
+
+  deleteCollection = async title => {
+    await this.props.deleteDatacollection(title)
+    this.getcollection()
+  };
+
   componentDidMount () {
     this.getcollection()
   }
 
-  getcollection = () => {
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "GET",
-    })
-    .then(res => res.json())
-    .then(res => {
-      let list = []
-      res.forEach((collection) => list.push({
-        title: collection,
-        type: `dataCollection`,
-        content: []
-      }))
+  componentWillReceiveProps = nextProps => {
+    let _data = nextProps.data, list = []
+    if (_data) {
+      _.map(_data, (collection, id) => {
+        list.push({
+          title: collection,
+          type: `dataCollection`,
+          content: []
+        })
+      })
       this.setState({ list })
-    })
-    .catch(err => {
-      console.log("error", err)
-    })
+    }
   }
   render() {
     const { classes } = this.props;
