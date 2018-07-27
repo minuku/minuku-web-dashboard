@@ -100,6 +100,7 @@ class DataSection extends React.Component {
       method: "POST",
     })
     .then(res => console.log(res))
+    .then(() => this.getcollection())
     .catch(err => console.log("error", err))
   };
 
@@ -112,6 +113,7 @@ class DataSection extends React.Component {
       method: "DELETE",
     })
     .then(res => console.log(res))
+    .then(() => this.getcollection())
     .catch(err => console.log("error", err))
   };
 
@@ -137,6 +139,10 @@ class DataSection extends React.Component {
   };
 
   componentDidMount () {
+    this.getcollection()
+  }
+
+  getcollection = () => {
     let token = localStorage.getItem(`token`)
     fetch(`${url}/project/project1/situation/situation1/datacollection?token=${token}`, {
       headers: {
