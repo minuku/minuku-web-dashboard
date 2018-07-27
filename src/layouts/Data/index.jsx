@@ -112,17 +112,15 @@ class DataSection extends React.Component {
     this.props.getDatacollections()
   }
 
-  addCollection = async title => {
-    await this.props.addDatacollection({
+  addCollection = title => {
+    this.props.addDatacollection({
       title: title,
       dataCollectionCategory: this.state.dataCollectionCategory
     })
-    this.getcollection()
   };
 
-  deleteCollection = async title => {
-    await this.props.deleteDatacollection(title)
-    this.getcollection()
+  deleteCollection = title => {
+    this.props.deleteDatacollection(title)
   };
 
   componentDidMount () {

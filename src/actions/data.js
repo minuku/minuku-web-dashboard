@@ -59,6 +59,7 @@ export const addDatacollection = (data) => {
     .then(res => {
       dispatch(success(res));
     })
+    .then(() => dispatch(getDatacollections()) )
     .catch(err => {
       console.log("error", err)
       dispatch(failure(err));
@@ -90,6 +91,7 @@ export const deleteDatacollection = (title) => {
     .then(res => {
       dispatch(success(res));
     })
+    .then(() => dispatch(getDatacollections()) )
     .catch(err => {
       console.log("error", err)
       dispatch(failure(err));

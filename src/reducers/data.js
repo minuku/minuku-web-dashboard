@@ -4,7 +4,7 @@ const data = (state = [], action) => {
       return {...state, ...action.payload}
 
     case "GET_DATACOLLECTIONS_SUCCESS":
-      return {...state, ...action.payload}
+      return {...action.payload}
 
     case "GET_DATACOLLECTIONS_ERROR":
       return state
