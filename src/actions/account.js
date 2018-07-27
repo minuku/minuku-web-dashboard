@@ -15,7 +15,7 @@ export const login = user => {
 
   return dispatch => {
     dispatch(request(user));
-    if (process.env.NODE_ENV !== "production") {
+    if (process.env.NODE_ENV === "production") {
       fetch(`${url}/login`, {
         headers: {
           "Content-Type": "application/json"
@@ -64,7 +64,7 @@ export const register = user => {
   return dispatch => {
     dispatch(request(user));
 
-    if (process.env.NODE_ENV !== "production") {
+    if (process.env.NODE_ENV === "production") {
       fetch(`${url}/signup`, {
         headers: {
           Accept: "application/json",
