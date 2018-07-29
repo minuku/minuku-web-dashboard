@@ -6,6 +6,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import {
   onInitCondition,
+  onAddCondition,
+  onUpdateCondition,
+  onDeleteCondition,
 } from '../../actions/condition.js'
 
 import Card from '@material-ui/core/Card';
@@ -67,58 +70,72 @@ const theme = createMuiTheme({
 
 const defaultStart = new Date(2018, 11, 24, 10, 33, 30, 0);
 const defaultEnd = new Date(2018, 11, 24, 12, 33, 30, 0);
+const defaultCondition = {
+  isOpen: true,
+  name: '',
+  schedule_from: false,
+  startTime: defaultStart,
+  endTime: defaultEnd,
+  schedule_last: false,
+  duration: 10,
+  unit: 'minute',
+  rule: [{
+    name: 'transportation',
+    parameter: ['on foot'],
+  }]
+};
 
 class Condition extends React.Component {
 
   componentDidMount() {
     this.props.onInitCondition();
-    console.log(this.props.conditionList);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let tmpList = _.cloneDeep(nextProps.conditionList);
+    this.setState({conditionList: tmpList});
   }
 
   state = { 
-    conditionList: this.props.conditionList,
+    conditionList: [],
+    isOpen: [],
+    newDialogIsOpen: false,
   };
 
+  // Handle the event of clicking the pencil icon. Open the dialog.
   handleEdit = (index) => {
-    let tmp = this.state.conditionList;
-    tmp[index].isOpen = true;
-    this.setState({conditionList: tmp});
+    let ListCopy = _.cloneDeep(this.state.conditionList);
+    ListCopy[index].isOpen = true;
+    this.setState({conditionList: ListCopy});
   };
 
+  // Handle the event of clicking the trash can icon. Remove the condtion.
   handleDelete = (index) => {
-    let tmp = this.state.conditionList;
-    tmp.splice(index, 1);
-    this.setState({conditionList: tmp});
-
+    this.props.onDeleteCondition(index);
   };
 
+  // Handle the event of clicking the '+Add' button. Insert new condition and open the dialog.
   handleAdd = () => {
-    let tmp = this.state.conditionList;
-    tmp.push({
-      isOpen: true,
-      name: '新的情境',
-      schedule_from: false,
-      startTime: defaultStart,
-      endTime: defaultEnd,
-      schedule_last: false,
-      duration: 10,
-      unit: 'minute',
-      rule: [],
-    });
-    this.setState({conditionList: tmp});
-    };
-  
-  changeTestName = (text) => {
-    this.setState({testName: text});
+    this.setState({newDialogIsOpen: true});
+  };
+
+  // Handle the event of cancel button. Close the dialog without update the database.
+  handleCancel = (index) => {
+    let ListCopy = _.cloneDeep(this.state.conditionList);
+    ListCopy[index].isOpen = false;
+    this.setState({conditionList: ListCopy});
   }
 
-  handleClose = (index) => {
-    let tmp = this.state.conditionList;
-    tmp[index].isOpen = false;
-    this.setState({conditionList: tmp});
-  };
+  // Handle the event of save button. Cloase the dialog and update the database.
+  handleSave = (index, conObj) => {
+    let copyConObj = _.cloneDeep(conObj);
+    copyConObj.isOpen = false;
+    this.props.onUpdateCondition(index, copyConObj);
+    this.setState({newDialogIsOpen: false});
+  }
 
   render() {
+    //console.log(this.state.conditionList);
     const { classes } = this.props;
     return (
       <div>
@@ -131,7 +148,11 @@ class Condition extends React.Component {
           <List>
             {
               _.map(this.state.conditionList, (condition, index) => 
-              <ListItem divider disableGutters>
+              <ListItem 
+                divider 
+                disableGutters
+                key={index}
+              >
                 <ListItemText primary={condition.name}/>
                 <ListItemSecondaryAction>
                   <IconButton onClick={(e) => this.handleEdit(index)}>
@@ -144,12 +165,20 @@ class Condition extends React.Component {
                 <ConditionDialog 
                   conIndex  = {index}
                   conObj    = {condition}
-                  handleClose = {() => this.handleClose(index)}
+                  handleCancel = {() => this.handleCancel(index)}
+                  handleSave = {this.handleSave}
                   isOpen = {condition.isOpen}
                 />
               </ListItem>
               )
             }
+            <ConditionDialog 
+                  conIndex  = {this.state.conditionList.length}
+                  conObj    = {defaultCondition}
+                  handleCancel = {() => {this.setState({newDialogIsOpen: false})}}
+                  handleSave = {this.handleSave}
+                  isOpen = {this.state.newDialogIsOpen}
+            />
           </List>
           </CardContent>
           <CardActions className={classes.actions}>
@@ -178,7 +207,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = (dispatch) =>(
-  bindActionCreators({ onInitCondition }, dispatch)
+  bindActionCreators({ onInitCondition, onAddCondition, onUpdateCondition, onDeleteCondition }, dispatch)
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Condition));

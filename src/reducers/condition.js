@@ -1,4 +1,5 @@
 import { initCondition, updateCondition, addCondition, deleteCondition }  from "../constants/constants.js"
+import _ from 'lodash';
 
 const defaultStart = new Date(2018, 11, 24, 10, 33, 30, 0);
 const defaultEnd = new Date(2018, 11, 24, 12, 33, 30, 0);
@@ -6,20 +7,29 @@ const defaultEnd = new Date(2018, 11, 24, 12, 33, 30, 0);
 const conditionReducer = (state = [], action) => {
   switch (action.type) {
     case updateCondition:
-      return state;
+    {
+      let tmpCondition = _.cloneDeep(state);
+      tmpCondition[action.index] = action.payload;
+      return tmpCondition;
+    }
       
     case addCondition:
+    {
+      let tmp = _.cloneDeep(state);
       return [
-        ...state,
-        action.payload.condition,
+        ...tmp,
+        action.payload,
       ];
-
+    }
     case deleteCondition:
-      return state;
+    {
+      let tmpCondition = _.cloneDeep(state);
+      tmpCondition.splice(action.index, 1);
+      return tmpCondition;
+    }
       
     case initCondition:
-      return ({
-        conditionList: 
+      return (
         [
           {
             isOpen: false,
@@ -38,22 +48,6 @@ const conditionReducer = (state = [], action) => {
               {
                 name: "accelerometer",
                 parameter: [0, 0, 0, 10, 10, 10],
-              },
-            ],
-          },
-          {
-            isOpen: false,
-            name: '騎腳踏中',
-            schedule_from: false,
-            startTime: defaultStart,
-            endTime: defaultEnd,
-            schedule_last: false,
-            duration: 10,
-            unit: 'minute',
-            rule: [
-              {
-                name: "gravity",
-                parameter:[0, 0, 0, 10, 10, 10],
               },
             ],
           },
@@ -78,7 +72,7 @@ const conditionReducer = (state = [], action) => {
             ],
           },
         ]
-      });
+      );
     default:
       return state;
   }

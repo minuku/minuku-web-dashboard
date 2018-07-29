@@ -50,45 +50,56 @@ const minInterval = Array(60).fill().map((value, index) => index);
 const timeUnit = ['hour', 'minute', 'second'];
 
 class ConditionDialog extends React.Component{
-
+  
+  // Every time when open the dialog, this function will be called.
+  componentWillReceiveProps(nextProps) {
+    let tmpConObj = _.cloneDeep(nextProps.conObj);
+    let tmpConIndex = nextProps.conIndex;
+    this.setState(
+      {
+        conObj: tmpConObj,
+        conIndex: tmpConIndex,
+      }
+    );
+  }
   state={
-    conObj: this.props.conObj,
-    conIndex: this.props.conIndex,
+    conObj: {},
+    conIndex: -1,
   }
 
   /* Event Handle Function */
   handleChange = (type) => event => {
-    let tmp = this.state.conObj;
+    let tmp = _.cloneDeep(this.state.conObj);
     tmp[type] = event.target.value;
     this.setState({conObj: tmp});
   };
 
   handleCheck = (type) => event => {
-    let tmp = this.state.conObj;
+    let tmp = _.cloneDeep(this.state.conObj);
     tmp[type] = event.target.checked;
     this.setState({conObj: tmp});
   };
 
   handleTimeChange = ({time, mode}) => {
-    let tmp = this.state.conObj;
+    let tmp = _.cloneDeep(this.state.conObj);
     tmp[mode] = time;
     this.setState({conObj: tmp});
   }
 
-  handleChangeRule = ({ri, t}) => event => {
-    let tmp = this.state.conObj;
-    tmp['rule'][ri][t] = event.target.value;
+  handleChangeRule = (ruleIndex, e) => {
+    let tmp = _.cloneDeep(this.state.conObj);
+    tmp['rule'][ruleIndex]['name'] = e.target.value;
     this.setState({conObj: tmp});
   }
 
   handleCross = (ruleIndex) => {
-    let tmp = this.state.conObj;
+    let tmp = _.cloneDeep(this.state.conObj);
     tmp.rule.splice(ruleIndex, 1);
     this.setState({conObj: tmp});
   }
 
   handleAddRule = (index) => {
-    let tmp = this.state.conObj;
+    let tmp = _.cloneDeep(this.state.conObj);
     tmp.rule.push({
       name: "transportation",
       parameter: ['on foot'],
@@ -97,10 +108,9 @@ class ConditionDialog extends React.Component{
   };
 
   handleParaChange = (id, ruleId, value) => {
-    let tmp = this.state.conObj;
+    let tmp = _.cloneDeep(this.state.conObj);
     tmp['rule'][ruleId]['parameter'][id] = value;
     this.setState({conObj: tmp});
-    console.log(value)
   }
 
   render(){
@@ -218,11 +228,14 @@ class ConditionDialog extends React.Component{
               </ListItem>
               {
                 _.map(this.state.conObj.rule, (ruleObj, ruleIndex) =>
-                  <ListItem disableGutters>
+                  <ListItem 
+                    disableGutters
+                    key={ruleIndex}
+                  >
                     <Rule 
                       ruleObj = {ruleObj}
                       ruleIndex = {ruleIndex}
-                      handleChangeRule = {() => this.handleChangeRule({ri: ruleIndex, t: 'name'})}
+                      handleChangeRule = {this.handleChangeRule}
                       handleCross = {() => this.handleCross(ruleIndex)}
                       handleParaChange = {this.handleParaChange}
                     />
@@ -243,11 +256,11 @@ class ConditionDialog extends React.Component{
             </List>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.props.handleClose} color="primary">
+            <Button onClick={this.props.handleCancel} color="primary">
               cancel
             </Button>
-            <Button onClick={this.props.handleClose} color="primary" autoFocus>
-              done
+            <Button onClick={()=>this.props.handleSave(this.state.conIndex, this.state.conObj)} color="primary" autoFocus>
+              save
             </Button>
           </DialogActions>
         </Dialog>

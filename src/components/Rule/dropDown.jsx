@@ -19,7 +19,7 @@ const styles = theme => ({
 });
 
 class DropDown extends React.Component{
-  
+
   render(){
 
     const { classes } = this.props;
@@ -40,7 +40,7 @@ class DropDown extends React.Component{
         >
           {
             streamGenerator['transportation']['menu'].map(option => 
-            <MenuItem value={option} >
+            <MenuItem value={option} key={option}>
               {option}
             </MenuItem>
             )

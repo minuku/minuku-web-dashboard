@@ -30,11 +30,7 @@ const styles = theme => ({
 const streamGenMenu = ['transportation', 'accelerometer', 'rotation', 'gravity', 'gyroscope', 'light', 'magnetic', 'pressure', 'proximity', 'temperature', 'humidity',];
 
 class Rule extends React.Component{
-
-  state={
-    ruleObj: this.props.ruleObj,
-  }
-
+  
   handleParaChange = (id, ruleId, e) => {
     this.props.handleParaChange(id, ruleId, e.target.value);
   }
@@ -50,7 +46,7 @@ class Rule extends React.Component{
           select
           value = {this.props.ruleObj.name}
           className={classes.textField}
-          onChange={this.props.handleChangeRule()}
+          onChange={(e) => this.props.handleChangeRule(this.props.ruleIndex, e)}
           SelectProps={{
             MenuProps: {
               className: classes.menu,
@@ -60,7 +56,7 @@ class Rule extends React.Component{
         >
           {
             streamGenMenu.map(option => 
-            <MenuItem value={option} >
+            <MenuItem value={option} key={option}>
               {option}
             </MenuItem>
             )
@@ -68,8 +64,9 @@ class Rule extends React.Component{
         </TextField>
         {
           (
+            // TODO: Add different input form for different stream generator
             () => {
-              switch (streamGenerator[this.props.ruleObj.name]['inputType']) {
+              /*switch (streamGenerator[this.props.ruleObj.name]['inputType']) {
                 case 'DropDown':  return (
                                     <DropDown 
                                       menuValue = {this.props.ruleObj.parameter}
@@ -95,7 +92,7 @@ class Rule extends React.Component{
                                       ruleIndex = {this.props.ruleIndex}
                                     />);
                 default:          return (<div></div>);
-            }
+            }*/
             }
           )()
         }

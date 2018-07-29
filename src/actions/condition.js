@@ -8,8 +8,9 @@ export const onInitCondition = () => ({
   type: initCondition,
 })
 
-export const onUpdateCondition = (payload) => ({
+export const onUpdateCondition = (index, payload) => ({
   type: updateCondition,
+  index,
   payload
 })
 
@@ -18,9 +19,9 @@ export const onAddCondition = (payload) => ({
   payload
 })
 
-export const onDeleteCondition = (payload) => ({
+export const onDeleteCondition = (index) => ({
   type: deleteCondition,
-  payload
+  index
 })
 
 /*export const onFetchInitCondition = (payload) => (
