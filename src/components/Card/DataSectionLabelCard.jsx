@@ -88,6 +88,11 @@ class DataSectionDialog extends React.Component {
   toggleModal = () => {
     this.setState({ open: !this.state.open });
   };
+  handleSubmit = () => {
+    let _labelingData = this.state._labelingData;
+    this.props.updateCard(this.props.cardTitle, _labelingData);
+    this.toggleModal();
+  }
   handleChange = ({ sectionId, labelId }) => event => {
     let _labelingData = this.state._labelingData;
     let labelCounter = this.state.labelCounter;
@@ -101,18 +106,24 @@ class DataSectionDialog extends React.Component {
 
   componentDidMount() {
     let _labelingData = {};
-    _.map(this.props.data, (sec, secId) => {
+    let labelCounter = 0;
+    let _data = _.isEmpty(this.props.data) ? this.props.defaultData : this.props.data
+
+    _.map(_data, (sec, secId) => {
       _labelingData[secId] = {};
-      _.map(sec, (type, id) => {
+      _.map(sec, (datum, id) => {
+        labelCounter += datum.active ? 1 : 0
         _labelingData[secId][id] = {
-          active: false,
-          value: null,
-          type: type
+          active: datum.active,
+          value: datum.value,
+          type: datum.type
         };
       });
     });
-    this.setState({ _labelingData: _labelingData });
+
+    this.setState({ _labelingData, labelCounter });
   }
+
   render() {
     const { classes } = this.props;
 
@@ -158,7 +169,7 @@ class DataSectionDialog extends React.Component {
               </FormGroup>
             </FormControl>
           ))}
-          handleSubmit={this.toggleModal}
+          handleSubmit={this.handleSubmit}
           handleClose={this.toggleModal}
         />
       </Card>

@@ -15,18 +15,6 @@ import _ from "lodash";
 let url = `https://minukutest.nctu.me/minukutest`;
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    height: `100%`,
-    zIndex: 1,
-    overflow: "scroll",
-    position: "relative",
-    display: "flex",
-    flexDirection: `column`
-  },
-  sectionList: {
-    padding: 20
-  },
   section: {
     marginBottom: 32
   },
@@ -49,14 +37,6 @@ const styles = theme => ({
     backgroundColor: theme.palette.secondary.main,
     margin: `0 16px`,
     padding: `4px 16px`
-  },
-  addSectionWrapper: {
-    marginTop: 100
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
   }
 });
 
@@ -71,27 +51,30 @@ class DataRow extends React.Component {
     sectionType: ``,
     data: []
   };
-  addCard = (name) => {
+  updateCard = (deviceName, data) => {
+    let name = this.props.section.title
     let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${name}/device?token=${token}`, {
+
+    fetch(`${url}/project/project1/situation/situation1/datacollection/${name}/device/${deviceName}?token=${token}`, {
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        "deviceName": this.state.dataCollectionTitle,
-        "deviceType": this.state.dataCollectionCategory,
-        "deviceContent": [1]
+        "deviceContent": data
       }),
-      method: "POST",
+      method: "PUT",
     })
     .then(res => res.json())
-    .then(res => console.log(res))
+    .then(res => {
+      console.log(res)
+    })
     .catch(err => {
       console.log("error", err)
     })
-  };
+  }
 
   deleteCard = (deviceName) => {
+    console.log(`row: delete`)
     let name = this.props.section.title
     let token = localStorage.getItem(`token`)
     fetch(`${url}/project/project1/situation/situation1/datacollection/${name}/device/${deviceName}?token=${token}`, {
@@ -107,14 +90,6 @@ class DataRow extends React.Component {
     .catch(err => {
       console.log("error", err)
     })
-  };
-
-  createElement = () => {
-    this.state.elementType === `collection`
-      ? this.addCollection(this.state.dataCollectionTitle)
-      : this.addCard(this.state.dataSectionTitle);
-    this.setState({ dataCollectionTitle: ``, dataCollectionCategory: `` });
-    this.props.toggleDialog();
   };
 
   deleteDatacollection = title => {
@@ -133,17 +108,19 @@ class DataRow extends React.Component {
     let name = this.props.section.title
     let token = localStorage.getItem(`token`)
     fetch(`${url}/project/project1/situation/situation1/datacollection/${name}?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
       method: "GET",
     })
     .then(res => res.json())
     .then(res => {
-      this.setState({
-        sectionType: res.datacollectionType,
-        data: res.devices
-      })
+      console.log(res)
+      if (res) {
+        this.setState({
+          sectionType: res.datacollectionType,
+          data: res.devices
+        })
+      } else {
+        // if 空的array
+      }
     })
     .catch(err => {
       console.log("error", err)
@@ -176,7 +153,9 @@ class DataRow extends React.Component {
           {_.map(this.state.data, (card, cid) => (
             <Grid key={cid} item>
               <DataSectionLabelCard
-                data={mobileLabelData}
+                data={card.deviceContent}
+                defaultData={mobileLabelData}
+                updateCard={this.updateCard}
                 deleteCard={() => this.deleteCard(card.deviceName)}
                 cardTitle={card.deviceName}
                 cardType={card.deviceType}

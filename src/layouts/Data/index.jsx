@@ -25,36 +25,8 @@ const styles = theme => ({
   sectionList: {
     padding: 20
   },
-  section: {
-    marginBottom: 32
-  },
-  sectionTitle: {
-    marginBottom: 8
-  },
-  sectionContent: {
-    overflowX: "scroll",
-    alignItems: "center"
-  },
-  labelBtn: {
-    minHeight: 24,
-    padding: `4px 16px 2px`,
-    marginRight: 8,
-    backgroundColor: `rgba(100, 100, 100, 0.25)`,
-    color: `rgba(100, 100, 100, 0.95)`
-  },
-  addCardButton: {
-    height: 36,
-    backgroundColor: theme.palette.secondary.main,
-    margin: `0 16px`,
-    padding: `4px 16px`
-  },
   addSectionWrapper: {
     marginTop: 100
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200
   }
 });
 
@@ -68,12 +40,6 @@ class DataSection extends React.Component {
     isDialogShow: false
   };
   addCard = (name) => {
-    // let list = this.state.list;
-    // list[sectionId].content.push({
-    //   cardTitle: title,
-    //   type: this.state.dataCollectionCategory
-    // });
-    // this.setState({ list });
     let token = localStorage.getItem(`token`)
     fetch(`${url}/project/project1/situation/situation1/datacollection/${name}/device?token=${token}`, {
       headers: {
@@ -82,7 +48,7 @@ class DataSection extends React.Component {
       body: JSON.stringify({
         "deviceName": this.state.dataCollectionTitle,
         "deviceType": this.state.dataCollectionCategory,
-        "deviceContent": [1]
+        "deviceContent": []
       }),
       method: "POST",
     })
@@ -142,7 +108,6 @@ class DataSection extends React.Component {
 
   componentWillReceiveProps = nextProps => {
     let _data = nextProps.data, list = []
-    console.log(_data);
     if (_data) {
       _.map(_data, (collection, id) => {
         list.push({
