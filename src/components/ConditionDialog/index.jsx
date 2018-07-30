@@ -65,6 +65,7 @@ class ConditionDialog extends React.Component{
   state={
     conObj: {},
     conIndex: -1,
+    nameError: false,
   }
 
   /* Event Handle Function */
@@ -113,6 +114,15 @@ class ConditionDialog extends React.Component{
     this.setState({conObj: tmp});
   }
 
+  handleSave = (conIndex, conObj) => {
+    if(conObj.name){
+      this.setState({nameError: false});
+      this.props.handleSave(conIndex, conObj);
+    } else{
+      this.setState({nameError: true});
+    }
+  }
+
   render(){
 
     const { classes } = this.props;
@@ -126,7 +136,8 @@ class ConditionDialog extends React.Component{
         >
           <DialogTitle>
             <TextField
-              label="Name"
+              error={this.state.nameError}
+              label={this.state.nameError? 'Please enter a name':'Name'}
               className={classes.textField}
               value={this.state.conObj.name}
               onChange={this.handleChange("name")}
@@ -259,7 +270,7 @@ class ConditionDialog extends React.Component{
             <Button onClick={this.props.handleCancel} color="primary">
               cancel
             </Button>
-            <Button onClick={()=>this.props.handleSave(this.state.conIndex, this.state.conObj)} color="primary" autoFocus>
+            <Button onClick={()=>this.handleSave(this.state.conIndex, this.state.conObj)} color="primary" autoFocus>
               save
             </Button>
           </DialogActions>
