@@ -132,7 +132,7 @@ class DataSection extends React.Component {
               rowId={sid}
               section={section}
               toggleDialog={this.toggleDialog}
-              addDatacollection={this.addCollection}
+              getDevices={this.props.getDevices}
               deleteDatacollection={this.deleteCollection}
             />
           ))}

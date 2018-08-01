@@ -87,6 +87,7 @@ class DataRow extends React.Component {
     .then(res => {
       console.log(res)
     })
+    .then(() => this.getAllDevice())
     .catch(err => {
       console.log("error", err)
     })
@@ -106,25 +107,12 @@ class DataRow extends React.Component {
 
   getAllDevice = () => {
     let name = this.props.section.title
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${name}?token=${token}`, {
-      method: "GET",
-    })
-    .then(res => res.json())
-    .then(res => {
-      console.log(res)
-      if (res) {
-        this.setState({
-          sectionType: res.datacollectionType,
-          data: res.devices
-        })
-      } else {
-        // if 空的array
-      }
-    })
-    .catch(err => {
-      console.log("error", err)
-    })
+    this.props.getDevices(name)
+
+    //   this.setState({
+    //     sectionType: res.datacollectionType,
+    //     data: res.devices
+    //   })
   }
   render() {
     const { classes, section } = this.props;

@@ -1,7 +1,7 @@
 const data = (state = [], action) => {
   switch (action.type) {
     case "GET_DATACOLLECTIONS":
-      return {...state, ...action.payload}
+      return state
 
     case "GET_DATACOLLECTIONS_SUCCESS":
       return {...action.payload}
@@ -25,6 +25,42 @@ const data = (state = [], action) => {
       return state
 
     case "DELETE_DATACOLLECTION_ERROR":
+      return state
+
+    case "GET_DEVICES":
+      return state
+
+    case "GET_DEVICES_SUCCESS":
+      return state
+
+    case "GET_DEVICES_ERROR":
+      return state
+
+    case "ADD_DEVICE":
+      return state
+
+    case "ADD_DEVICE_SUCCESS":
+      return state
+
+    case "ADD_DEVICE_ERROR":
+      return state
+
+    case "DELETE_DEVICE":
+      return state
+
+    case "DELETE_DEVICE_SUCCESS":
+      return state
+
+    case "DELETE_DEVICE_ERROR":
+      return state
+
+    case "UPDATE_DEVICE":
+      return state
+
+    case "UPDATE_DEVICE_SUCCESS":
+      return state
+
+    case "UPDATE_DEVICE_ERROR":
       return state
 
     default:
