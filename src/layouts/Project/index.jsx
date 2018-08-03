@@ -2,6 +2,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import EditIcon from '@material-ui/icons/Edit';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Typography from '@material-ui/core/Typography'
 //import TextField from '@material-ui/core/TextField'
 import Checkbox from '@material-ui/core/Checkbox';
@@ -25,7 +26,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import ActionAlarm from 'material-ui/SvgIcon';
 
 const styles = theme => ({
   root: {
@@ -40,13 +40,6 @@ const styles = theme => ({
   },
 })
 
-const options = [
-  'Rename',
-  'AddRule',
-  'Clear',
-  'Delete',
-];
-
 class Project extends React.Component {
 
   state = {
@@ -56,6 +49,8 @@ class Project extends React.Component {
     anchorEl: null,
     renameDialog: false,
     settingDialog: false,
+    deleteDialog:false,
+    deleteProjectDialog:false,
 
     list: [                       //list of setting
       { id: 0,
@@ -80,12 +75,20 @@ class Project extends React.Component {
     //List of settings END
   } ;
 
+  temp = {
+    setid: -1,
+  };
+
+//VERT MENU
   handleMoreVertClick = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
   handleMoreVertClose = () => {
     this.setState({ anchorEl: null });
   };
+
+
+//RENAME PROJECT
   renameProject = () => {
     this.setState({ anchorEl: null });
     this.setState({renameDialog:true});
@@ -94,7 +97,7 @@ class Project extends React.Component {
     this.setState({titleHolder:event.target.value});
   }
   renameConfirmed = () => {
-    if(this.state.titleHolder == '')
+    if(this.state.titleHolder === '')
       alert('Project name can\'t be empty');
     else{
       this.setState({title: this.state.titleHolder } );
@@ -107,6 +110,14 @@ class Project extends React.Component {
     this.setState({renameDialog : false});
   }
 
+//REMOVE ALL
+  removeAll = () => {
+    this.state.list.length = 0;
+    this.setState({ anchorEl: null });
+
+  } 
+
+//ADD ONE SETTING
   addSettings = () => {
     this.state.list.push({ id: this.state.list.length,
       checked: false,
@@ -117,51 +128,72 @@ class Project extends React.Component {
     this.setState({ anchorEl: null });
   }
 
-  deleteSetting = () =>{
-    alert('Are you sure to delete this setting?');
+//DELETE PROJECT
+  deleteProjectDialog = (v) =>{
+    this.setState({deleteProjectDialog:true});
+    this.setState({ anchorEl: null });
+  }
+  deleteProjectDialogClose = () =>{
+    this.setState({deleteProjectDialog:false});
+  }
+  confirmDeleteProject = () =>{
+    this.setState({deleteProjectDialog:false});
+    this.setState({title:`Project Deleted`});
   }
 
+
+
+
+//DELETE SPECIFIC SETTING
+  deleteDialog = (v) =>{
+    this.temp.setid = this.state.list.indexOf(v);
+    //alert(`DELETE${v.id},${this.temp.setid},${this.state.list.indexOf(v)}`);
+    this.setState({deleteDialog:true});
+  }
+  deleteDialogClose = () =>{
+    this.setState({deleteDialog:false});
+  }
+  confirmDelete = () =>{
+    this.state.list.splice(this.temp.setid,1);
+    this.setState({deleteDialog:false});
+  }
+
+
+//MODIFY A SPECIFIC SETTING
   settingDialog = (v) =>{
     this.setState({settingDialog:true});
+    this.temp.setid = this.state.list.indexOf(v) ;
+    //alert(`${v.id},${this.temp.setid}`);
   }
   settingDialogClose = () => {
-    this.setState({settingDialog:false})
+    this.setState({settingDialog:false});
+  }
+  confirmSetting = () =>{
+    this.setState({settingDialog:false});
   }
 
-  removeAll = () => {
-    this.setState({title:`Project (remove all)`});
-    this.setState({ anchorEl: null });
-  }
-  deleteProject = () => {
-    this.setState({title:`Project Deleted`});
-    this.setState({ anchorEl: null });
-  }
-  
   
 
-
+////// THESE ARE DEBUG FUNCTIONS /////////////////////
   handleProjectNameClick = (v) => {
     this.setState({title:`Project B`});
     this.setState({open:true});
     alert(`This icon should change title name.` );
   };
-
   handleSelectClick = (v) =>{
     v.checked=!v.checked;
     alert(`This is select click ${v.checked}`);
   };
-
   handleEditClick = (v) => {
     const temp = this.state.list ;
     temp[v.id].action = `Changed`;
     this.setState( { list : temp});
     alert(`Editing ${v.id}` );
   };
-
   handleTest = () =>{
     alert('handleTest, also unfinished.QQ');
   };
-
+///////////////////////////////////////////////////////
 //TO DO List: Do we need Boot-Strap-Table???
 
   render () {
@@ -219,6 +251,9 @@ class Project extends React.Component {
                         <IconButton onClick={() => this.settingDialog(val)}>
                           <EditIcon/>
                         </IconButton>
+                        <IconButton onClick={() => this.deleteDialog(val)}>
+                          <DeleteIcon/>
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -233,7 +268,7 @@ class Project extends React.Component {
               <MenuItem onClick={this.renameProject}>Rename project</MenuItem>
               <MenuItem onClick={this.addSettings}>Add settings</MenuItem>
               <MenuItem onClick={this.removeAll}>Remove all settings</MenuItem>
-              <MenuItem onClick={this.deleteProject}>Delete project</MenuItem>
+              <MenuItem onClick={this.deleteProjectDialog}>Delete project</MenuItem>
             </Menu>
 
 
@@ -265,14 +300,35 @@ class Project extends React.Component {
                    />
               </DialogContent>
               <DialogActions>
-                <Button variant="contained" color="secondary" onClick={this.deleteSetting} > 
-                  Delete 
-                </Button>
                 <Button variant="contained" onClick={this.settingDialogClose} >
                   Cancel
                 </Button>
                 <Button variant="contained" color="primary" onClick={this.settingDialogClose} >
                   Confirm
+                </Button>
+              </DialogActions>
+            </Dialog>
+
+            <Dialog open={this.state.deleteDialog} onClose={this.deleteDialogClose}>             
+              <DialogTitle id="DDT">{`Are you sure want to delete this setting?`} </DialogTitle> 
+              <DialogActions>
+                <Button variant="contained" onClick={this.deleteDialogClose} >
+                  Cancel
+                </Button>
+                <Button variant="contained" color="secondary" onClick={this.confirmDelete} >
+                  Delete
+                </Button>
+              </DialogActions>
+            </Dialog>
+
+            <Dialog open={this.state.deleteProjectDialog} onClose={this.deleteProjectDialogClose}>             
+              <DialogTitle id="DPDT">{`Are you sure want to delete this project?`} </DialogTitle> 
+              <DialogActions>
+                <Button variant="contained" onClick={this.deleteProjectDialogClose} >
+                  Cancel
+                </Button>
+                <Button variant="contained" color="secondary" onClick={this.confirmDeleteProject} >
+                  Delete
                 </Button>
               </DialogActions>
             </Dialog>
