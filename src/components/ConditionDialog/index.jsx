@@ -8,7 +8,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import MenuItem from '@material-ui/core/MenuItem';
-import TimeInput from 'material-ui-time-picker';
 import Rule from 'components/Rule'
 import _ from 'lodash';
 import Button from '@material-ui/core/Button';
@@ -156,18 +155,30 @@ class ConditionDialog extends React.Component{
                 />
                 <div className={classes.TimeLabelGroup}>
                   <ListItemText primary='From' className={classes.listItemText}/>
-                  <TimeInput
-                    mode='12h'
+                  <TextField
+                    type="time"
                     onChange={(time) => this.handleTimeChange({time: time, mode: 'startTime'})}
                     value={this.state.conObj.startTime}
                     className = {classes.timePick}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      step: 60, // 1 min
+                    }}
                   />
                   <ListItemText primary='to' className={classes.listItemText}/>
-                  <TimeInput
-                    mode='12h'
+                  <TextField
+                    type="time"
                     onChange={(time) => this.handleTimeChange({time: time, mode: 'endTime'})}
                     value={this.state.conObj.endTime}
                     className = {classes.timePick}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{
+                      step: 60, // 1 min
+                    }}
                   />
                 </div>
               </ListItem>

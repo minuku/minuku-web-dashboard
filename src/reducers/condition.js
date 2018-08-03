@@ -42,8 +42,8 @@ const conditionReducer = (state = [], action) => {
         returnState[index] = _.cloneDeep(item.conditionContent);
         returnState[index]['isOpen'] = false;
         returnState[index]['name'] = item.conditionName;
-        returnState[index]['schedule_from'] = item.startTime? true : false; 
-        returnState[index]['schedule_last'] = item.lastTime? true : false;
+        returnState[index]['schedule_from'] = item.conditionContent.startTime; 
+        returnState[index]['schedule_last'] = item.conditionContent.endTime;
       })
       return returnState;
     }

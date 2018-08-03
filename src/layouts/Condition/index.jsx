@@ -68,20 +68,17 @@ const theme = createMuiTheme({
   },
 });
 
-const defaultStart = new Date(2018, 11, 24, 10, 33, 30, 0);
-const defaultEnd = new Date(2018, 11, 24, 12, 33, 30, 0);
 const defaultCondition = {
   isOpen: true,
   name: '',
   schedule_from: false,
-  startTime: defaultStart,
-  endTime: defaultEnd,
+  startTime: '',
+  endTime: '',
   schedule_last: false,
   duration: 10,
   unit: 'minute',
   rule: [{
     name: 'transportation',
-    parameter: ['on foot'],
   }]
 };
 
