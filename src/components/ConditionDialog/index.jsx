@@ -61,10 +61,15 @@ class ConditionDialog extends React.Component{
       }
     );
   }
+
   state={
     conObj: {},
     conIndex: -1,
     nameError: false,
+    startTimeError: false,
+    endTimeError: false,
+    durationError: false,
+    unitError: false,
   }
 
   /* Event Handle Function */
@@ -80,9 +85,10 @@ class ConditionDialog extends React.Component{
     this.setState({conObj: tmp});
   };
 
-  handleTimeChange = ({time, mode}) => {
+  handleTimeChange = ({event, mode}) => {
+    event.persist();
     let tmp = _.cloneDeep(this.state.conObj);
-    tmp[mode] = time;
+    tmp[mode] = event.target.value;
     this.setState({conObj: tmp});
   }
 
@@ -114,12 +120,64 @@ class ConditionDialog extends React.Component{
   }
 
   handleSave = (conIndex, conObj) => {
-    if(conObj.name){
+    let hasError = false;
+    if(conObj.name){    // if condition name is empty, reject save event and send an error message
       this.setState({nameError: false});
-      this.props.handleSave(conIndex, conObj);
-    } else{
+    } else {
       this.setState({nameError: true});
+      hasError = true;
     }
+
+    // if check box 'schedule_from' is checked, but the input is empty string, reject save event and send an error message
+    if(conObj.schedule_from){
+      if(!conObj.startTime){
+        this.setState({startTimeError: true});
+        hasError = true;
+        //console.log('startTime error');
+      } else {
+        this.setState({startTimeError: false});
+      }
+      if(!conObj.endTime){
+        this.setState({endTimeError: true});
+        hasError = true;
+        //console.log('endTime error');
+      } else {
+        this.setState({endTimeError: false});
+      }
+    }
+
+    // if check box 'schedule_last' is checked, but the input is empty string, reject save event and send an error message
+    if(conObj.schedule_last){
+      if(!conObj.duration){
+        this.setState({durationError: true});
+        hasError = true;
+        //console.log('duration error');
+      } else {
+        this.setState({durationError: false});
+      }
+      if(!conObj.unit){
+        this.setState({unitError: true});
+        hasError = true;
+        //console.log('unit error');
+      } else {
+        this.setState({unitError: false});
+      }
+    }
+
+    //No error, save the condition
+    if (!hasError)
+      this.props.handleSave(conIndex, conObj, this.props.isAdd);
+  }
+
+  handleCancel = (index) => {
+    this.setState({
+      nameError: false,
+      startTimeError: false,
+      endTimeError: false,
+      durationError: false,
+      unitError: false,
+    })
+    this.props.handleCancel(index);
   }
 
   render(){
@@ -157,7 +215,9 @@ class ConditionDialog extends React.Component{
                   <ListItemText primary='From' className={classes.listItemText}/>
                   <TextField
                     type="time"
-                    onChange={(time) => this.handleTimeChange({time: time, mode: 'startTime'})}
+                    disabled={!this.state.conObj.schedule_from}
+                    error={this.state.startTimeError}
+                    onChange={(e) => this.handleTimeChange({event: e, mode: 'startTime'})}
                     value={this.state.conObj.startTime}
                     className = {classes.timePick}
                     InputLabelProps={{
@@ -170,7 +230,9 @@ class ConditionDialog extends React.Component{
                   <ListItemText primary='to' className={classes.listItemText}/>
                   <TextField
                     type="time"
-                    onChange={(time) => this.handleTimeChange({time: time, mode: 'endTime'})}
+                    disabled={!this.state.conObj.schedule_from}
+                    error={this.state.endTimeError}
+                    onChange={(e) => this.handleTimeChange({event: e, mode: 'endTime'})}
                     value={this.state.conObj.endTime}
                     className = {classes.timePick}
                     InputLabelProps={{
@@ -194,6 +256,8 @@ class ConditionDialog extends React.Component{
                   <ListItemText primary='Last for' className={classes.listItemText}/>
                   <TextField
                     id="select-currency"
+                    disabled={!this.state.conObj.schedule_last}
+                    error={this.state.durationError}
                     select
                     className={classes.textField}
                     value={this.state.conObj.duration}
@@ -223,6 +287,8 @@ class ConditionDialog extends React.Component{
                   <ListItemText primary=' ' className={classes.listItemText}/>
                   <TextField
                     select
+                    disabled={!this.state.conObj.schedule_last}
+                    error={this.state.unitError}
                     className={classes.textField}
                     value={this.state.conObj.unit}
                     onChange={this.handleChange("unit")}
@@ -278,7 +344,7 @@ class ConditionDialog extends React.Component{
             </List>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.props.handleCancel} color="primary">
+            <Button onClick={() => this.handleCancel(this.state.conIndex)} color="primary">
               cancel
             </Button>
             <Button onClick={()=>this.handleSave(this.state.conIndex, this.state.conObj)} color="primary" autoFocus>

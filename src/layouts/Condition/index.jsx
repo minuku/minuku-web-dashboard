@@ -108,7 +108,7 @@ class Condition extends React.Component {
 
   // Handle the event of clicking the trash can icon. Remove the condtion.
   handleDelete = (index) => {
-    this.props.onDeleteCondition(index);
+    this.props.onDeleteCondition(index, this.state.conditionList[index].name);
   };
 
   // Handle the event of clicking the '+Add' button. Insert new condition and open the dialog.
@@ -124,10 +124,28 @@ class Condition extends React.Component {
   }
 
   // Handle the event of save button. Cloase the dialog and update the database.
-  handleSave = (index, conObj) => {
+  handleSave = (index, conObj, isAdd) => {
+    
     let copyConObj = _.cloneDeep(conObj);
+    // if the checkbox is unchecked, return empty string
+    if(copyConObj.schedule_from === false){
+      copyConObj.startTime = "";
+      copyConObj.endTime = "";
+    } 
+    if (copyConObj.schedule_last === false){
+      copyConObj.duration = null;
+      copyConObj.unit = "";
+    }
+
+    // Close the dialog
     copyConObj.isOpen = false;
-    this.props.onUpdateCondition(index, copyConObj);
+
+    // If the dialog is the add dialog, create new condition to server, else just update
+    if(isAdd){
+      this.props.onAddCondition(copyConObj);
+    } else {
+      this.props.onUpdateCondition(index, copyConObj, this.state.conditionList[index].name);
+    }
     this.setState({newDialogIsOpen: false});
   }
 
@@ -162,9 +180,10 @@ class Condition extends React.Component {
                 <ConditionDialog 
                   conIndex  = {index}
                   conObj    = {condition}
-                  handleCancel = {() => this.handleCancel(index)}
+                  handleCancel = {this.handleCancel}
                   handleSave = {this.handleSave}
                   isOpen = {condition.isOpen}
+                  isAdd = {false}
                 />
               </ListItem>
               )
@@ -175,6 +194,7 @@ class Condition extends React.Component {
                   handleCancel = {() => {this.setState({newDialogIsOpen: false})}}
                   handleSave = {this.handleSave}
                   isOpen = {this.state.newDialogIsOpen}
+                  isAdd = {true}
             />
           </List>
           </CardContent>

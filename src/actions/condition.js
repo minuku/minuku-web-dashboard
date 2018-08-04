@@ -1,9 +1,10 @@
-import { initConditionSuccess, initConditionFail, initConditionRequest,  
-         updateConditionSuccess, updateConditionFail, updateConditionRequest,
-         addConditionSuccess, addConditionFail, addConditionRequest,
-         deleteConditionSuccess, deleteConditionFail, deleteConditionRequest
+import { initCondition,
+         updateCondition,
+         addCondition,
+         deleteCondition
        }  from "../constants/constants.js"
-import { dispatch } from "../../node_modules/rxjs/internal/observable/range";
+import _ from 'lodash';
+
 const url = `https://minukutest.nctu.me/minukutest`;
 const projectName = `project1`;
 const situationName = `situation1`;
@@ -11,29 +12,14 @@ const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzMwODk4MTQsInN1
 
 
 export const onInitCondition = () => {
-  
-  const request = () => {
-    return{
-      type: initConditionRequest,
-    }
-  }
-
   const success = (payload) => {
     return{
-      type: initConditionSuccess,
+      type: initCondition,
       payload
     };
   };
 
-  const failure = (error) => {
-    return{
-      type: initConditionFail,
-      error
-    };
-  };
-
   return dispatch => {
-    dispatch(request);
     fetch(`${url}/project/${projectName}/situation/${situationName}/condition?token=${token}`,{
       headers: {
         "Content-Type": "application/json"
@@ -41,78 +27,128 @@ export const onInitCondition = () => {
       method: "GET",
     })
     .then(response => {
-      return response.json();
+      if(response.ok)
+        return response.json();
+      else
+        throw Error(response.statusText);
     })
     .then(data => {
-      //console.log(data);
       dispatch(success(data));
     })
-    .catch(err => {
-      console.log("error", err);
-      //dispatch(failure(err));
+    .catch(error => {
+      console.error(error);
     })
-  
-    /*fetch(`https://minukutest.nctu.me/minukutest/project/project1/situation/situation1/condition/移動中?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzMwODk4MTQsInN1YiI6ImFybXVybyIsImV4cCI6MTU2NDYyOTQxNH0.3ZKAeHxNyVeuSJxo1kU_mQHhrtXprza9n5XNusBPeN0`,{
+  }
+}
+
+export const onUpdateCondition = (index, payload, conditionName) => {
+  const success = (index, payload) => {
+    return{
+      type: updateCondition,
+      index,
+      payload,
+    };
+  }
+
+  return dispatch => {
+    let tmpPayload = _.cloneDeep(payload);
+    delete tmpPayload.isOpen;
+    delete tmpPayload.schedule_from;
+    delete tmpPayload.schedule_last;
+    let formalizePayload = {
+      conditionName: payload.name,
+      conditionContent: tmpPayload
+    }
+    fetch(`${url}/project/${projectName}/situation/${situationName}/condition/${conditionName}?token=${token}`,{
+      body: JSON.stringify(formalizePayload),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "PUT",
+    })
+    .then(response => {
+      if(response.ok)
+        return response.json();
+      else
+        throw Error(response.statusText);
+    })
+    .then(message => {
+      console.log(message.msg);
+      dispatch(success(index, payload));
+    })
+    .catch(error => {
+      console.error(error);
+    })
+    
+  }
+}
+
+export const onAddCondition = (payload) => {
+  const success = (payload) => {
+    return{
+      type: addCondition,
+      payload
+    };
+  }
+
+  return dispatch => {
+    let formalizePayload = {
+      conditionName: payload.name,
+      conditionContent: payload
+    }
+    fetch(`${url}/project/${projectName}/situation/${situationName}/condition?token=${token}`,{
+      body: JSON.stringify(formalizePayload),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+    })
+    .then(response => {
+      if(response.ok)
+        return response.json();
+      else
+        throw Error(response.statusText);
+    })
+    .then(message => {
+      console.log(message.msg);
+      dispatch(success(payload));
+    })
+    .catch(error => {
+      console.error(error);
+    })
+    
+  }
+
+}
+
+export const onDeleteCondition = (index, conditionName) => {
+  const success = (index) => {
+    return {
+      type: deleteCondition,
+      index
+    }
+  }
+
+  return dispatch => {
+    fetch(`https://minukutest.nctu.me/minukutest/project/project1/situation/situation1/condition/${conditionName}?token=${token}`,{
       headers: {
         "Content-Type": "application/json"
       },
       method: "DELETE",
     })
     .then(response => {
-      //return response.json();
-      console.log(response);
+      if(response.ok)
+        return response.json();
+      else
+        throw Error(response.statusText);
     })
-    .catch(err => {
-      console.log("error", err);
-      //dispatch(failure(err));
-    })*/
+    .then(message => {
+      console.log(message.msg);
+      dispatch(success(index));
+    })
+    .catch(error => {
+      console.error(error);
+    })
   }
+
 }
-
-export const onUpdateCondition = (index, payload) => ({
-  type: updateConditionRequest,
-  index,
-  payload
-})
-
-export const onAddCondition = (payload) => ({
-  type: addConditionRequest,
-  payload
-})
-
-export const onDeleteCondition = (index) => ({
-  type: deleteConditionRequest,
-  index
-})
-
-/*export const onFetchInitCondition = (payload) => (
-  {
-    type: initCondition,
-    payload,
-    callBack: (response, dispatch) => dispatch(onInitCondition(response)),
-  }
-);
-
-export const onFetchUpdateCondition = (payload) => (
-  {
-    type: updateCondition,
-    payload,
-    callBack: (response, dispatch) => dispatch(onUpdateCondition(response)),
-  }
-);
-
-export const onFetchAddCondition = (payload) => (
-  {
-    type: addCondition,
-    payload,
-    callBack: (response, dispatch) => dispatch(onAddCondition(response)),
-  }
-);
-
-export const onFetchDeleteCondition = (payload) => (
-  {
-    type: deleteCondition,
-    payload,
-    callBack: (response, dispatch) => dispatch(onDeleteCondition(response)),
-  }
-);*/
