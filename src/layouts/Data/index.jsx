@@ -10,7 +10,6 @@ import Dialog from "components/Dialog";
 import DataCollectionElm from "components/Dialog/DataCollectionElm";
 
 import _ from "lodash";
-let url = `https://minukutest.nctu.me/minukutest`;
 
 const styles = theme => ({
   root: {
@@ -40,29 +39,11 @@ class DataSection extends React.Component {
     isDialogShow: false
   };
   addCard = (name) => {
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${name}/device?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        "deviceName": this.state.dataCollectionTitle,
-        "deviceType": this.state.dataCollectionCategory,
-        "deviceContent": []
-      }),
-      method: "POST",
-    })
-    .then(res => res.json())
-    .then(res => console.log(res))
-    .catch(err => {
-      console.log("error", err)
-    })
-  };
-
-  deleteCard = (sectionId, cardId) => {
-    let list = this.state.list;
-    list[sectionId].content.splice(cardId, 1);
-    this.setState({ list });
+    let info = {
+      title: this.state.dataCollectionTitle,
+      category: this.state.dataCollectionCategory
+    }
+    this.props.addDevice(name, info)
   };
 
   createElement = () => {
@@ -109,11 +90,11 @@ class DataSection extends React.Component {
   componentWillReceiveProps = nextProps => {
     let _data = nextProps.data, list = []
     if (_data) {
-      _.map(_data, (collection, id) => {
+      _.map(_data, (datum, id) => {
         list.push({
-          title: collection,
+          title: datum.collection,
           type: ``,
-          content: []
+          content: datum
         })
       })
       this.setState({ list })
@@ -133,6 +114,8 @@ class DataSection extends React.Component {
               section={section}
               toggleDialog={this.toggleDialog}
               getDevices={this.props.getDevices}
+              updateDevice={this.props.updateDevice}
+              deleteDevice={this.props.deleteDevice}
               deleteDatacollection={this.deleteCollection}
             />
           ))}

@@ -53,44 +53,12 @@ class DataRow extends React.Component {
   };
   updateCard = (deviceName, data) => {
     let name = this.props.section.title
-    let token = localStorage.getItem(`token`)
-
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${name}/device/${deviceName}?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        "deviceContent": data
-      }),
-      method: "PUT",
-    })
-    .then(res => res.json())
-    .then(res => {
-      console.log(res)
-    })
-    .catch(err => {
-      console.log("error", err)
-    })
+    this.props.updateDevice(name, deviceName, data)
   }
 
   deleteCard = (deviceName) => {
-    console.log(`row: delete`)
-    let name = this.props.section.title
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${name}/device/${deviceName}?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "DELETE",
-    })
-    .then(res => res.json())
-    .then(res => {
-      console.log(res)
-    })
-    .then(() => this.getAllDevice())
-    .catch(err => {
-      console.log("error", err)
-    })
+    let collectionName = this.props.section.title
+    this.props.deleteDevice(collectionName, deviceName)
   };
 
   deleteDatacollection = title => {
@@ -101,19 +69,9 @@ class DataRow extends React.Component {
     this.getAllDevice()
   }
 
-  componentWillReceiveProps = nextProps => {
-    console.log(`here`);
-  }
+  componentWillReceiveProps = nextProps => {}
 
-  getAllDevice = () => {
-    let name = this.props.section.title
-    this.props.getDevices(name)
-
-    //   this.setState({
-    //     sectionType: res.datacollectionType,
-    //     data: res.devices
-    //   })
-  }
+  getAllDevice = () => {}
   render() {
     const { classes, section } = this.props;
     return (
@@ -125,7 +83,7 @@ class DataRow extends React.Component {
           alignItems="center"
           pacing={4}
         >
-          <Button className={classes.labelBtn}>{this.state.sectionType}</Button>
+          <Button className={classes.labelBtn}>{`this.state.sectionType`}</Button>
           <Typography variant="headline">{section.title}</Typography>
           <IconButton onClick={() => this.deleteDatacollection(section.title)}>
             <DeleteIcon />
@@ -138,7 +96,7 @@ class DataRow extends React.Component {
           justify="flex-start"
           className={classes.sectionContent}
         >
-          {_.map(this.state.data, (card, cid) => (
+          {_.map(section.content.devices, (card, cid) => (
             <Grid key={cid} item>
               <DataSectionLabelCard
                 data={card.deviceContent}

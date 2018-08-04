@@ -7,7 +7,6 @@ export const getDatacollections = () => {
   const success = payload => {
     return { type: "GET_DATACOLLECTIONS_SUCCESS", payload };
   };
-
   const failure = error => {
     return { type: "GET_DATACOLLECTIONS_ERROR", error };
   };
@@ -21,9 +20,12 @@ export const getDatacollections = () => {
       method: "GET",
     })
     .then(res => res.json())
-    .then(res => {
-      console.log(res);
-      dispatch(success(res));
+    .then(collections => {
+      console.log(`collections ->`, collections);
+      for (let i in collections) {
+        dispatch(getDevices(collections[i]))
+      }
+      dispatch(success(collections));
     })
     .catch(err => {
       console.log("error", err)
@@ -39,7 +41,6 @@ export const addDatacollection = (data) => {
   const success = payload => {
     return { type: "ADD_DATACOLLECTION_SUCCESS", payload };
   };
-
   const failure = error => {
     return { type: "ADD_DATACOLLECTION_ERROR", error };
   };
@@ -90,7 +91,7 @@ export const deleteDatacollection = (title) => {
     })
     .then(res => res.json())
     .then(res => {
-      dispatch(success(res));
+      dispatch(success(title));
     })
     .then(() => dispatch(getDatacollections()) )
     .catch(err => {
@@ -104,10 +105,9 @@ export const getDevices = (name) => {
   const request = () => {
     return { type: "GET_DEVICES" };
   };
-  const success = payload => {
-    return { type: "GET_DEVICES_SUCCESS", payload };
+  const success = obj => {
+    return { type: "GET_DEVICES_SUCCESS", payload: obj };
   };
-
   const failure = error => {
     return { type: "GET_DEVICES_ERROR", error };
   };
@@ -122,7 +122,8 @@ export const getDevices = (name) => {
     })
     .then(res => res.json())
     .then(res => {
-      dispatch(success(res.devices));
+      let obj = { collection: name, devices: res.devices }
+      dispatch(success(obj));
     })
     .catch(err => {
       console.log("error", err)
@@ -131,14 +132,13 @@ export const getDevices = (name) => {
   }
 }
 
-export const addDevice = (name) => {
+export const addDevice = (name, info) => {
   const request = () => {
     return { type: "ADD_DEVICE" };
   };
   const success = payload => {
     return { type: "ADD_DEVICE_SUCCESS", payload };
   };
-
   const failure = error => {
     return { type: "ADD_DEVICE_ERROR", error };
   };
@@ -150,16 +150,15 @@ export const addDevice = (name) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        "deviceName": this.state.dataCollectionTitle,
-        "deviceType": this.state.dataCollectionCategory,
+        "deviceName": info.title,
+        "deviceType": info.category,
         "deviceContent": []
       }),
       method: "POST",
     })
     .then(res => res.json())
-    .then(res => {
-      dispatch(success(res));
-    })
+    .then(res => dispatch(success(res)))
+    .then(() => dispatch(getDatacollections()))
     .catch(err => {
       console.log("error", err)
       dispatch(failure(err));
@@ -167,22 +166,21 @@ export const addDevice = (name) => {
   }
 }
 
-export const deleteDevice = (CollectionName, deviceName) => {
+export const deleteDevice = (collectionName, deviceName) => {
   const request = () => {
-    return { type: "ADD_DEVICE" };
+    return { type: "DELETE_DEVICE" };
   };
   const success = payload => {
-    return { type: "ADD_DEVICE_SUCCESS", payload };
+    return { type: "DELETE_DEVICE_SUCCESS", payload };
   };
-
   const failure = error => {
-    return { type: "ADD_DEVICE_ERROR", error };
+    return { type: "DELETE_DEVICE_ERROR", error };
   };
   return dispatch => {
     dispatch(request());
     let token = localStorage.getItem(`token`)
 
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${CollectionName}/device/${deviceName}?token=${token}`, {
+    fetch(`${url}/project/project1/situation/situation1/datacollection/${collectionName}/device/${deviceName}?token=${token}`, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -192,6 +190,7 @@ export const deleteDevice = (CollectionName, deviceName) => {
     .then(res => {
       dispatch(success(res));
     })
+    .then(() => dispatch(getDevices(collectionName)))
     .catch(err => {
       console.log("error", err)
       dispatch(failure(err));
@@ -199,14 +198,13 @@ export const deleteDevice = (CollectionName, deviceName) => {
   }
 }
 
-export const updateDevice = (CollectionName, deviceName, data) => {
+export const updateDevice = (collectionName, deviceName, data) => {
   const request = () => {
     return { type: "UPDATE_DEVICE" };
   };
   const success = payload => {
     return { type: "UPDATE_DEVICE_SUCCESS", payload };
   };
-
   const failure = error => {
     return { type: "UPDATE_DEVICE_ERROR", error };
   };
@@ -214,7 +212,7 @@ export const updateDevice = (CollectionName, deviceName, data) => {
     dispatch(request());
     let token = localStorage.getItem(`token`)
 
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${CollectionName}/device/${deviceName}?token=${token}`, {
+    fetch(`${url}/project/project1/situation/situation1/datacollection/${collectionName}/device/${deviceName}?token=${token}`, {
       headers: {
         "Content-Type": "application/json"
       },

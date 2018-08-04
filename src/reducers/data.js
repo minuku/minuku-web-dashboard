@@ -4,7 +4,7 @@ const data = (state = [], action) => {
       return state
 
     case "GET_DATACOLLECTIONS_SUCCESS":
-      return {...action.payload}
+      return state
 
     case "GET_DATACOLLECTIONS_ERROR":
       return state
@@ -22,7 +22,10 @@ const data = (state = [], action) => {
       return state
 
     case "DELETE_DATACOLLECTION_SUCCESS":
-      return state
+      delete state[action.payload];
+      return {
+        ...state
+      }
 
     case "DELETE_DATACOLLECTION_ERROR":
       return state
@@ -31,7 +34,12 @@ const data = (state = [], action) => {
       return state
 
     case "GET_DEVICES_SUCCESS":
-      return state
+      return {
+        ...state,
+        [action.payload.collection]: {
+          ...action.payload
+        }
+      }
 
     case "GET_DEVICES_ERROR":
       return state
@@ -49,7 +57,11 @@ const data = (state = [], action) => {
       return state
 
     case "DELETE_DEVICE_SUCCESS":
-      return state
+      delete state[action.payload.collection];
+      console.log('delete', state);
+      return {
+        ...state
+      }
 
     case "DELETE_DEVICE_ERROR":
       return state
