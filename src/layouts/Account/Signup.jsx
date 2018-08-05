@@ -1,12 +1,12 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import { Link } from "react-router-dom"
+import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import { Link } from "react-router-dom";
 
 const styles = theme => ({
   cardWrapper: {
@@ -14,8 +14,8 @@ const styles = theme => ({
     display: `flex`,
     alignItems: `center`,
     justifyContent: `center`,
-    height: '100vh',
-    position: 'relative',
+    height: "100vh",
+    position: "relative",
     padding: 20
   },
   card: {
@@ -33,30 +33,29 @@ const styles = theme => ({
   pos: {
     marginTop: 12
   }
-})
+});
 
 class SimpleCard extends React.Component {
   state = {
     account: ``,
     password: ``
-  }
+  };
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
-    })
-  }
+      [name]: event.target.value
+    });
+  };
   userSignup = () => {
     this.props.register({
       account: this.state.account,
       password: this.state.password
-    })
-  }
-  render () {
-    const { classes } = this.props
+    });
+  };
+  render() {
+    const { classes } = this.props;
     return (
       <div className={classes.cardWrapper}>
         <Card className={classes.card}>
-
           <CardContent>
             <Typography variant="headline" component="h2">
               Minuku Signup
@@ -67,7 +66,7 @@ class SimpleCard extends React.Component {
               label="account"
               className={classes.textField}
               value={this.state.account}
-              onChange={this.handleChange('account')}
+              onChange={this.handleChange("account")}
             />
             <TextField
               required
@@ -77,20 +76,26 @@ class SimpleCard extends React.Component {
               autoComplete="current-password"
               className={classes.textField}
               value={this.state.password}
-              onChange={this.handleChange('password')}
+              onChange={this.handleChange("password")}
             />
             <Typography variant="caption" gutterBottom className={classes.pos}>
-              <Link to='/login'>click here to login.</Link>
+              <Link to="/login">click here to login.</Link>
             </Typography>
           </CardContent>
 
           <CardActions>
-            <Button variant="contained" color="primary" onClick={this.userSignup}>signup</Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.userSignup}
+            >
+              signup
+            </Button>
           </CardActions>
         </Card>
       </div>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(SimpleCard)
+export default withStyles(styles)(SimpleCard);
