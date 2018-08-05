@@ -1,8 +1,8 @@
-import { initCondition,
-         updateCondition,
-         addCondition,
-         deleteCondition
-       }  from "../constants/constants.js"
+import { initConditionRequest, initConditionSuccess, initConditionFail,
+         updateConditionRequest, updateConditionFail, updateConditionSuccess,
+         addConditionRequest, addConditionSuccess, addConditionFail,
+         deleteConditionRequest, deleteConditionSuccess, deleteConditionFail
+       }  from "../constants/constants.js";
 import _ from 'lodash';
 
 const url = `https://minukutest.nctu.me/minukutest`;
@@ -12,14 +12,27 @@ const token = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MzMwODk4MTQsInN1
 
 
 export const onInitCondition = () => {
+  const request = () => {
+    return{
+      type: initConditionRequest
+    };
+  };
+
   const success = (payload) => {
     return{
-      type: initCondition,
+      type: initConditionSuccess,
       payload
     };
   };
 
+  const failure = () => {
+    return {
+      type: initConditionFail,
+    }
+  }
+
   return dispatch => {
+    dispatch(request());
     fetch(`${url}/project/${projectName}/situation/${situationName}/condition?token=${token}`,{
       headers: {
         "Content-Type": "application/json"
@@ -37,18 +50,31 @@ export const onInitCondition = () => {
     })
     .catch(error => {
       console.error(error);
+      dispatch(failure());
     })
   }
 }
 
 export const onUpdateCondition = (index, payload, conditionName) => {
+  const request = () => {
+    return{
+      type: updateConditionRequest
+    };
+  };
+
   const success = (index, payload) => {
     return{
-      type: updateCondition,
+      type: updateConditionSuccess,
       index,
       payload,
     };
-  }
+  };
+
+  const failure = () => {
+    return{
+      type: updateConditionFail,
+    };
+  };
 
   return dispatch => {
     let tmpPayload = _.cloneDeep(payload);
@@ -59,6 +85,7 @@ export const onUpdateCondition = (index, payload, conditionName) => {
       conditionName: payload.name,
       conditionContent: tmpPayload
     }
+    dispatch(request());
     fetch(`${url}/project/${projectName}/situation/${situationName}/condition/${conditionName}?token=${token}`,{
       body: JSON.stringify(formalizePayload),
       headers: {
@@ -78,24 +105,38 @@ export const onUpdateCondition = (index, payload, conditionName) => {
     })
     .catch(error => {
       console.error(error);
+      dispatch(failure());
     })
     
   }
 }
 
 export const onAddCondition = (payload) => {
+  const request = () => {
+    return {
+      type: addConditionRequest,
+    };
+  };
+  
   const success = (payload) => {
     return{
-      type: addCondition,
+      type: addConditionSuccess,
       payload
     };
-  }
+  };
+
+  const failure = () => {
+    return{
+      type: addConditionFail
+    };
+  };
 
   return dispatch => {
     let formalizePayload = {
       conditionName: payload.name,
       conditionContent: payload
     }
+    dispatch(request());
     fetch(`${url}/project/${projectName}/situation/${situationName}/condition?token=${token}`,{
       body: JSON.stringify(formalizePayload),
       headers: {
@@ -115,6 +156,7 @@ export const onAddCondition = (payload) => {
     })
     .catch(error => {
       console.error(error);
+      dispatch(failure());
     })
     
   }
@@ -122,14 +164,27 @@ export const onAddCondition = (payload) => {
 }
 
 export const onDeleteCondition = (index, conditionName) => {
+  const request = () => {
+    return{
+      type: deleteConditionRequest,
+    };
+  };
+  
   const success = (index) => {
     return {
-      type: deleteCondition,
+      type: deleteConditionSuccess,
       index
-    }
-  }
+    };
+  };
+
+  const failure = () => {
+    return {
+      type: deleteConditionFail,
+    };
+  };
 
   return dispatch => {
+    dispatch(request());
     fetch(`https://minukutest.nctu.me/minukutest/project/project1/situation/situation1/condition/${conditionName}?token=${token}`,{
       headers: {
         "Content-Type": "application/json"
@@ -148,6 +203,7 @@ export const onDeleteCondition = (index, conditionName) => {
     })
     .catch(error => {
       console.error(error);
+      dispatch(request());
     })
   }
 

@@ -17,6 +17,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 
+
 const styles = theme => ({
   dialog: {
     width: `100%`,
@@ -70,6 +71,7 @@ class ConditionDialog extends React.Component{
     endTimeError: false,
     durationError: false,
     unitError: false,
+    nameRepeat: false,
   }
 
   /* Event Handle Function */
@@ -121,7 +123,24 @@ class ConditionDialog extends React.Component{
 
   handleSave = (conIndex, conObj) => {
     let hasError = false;
-    if(conObj.name){    // if condition name is empty, reject save event and send an error message
+    
+    // if the name is repeated, reject
+    if(conObj.name !== this.props.conObj.name) {
+
+      for(let i=0; i<this.props.nameList.length; i++){
+        if(this.props.nameList[i] === conObj.name){
+          this.setState({nameRepeat: true});
+          hasError = true;
+          break;
+        } else{
+          this.setState({nameRepeat: false});
+        }
+      }
+    }
+    
+    
+    // if condition name is empty, reject save event and send an error message
+    if(conObj.name){    
       this.setState({nameError: false});
     } else {
       this.setState({nameError: true});
@@ -176,6 +195,7 @@ class ConditionDialog extends React.Component{
       endTimeError: false,
       durationError: false,
       unitError: false,
+      nameRepeat: false,
     })
     this.props.handleCancel(index);
   }
@@ -193,8 +213,12 @@ class ConditionDialog extends React.Component{
         >
           <DialogTitle>
             <TextField
-              error={this.state.nameError}
-              label={this.state.nameError? 'Please enter a name':'Name'}
+              error={this.state.nameError || this.state.nameRepeat}
+              label={'Name'}
+              helperText={
+                this.state.nameError? 'Please enter a name':
+                (this.state.nameRepeat? 'The name has been used':'')
+              }
               className={classes.textField}
               value={this.state.conObj.name}
               onChange={this.handleChange("name")}
@@ -217,6 +241,7 @@ class ConditionDialog extends React.Component{
                     type="time"
                     disabled={!this.state.conObj.schedule_from}
                     error={this.state.startTimeError}
+                    helperText={this.state.startTimeError? "Shouldn't be empty":""}
                     onChange={(e) => this.handleTimeChange({event: e, mode: 'startTime'})}
                     value={this.state.conObj.startTime}
                     className = {classes.timePick}
@@ -232,6 +257,7 @@ class ConditionDialog extends React.Component{
                     type="time"
                     disabled={!this.state.conObj.schedule_from}
                     error={this.state.endTimeError}
+                    helperText={this.state.endTimeError? "Shouldn't be empty":""}
                     onChange={(e) => this.handleTimeChange({event: e, mode: 'endTime'})}
                     value={this.state.conObj.endTime}
                     className = {classes.timePick}
@@ -258,6 +284,7 @@ class ConditionDialog extends React.Component{
                     id="select-currency"
                     disabled={!this.state.conObj.schedule_last}
                     error={this.state.durationError}
+                    helperText={this.state.durationError? "Shouldn't be empty":""}
                     select
                     className={classes.textField}
                     value={this.state.conObj.duration}
@@ -289,6 +316,7 @@ class ConditionDialog extends React.Component{
                     select
                     disabled={!this.state.conObj.schedule_last}
                     error={this.state.unitError}
+                    helperText={this.state.unitError? "Shouldn't be empty":""}
                     className={classes.textField}
                     value={this.state.conObj.unit}
                     onChange={this.handleChange("unit")}

@@ -1,10 +1,10 @@
 import { combineReducers } from "redux"
 import account from "./account"
-import conditionReducer from "./condition.js"
+import conditionData from "./conditionData.js"
 
 const minuku = combineReducers({
   account,
-  conditionReducer
+  conditionData
 })
 
 export default minuku
