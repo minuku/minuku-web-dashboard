@@ -12,7 +12,6 @@ import { DataSectionLabelCard } from "components/Card";
 import { mobileLabelData } from "./labelFormat.js";
 
 import _ from "lodash";
-let url = `https://minukutest.nctu.me/minukutest`;
 
 const styles = theme => ({
   section: {
