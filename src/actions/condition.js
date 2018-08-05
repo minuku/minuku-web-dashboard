@@ -203,7 +203,7 @@ export const onDeleteCondition = (index, conditionName) => {
     })
     .catch(error => {
       console.error(error);
-      dispatch(request());
+      dispatch(failure());
     })
   }
 

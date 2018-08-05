@@ -1,18 +1,12 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
-import { streamGenerator } from './streamGenerator.js';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import purple from '@material-ui/core/colors/purple';
-
-import DropDown from './dropDown.jsx';
-import OneInput from './oneInput.jsx';
-import ThreeInput from './threeInput.jsx';
-import FourInput from './fourInput.jsx';
 
 import ListItem from '@material-ui/core/ListItem';
 
@@ -63,38 +57,7 @@ class Rule extends React.Component{
           }
         </TextField>
         {
-          (
-            // TODO: Add different input form for different stream generator
-            () => {
-              /*switch (streamGenerator[this.props.ruleObj.name]['inputType']) {
-                case 'DropDown':  return (
-                                    <DropDown 
-                                      menuValue = {this.props.ruleObj.parameter}
-                                      handleChange={this.handleParaChange}
-                                      ruleIndex = {this.props.ruleIndex}
-                                    />);
-                case 'OneInput':  return (
-                                    <OneInput 
-                                      inputValue = {this.props.ruleObj.parameter}
-                                      handleChange={this.handleParaChange}
-                                      ruleIndex = {this.props.ruleIndex}
-                                    />);
-                case 'ThreeInput':return (
-                                    <ThreeInput 
-                                      inputValue = {this.props.ruleObj.parameter}
-                                      handleChange={this.handleParaChange}
-                                      ruleIndex = {this.props.ruleIndex}
-                                    />);
-                case 'FourInput': return (
-                                    <FourInput 
-                                      inputValue = {this.props.ruleObj.parameter}
-                                      handleChange={this.handleParaChange}
-                                      ruleIndex = {this.props.ruleIndex}
-                                    />);
-                default:          return (<div></div>);
-            }*/
-            }
-          )()
+          // TODO: Add different input form for different stream generator
         }
         
         <IconButton onClick = {this.props.handleCross}>
