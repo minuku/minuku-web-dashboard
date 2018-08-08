@@ -11,7 +11,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Rule from 'components/Rule'
 import _ from 'lodash';
 import Button from '@material-ui/core/Button';
-import purple from '@material-ui/core/colors/purple';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -28,13 +27,6 @@ const styles = theme => ({
   listItemText: {
     textAlign: `left`,
     width: `auto`
-  },
-  cssRoot: {
-    color: theme.palette.getContrastText(purple[700]),
-    backgroundColor: purple[700],
-    '&:hover': {
-      backgroundColor: purple[900],
-    },
   },
   TimeLabelGroup: {
     display: `flex`,
@@ -184,8 +176,19 @@ class ConditionDialog extends React.Component{
     }
 
     //No error, save the condition
-    if (!hasError)
+    if (!hasError){
       this.props.handleSave(conIndex, conObj, this.props.isAdd);
+      // Clear the error message
+      this.setState({
+        nameError: false,
+        startTimeError: false,
+        endTimeError: false,
+        durationError: false,
+        unitError: false,
+        nameRepeat: false,
+      })
+    }
+      
   }
 
   handleCancel = (index) => {
