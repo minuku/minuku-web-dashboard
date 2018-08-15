@@ -10,16 +10,7 @@ import purple from '@material-ui/core/colors/purple';
 
 import ListItem from '@material-ui/core/ListItem';
 
-const styles = theme => ({
-  cssRoot: {
-    color: theme.palette.getContrastText(purple[700]),
-    backgroundColor: purple[700],
-    '&:hover': {
-      backgroundColor: purple[900],
-    },
-  },
-  
-});
+const styles = theme => ({});
 
 const streamGenMenu = ['transportation', 'accelerometer', 'rotation', 'gravity', 'gyroscope', 'light', 'magnetic', 'pressure', 'proximity', 'temperature', 'humidity',];
 

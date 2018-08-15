@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import _ from 'lodash';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -22,9 +22,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete'
 import Button from '@material-ui/core/Button';
 
-import purple from '@material-ui/core/colors/purple';
-import yellow from '@material-ui/core/colors/yellow';
-
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -38,7 +35,11 @@ import ConditionDialog from 'components/ConditionDialog';
 
 const styles = theme => ({
   card: {
-    maxWidth: 600,
+    position: 'absolute',
+    width: 600,
+    marginTop:'50px',
+    left: '50%',
+    transform: 'translateX(-50%)'
   },
   media: {
     height: 0,
@@ -51,13 +52,6 @@ const styles = theme => ({
   timePick: {
     width: 82,
   },
-  cssRoot: {
-    color: theme.palette.getContrastText(purple[700]),
-    backgroundColor: purple[700],
-    '&:hover': {
-      backgroundColor: purple[900],
-    },
-  },
   listItem: {
     justifyContent: 'flex-start',
     display: 'flex',
@@ -65,11 +59,6 @@ const styles = theme => ({
   
 });
 
-const theme = createMuiTheme({
-  palette: {
-    secondary: yellow
-  },
-});
 
 const defaultCondition = {
   isOpen: true,
@@ -161,6 +150,7 @@ class Condition extends React.Component {
       this.props.onUpdateCondition(index, copyConObj, this.state.conditionList[index].name);
     }
     this.setState({newDialogIsOpen: false});
+
   }
   
   // Handle Error snackbar closing
@@ -177,7 +167,7 @@ class Condition extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-      <MuiThemeProvider theme={theme}>
+      
         <Card className={classes.card}>
           <CardHeader
             title="Condition"
@@ -278,7 +268,7 @@ class Condition extends React.Component {
             <ErrorIcon color="secondary" />
           ]}
         />
-        </MuiThemeProvider>
+        
       </div>
     );
   }
