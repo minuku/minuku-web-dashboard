@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import purple from '@material-ui/core/colors/purple';
 
 import ListItem from '@material-ui/core/ListItem';
 
@@ -14,7 +15,7 @@ const styles = theme => ({});
 const streamGenMenu = ['transportation', 'accelerometer', 'rotation', 'gravity', 'gyroscope', 'light', 'magnetic', 'pressure', 'proximity', 'temperature', 'humidity',];
 
 class Rule extends React.Component{
-
+  
   handleParaChange = (id, ruleId, e) => {
     this.props.handleParaChange(id, ruleId, e.target.value);
   }
@@ -39,7 +40,7 @@ class Rule extends React.Component{
           margin="normal"
         >
           {
-            streamGenMenu.map(option =>
+            streamGenMenu.map(option => 
             <MenuItem value={option} key={option}>
               {option}
             </MenuItem>
@@ -49,7 +50,7 @@ class Rule extends React.Component{
         {
           // TODO: Add different input form for different stream generator
         }
-
+        
         <IconButton onClick = {this.props.handleCross}>
             <CloseIcon />
         </IconButton>

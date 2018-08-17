@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import SectionHeader from "components/Header/SectionHeader";
 import _ from 'lodash';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -167,7 +168,7 @@ class Condition extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-      
+        <SectionHeader title={`Project Section 專案設定`} />
         <Card className={classes.card}>
           <CardHeader
             title="Condition"

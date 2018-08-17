@@ -6,14 +6,19 @@ import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
-
+import SectionHeader from "components/Header/SectionHeader";
 // fake apiUrl
 import { userService } from 'utils/userService'
 
 const styles = theme => ({
   root: {
-    display: 'flex',
-    justifyContent: 'flex-start'
+    flexGrow: 1,
+    height: `100%`,
+    zIndex: 1,
+    overflow: "scroll",
+    position: "relative",
+    display: "flex",
+    flexDirection: `column`
   },
   container: {
     display: 'flex',
@@ -68,6 +73,7 @@ class Porfile extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
+        <SectionHeader title={`Profile Section 帳戶設定`} />
         <Card className={classes.card}>
           <CardContent>
             <Typography className={classes.title} color="textSecondary">
