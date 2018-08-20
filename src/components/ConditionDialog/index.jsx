@@ -92,6 +92,12 @@ class ConditionDialog extends React.Component{
     this.setState({conObj: tmp});
   }
 
+  handleChangeRuleParameter = (ruleIndex, e) => {
+    let tmp = _.cloneDeep(this.state.conObj);
+    tmp['rule'][ruleIndex]['parameter'] = e.target.value;
+    this.setState({conObj: tmp});
+  }
+
   handleCross = (ruleIndex) => {
     let tmp = _.cloneDeep(this.state.conObj);
     tmp.rule.splice(ruleIndex, 1);
@@ -357,6 +363,7 @@ class ConditionDialog extends React.Component{
                       handleChangeRule = {this.handleChangeRule}
                       handleCross = {() => this.handleCross(ruleIndex)}
                       handleParaChange = {this.handleParaChange}
+                      handleChangeRuleParameter = {this.handleChangeRuleParameter}
                     />
                   </ListItem>
                 )
