@@ -82,7 +82,7 @@ class DataRow extends React.Component {
           alignItems="center"
           pacing={4}
         >
-          <Button className={classes.labelBtn}>{`dataCollection`}</Button>
+          <Button className={classes.labelBtn}>{`Data Collection`}</Button>
           <Typography variant="headline">{section.title}</Typography>
           <IconButton onClick={() => this.deleteDatacollection(section.title)}>
             <DeleteIcon />
