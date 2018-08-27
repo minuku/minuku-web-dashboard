@@ -4,26 +4,28 @@ import { initConditionRequest, initConditionSuccess, initConditionFail,
   deleteConditionRequest, deleteConditionSuccess, deleteConditionFail
 }  from "../constants/constants.js";
 import _ from 'lodash';
+/* The reducer contain two data; One is dataList, which contain all the configuration of condition.
+Another is dataState, wich identify if the data is loading or not. */
 
 const conditionData = (state = {}, action) => {
   switch (action.type) {
     case updateConditionRequest:
     {
       let returnState = _.cloneDeep(state);
-      returnState.dataState.isLoading = true;
+      returnState.dataState.isLoading = true; // If requesting, set the isLoading state true to show the loading effect
       return returnState;
     }
     case updateConditionSuccess:
     {
       let returnState = _.cloneDeep(state);
-      returnState.dataList[action.index] = action.payload;
-      returnState.dataState.isLoading = false;
+      returnState.dataList[action.index] = action.payload;  // update the store dataList from the server's response
+      returnState.dataState.isLoading = false;  // If success, cancel the loading effect
       return returnState;
     }
     case updateConditionFail:
     {
       let returnState = _.cloneDeep(state);
-      returnState.dataState.isError = true;
+      returnState.dataState.isError = true; // If error, cancel the loading and set error
       returnState.dataState.isLoading = false;
       return returnState;
     }
@@ -84,10 +86,10 @@ const conditionData = (state = {}, action) => {
       let returnState = _.cloneDeep(state);
       _.map(action.payload, (item, index) => {
         returnState.dataList[index] = _.cloneDeep(item.conditionContent);
-        returnState.dataList[index]['isOpen'] = false;
-        returnState.dataList[index]['name'] = item.conditionName;
-        returnState.dataList[index]['schedule_from'] = item.conditionContent.startTime? true: false; 
-        returnState.dataList[index]['schedule_last'] = item.conditionContent.duration? true: false;
+        returnState.dataList[index]['isOpen'] = false;   // All the dialog should be colesed.
+        returnState.dataList[index]['name'] = item.conditionName; // Move name property to the list
+        returnState.dataList[index]['schedule_from'] = item.conditionContent.startTime? true: false; // The 'schedule_from' checkbox should be checked only if the field 'startTime' isn't empty
+        returnState.dataList[index]['schedule_last'] = item.conditionContent.duration? true: false; // Same as above
       })
       returnState.dataState.isLoading = false;
       return returnState;

@@ -6,12 +6,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import purple from '@material-ui/core/colors/purple';
 
 import ListItem from '@material-ui/core/ListItem';
 
-const styles = theme => ({});
-
+const styles = theme => ({
+  textField: {
+    marginLeft: '10px'
+  },
+});
 const streamGenMenu = ['transportation', 'accelerometer', 'rotation', 'gravity', 'gyroscope', 'light', 'magnetic', 'pressure', 'proximity', 'temperature', 'humidity',];
 
 class Rule extends React.Component{
@@ -37,6 +39,7 @@ class Rule extends React.Component{
               className: classes.menu,
             },
           }}
+          label='Sensor Type'
           margin="normal"
         >
           {
@@ -49,6 +52,13 @@ class Rule extends React.Component{
         </TextField>
         {
           // TODO: Add different input form for different stream generator
+          <TextField
+            className={classes.textField}
+            margin="normal"
+            label='Parameter'
+            value={this.props.ruleObj.parameter}
+            onChange={(e) => this.props.handleChangeRuleParameter(this.props.ruleIndex, e)}
+          />
         }
         
         <IconButton onClick = {this.props.handleCross}>
