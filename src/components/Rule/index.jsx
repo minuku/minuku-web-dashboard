@@ -6,7 +6,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import purple from '@material-ui/core/colors/purple';
 
 import ListItem from '@material-ui/core/ListItem';
 
