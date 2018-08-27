@@ -25,7 +25,7 @@ class SectionHeader extends React.Component {
         <Divider/>
         <Toolbar className={classes.bar}>
           <Typography variant="headline" color="inherit">
-            {this.props.title}
+            Data Section 專案資料設定
           </Typography>
         </Toolbar>
         <Divider/>

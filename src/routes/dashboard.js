@@ -1,5 +1,4 @@
 import ProfilePage from 'layouts/Profile/index.jsx'
-import ProjectPage from 'layouts/Project/index.jsx'
 import Condition from 'layouts/Condition/index.jsx';
 import { Data } from 'containers/Data/index.js'
 
@@ -9,12 +8,6 @@ const dashboardRoutes = [
     sidebarName: "Profile",
     navbarName: "Profile",
     component: ProfilePage
-  },
-  {
-    path: "/dashboard/project",
-    sidebarName: "project",
-    navbarName: "project",
-    component: ProjectPage
   },
   {
     path: "/dashboard/condition",
