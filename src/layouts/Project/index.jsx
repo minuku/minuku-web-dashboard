@@ -9,6 +9,10 @@ import SectionHeader from "components/Header/SectionHeader";
 import ReactJson from 'react-json-view'
 import { userService } from 'utils/userService'
 import { saveAs } from 'file-saver/FileSaver';
+
+import Dashboard from 'layouts/Dashboard'
+
+
 let url = `https://minukutest.nctu.me/minukutest`;
 
 const styles = theme => ({
@@ -63,6 +67,7 @@ class Porfile extends React.Component {
         method: "GET",
       })
       .then(res => res.json())
+      .catch((error) => console.log(error))
       .then(res => {
         this.setState({data: res})
         console.log(res)
@@ -71,26 +76,28 @@ class Porfile extends React.Component {
   render () {
     const { classes } = this.props
     return (
-      <div className={classes.root}>
-        <SectionHeader title={`Project Section 專案設定`} />
+      <Dashboard>
+        <div className={classes.root}>
+          <SectionHeader title={`Project Section 專案設定`} />
 
-        <Card className={classes.card}>
-          <CardContent style={{ flex: 1}}>
-            <Typography className={classes.title} color="textSecondary">
-              Project schema
-            </Typography>
-            <ReactJson collapsed={true} style={{ maxHeight: 450, overflow: `scroll` }}src={this.state.data} />
-          </CardContent>
+          <Card className={classes.card}>
+            <CardContent style={{ flex: 1}}>
+              <Typography className={classes.title} color="textSecondary">
+                Project schema
+              </Typography>
+              <ReactJson collapsed={true} style={{ maxHeight: 450, overflow: `scroll` }}src={this.state.data} />
+            </CardContent>
 
-          <CardActions>
-            <Button
-              onClick={() => this.downloadJSON()}
-              variant="contained"
-              size="small"
-              color="primary">download</Button>
-          </CardActions>
-        </Card>
-      </div>
+            <CardActions>
+              <Button
+                onClick={() => this.downloadJSON()}
+                variant="contained"
+                size="small"
+                color="primary">download</Button>
+            </CardActions>
+          </Card>
+        </div>
+      </Dashboard>
     )
   }
 }

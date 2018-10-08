@@ -7,13 +7,16 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 
+import Dashboard from 'layouts/Dashboard'
+
 // fake apiUrl
 import { userService } from 'utils/userService'
 
 const styles = theme => ({
   root: {
     display: 'flex',
-    justifyContent: 'flex-start'
+    justifyContent: 'center',
+    marginTop: 50
   },
   container: {
     display: 'flex',
@@ -67,45 +70,47 @@ class Profile extends React.Component {
   render () {
     const { classes } = this.props
     return (
-      <div className={classes.root}>
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography className={classes.title} color="textSecondary">
-              User Profile
-            </Typography>
+      <Dashboard>
+        <div className={classes.root}>
+          <Card className={classes.card}>
+            <CardContent>
+              <Typography className={classes.title} color="textSecondary">
+                User Profile
+              </Typography>
 
-            <form className={classes.container} noValidate autoComplete="off">
-              <TextField
-                id="displayName"
-                label="display name"
-                className={classes.textField}
-                value={this.state.displayName}
-                onChange={this.handleChange('displayName')}
-                margin="normal"
-              />
+              <form className={classes.container} noValidate autoComplete="off">
+                <TextField
+                  id="displayName"
+                  label="display name"
+                  className={classes.textField}
+                  value={this.state.displayName}
+                  onChange={this.handleChange('displayName')}
+                  margin="normal"
+                />
 
-              <TextField
-                disabled
-                id="email"
-                label="email"
-                className={classes.textField}
-                value={this.state.email}
-                onChange={this.handleChange('email')}
-                margin="normal"
-              />
-            </form>
+                <TextField
+                  disabled
+                  id="email"
+                  label="email"
+                  className={classes.textField}
+                  value={this.state.email}
+                  onChange={this.handleChange('email')}
+                  margin="normal"
+                />
+              </form>
 
-          </CardContent>
+            </CardContent>
 
-          <CardActions>
-            <Button
-              onClick={this.updateProfile}
-              variant="contained"
-              size="small"
-              color="primary">Update</Button>
-          </CardActions>
-        </Card>
-      </div>
+            <CardActions>
+              <Button
+                onClick={this.updateProfile}
+                variant="contained"
+                size="small"
+                color="primary">Update</Button>
+            </CardActions>
+          </Card>
+        </div>
+      </Dashboard>
     )
   }
 }

@@ -31,6 +31,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Dashboard from 'layouts/Dashboard'
 import ConditionDialog from 'components/ConditionDialog';
 
 const styles = theme => ({
@@ -166,110 +167,112 @@ class Condition extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-      
-        <Card className={classes.card}>
-          <CardHeader
-            title="Condition"
-          />
-          <CardContent>
-          <List>
-            {
-              _.map(this.state.conditionList, (condition, index) => 
-              <ListItem 
-                divider 
-                disableGutters
-                key={index}
-              >
-                <ListItemText primary={condition.name}/>
-                <ListItemSecondaryAction>
-                  <IconButton 
-                    onClick={(e) => this.handleEdit(index)}
-                    disabled={this.state.proccessingState.isLoading}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton 
-                    onClick={(e) => this.handleDelete(index)}
-                    disabled={this.state.proccessingState.isLoading}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-                <ConditionDialog 
-                  conIndex  = {index}
-                  conObj    = {condition}
-                  handleCancel = {this.handleCancel}
-                  handleSave = {this.handleSave}
-                  isOpen = {condition.isOpen}
-                  isAdd = {false}
-                  nameList = {this.state.nameList}
-                />
-              </ListItem>
-              )
-            }
-            <ConditionDialog 
-                  conIndex  = {this.state.conditionList.length}
-                  conObj    = {defaultCondition}
-                  handleCancel = {() => {this.setState({newDialogIsOpen: false})}}
-                  handleSave = {this.handleSave}
-                  isOpen = {this.state.newDialogIsOpen}
-                  isAdd = {true}
-                  nameList = {this.state.nameList}
-            />
-          </List>
-          </CardContent>
-          <CardActions className={classes.actions}>
-            <Button 
-              variant="contained" 
-              color="secondary" 
-              className={classes.margin}
-              onClick={this.handleAdd}
-              disabled={this.state.proccessingState.isLoading}
-            >
-              + ADD
-            </Button>
-          </CardActions>
-        </Card>
-        <Snackbar
-          className='proccessingBar'
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          open={
-            this.state.proccessingState.isLoading
-          }
-          autoHideDuration={6000}
-          message={[
-            <span className="messageid">
-              Proccessing, please wait...
-            </span>
-          ]}
-          action={[
-            <CircularProgress className={classes.progress} size={15} color="secondary"/>
-          ]}
-        />
-        <Snackbar
-          className='errorBar'
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          onClose={this.handleClose}
-          open={this.state.proccessingState.isError}
-          autoHideDuration={6000}
-          message={[
-            <span className="messageid">
-              Something Wrong, please try again
-            </span>
-          ]}
-          action={[
-            <ErrorIcon color="secondary" />
-          ]}
-        />
+      <Dashboard>
+        <div>
         
-      </div>
+          <Card className={classes.card}>
+            <CardHeader
+              title="Condition"
+            />
+            <CardContent>
+            <List>
+              {
+                _.map(this.state.conditionList, (condition, index) => 
+                <ListItem 
+                  divider 
+                  disableGutters
+                  key={index}
+                >
+                  <ListItemText primary={condition.name}/>
+                  <ListItemSecondaryAction>
+                    <IconButton 
+                      onClick={(e) => this.handleEdit(index)}
+                      disabled={this.state.proccessingState.isLoading}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton 
+                      onClick={(e) => this.handleDelete(index)}
+                      disabled={this.state.proccessingState.isLoading}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                  <ConditionDialog 
+                    conIndex  = {index}
+                    conObj    = {condition}
+                    handleCancel = {this.handleCancel}
+                    handleSave = {this.handleSave}
+                    isOpen = {condition.isOpen}
+                    isAdd = {false}
+                    nameList = {this.state.nameList}
+                  />
+                </ListItem>
+                )
+              }
+              <ConditionDialog 
+                    conIndex  = {this.state.conditionList.length}
+                    conObj    = {defaultCondition}
+                    handleCancel = {() => {this.setState({newDialogIsOpen: false})}}
+                    handleSave = {this.handleSave}
+                    isOpen = {this.state.newDialogIsOpen}
+                    isAdd = {true}
+                    nameList = {this.state.nameList}
+              />
+            </List>
+            </CardContent>
+            <CardActions className={classes.actions}>
+              <Button 
+                variant="contained" 
+                color="secondary" 
+                className={classes.margin}
+                onClick={this.handleAdd}
+                disabled={this.state.proccessingState.isLoading}
+              >
+                + ADD
+              </Button>
+            </CardActions>
+          </Card>
+          <Snackbar
+            className='proccessingBar'
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            open={
+              this.state.proccessingState.isLoading
+            }
+            autoHideDuration={6000}
+            message={[
+              <span className="messageid">
+                Proccessing, please wait...
+              </span>
+            ]}
+            action={[
+              <CircularProgress className={classes.progress} size={15} color="secondary"/>
+            ]}
+          />
+          <Snackbar
+            className='errorBar'
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            onClose={this.handleClose}
+            open={this.state.proccessingState.isError}
+            autoHideDuration={6000}
+            message={[
+              <span className="messageid">
+                Something Wrong, please try again
+              </span>
+            ]}
+            action={[
+              <ErrorIcon color="secondary" />
+            ]}
+          />
+          
+        </div>
+      </Dashboard>
     );
   }
 }
