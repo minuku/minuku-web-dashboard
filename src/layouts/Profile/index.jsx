@@ -40,7 +40,7 @@ const styles = theme => ({
   }
 })
 
-class Porfile extends React.Component {
+class Profile extends React.Component {
   state = {
     displayName: ``,
     email: ``
@@ -110,4 +110,4 @@ class Porfile extends React.Component {
   }
 }
 
-export default withStyles(styles)(Porfile)
+export default withStyles(styles)(Profile)
