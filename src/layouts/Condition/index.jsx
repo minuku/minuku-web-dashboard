@@ -1,82 +1,81 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import _ from 'lodash';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import _ from "lodash";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import {
   onInitCondition,
   onAddCondition,
   onUpdateCondition,
-  onDeleteCondition,
-} from '../../actions/condition.js'
+  onDeleteCondition
+} from "../../actions/condition.js";
 
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
 
-import IconButton from '@material-ui/core/IconButton';
-import ErrorIcon from '@material-ui/icons/Error';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete'
-import Button from '@material-ui/core/Button';
+import IconButton from "@material-ui/core/IconButton";
+import ErrorIcon from "@material-ui/icons/Error";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Button from "@material-ui/core/Button";
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
 
-import Snackbar from '@material-ui/core/Snackbar';
+import Snackbar from "@material-ui/core/Snackbar";
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import Dashboard from 'layouts/Dashboard'
-import ConditionDialog from 'components/ConditionDialog';
+import Dashboard from "layouts/Dashboard";
+import ConditionDialog from "components/ConditionDialog";
 
 const styles = theme => ({
   card: {
-    position: 'absolute',
+    position: "absolute",
     width: 600,
-    marginTop:'50px',
-    left: '50%',
-    transform: 'translateX(-50%)'
+    marginTop: "50px",
+    left: "50%",
+    transform: "translateX(-50%)"
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%" // 16:9
   },
   actions: {
-    justifyContent: 'center',
-    marginBottom: '10px',
+    justifyContent: "center",
+    marginBottom: "10px"
   },
   timePick: {
-    width: 82,
+    width: 82
   },
   listItem: {
-    justifyContent: 'flex-start',
-    display: 'flex',
-  },
-  
+    justifyContent: "flex-start",
+    display: "flex"
+  }
 });
-
 
 const defaultCondition = {
   isOpen: true,
-  name: '',
+  name: "",
   schedule_from: false,
-  startTime: '',
-  endTime: '',
+  startTime: "",
+  endTime: "",
   schedule_last: false,
   duration: 10,
-  unit: 'minute',
-  rule: [{
-    name: 'transportation',
-  }]
+  unit: "minute",
+  rule: [
+    {
+      name: "transportation"
+    }
+  ]
 };
 
 class Condition extends React.Component {
-
   componentDidMount() {
     this.props.onInitCondition();
   }
@@ -86,57 +85,56 @@ class Condition extends React.Component {
     let tmpState = _.cloneDeep(nextProps.conditionStore.dataState);
     this.setState({
       conditionList: tmpList,
-      proccessingState: tmpState,
+      proccessingState: tmpState
     });
     let tmpNameList = [];
     _.map(tmpList, (condition, index) => {
       tmpNameList[index] = condition.name;
     });
-    this.setState({nameList: tmpNameList});
+    this.setState({ nameList: tmpNameList });
   }
 
-  state = { 
+  state = {
     conditionList: [],
     isOpen: [],
     proccessingState: {},
     newDialogIsOpen: false,
-    nameList: [],
+    nameList: []
   };
 
   // Handle the event of clicking the pencil icon. Open the dialog.
-  handleEdit = (index) => {
+  handleEdit = index => {
     let ListCopy = _.cloneDeep(this.state.conditionList);
     ListCopy[index].isOpen = true;
-    this.setState({conditionList: ListCopy});
+    this.setState({ conditionList: ListCopy });
   };
 
   // Handle the event of clicking the trash can icon. Remove the condtion.
-  handleDelete = (index) => {
+  handleDelete = index => {
     this.props.onDeleteCondition(index, this.state.conditionList[index].name);
   };
 
   // Handle the event of clicking the '+Add' button. Insert new condition and open the dialog.
   handleAdd = () => {
-    this.setState({newDialogIsOpen: true});
+    this.setState({ newDialogIsOpen: true });
   };
 
   // Handle the event of cancel button. Close the dialog without update the database.
-  handleCancel = (index) => {
+  handleCancel = index => {
     let ListCopy = _.cloneDeep(this.state.conditionList);
     ListCopy[index].isOpen = false;
-    this.setState({conditionList: ListCopy});
-  }
+    this.setState({ conditionList: ListCopy });
+  };
 
   // Handle the event of save button. Cloase the dialog and update the database.
   handleSave = (index, conObj, isAdd) => {
-
     let copyConObj = _.cloneDeep(conObj);
     // if the checkbox is unchecked, return empty string
-    if(copyConObj.schedule_from === false){
+    if (copyConObj.schedule_from === false) {
       copyConObj.startTime = "";
       copyConObj.endTime = "";
-    } 
-    if (copyConObj.schedule_last === false){
+    }
+    if (copyConObj.schedule_last === false) {
       copyConObj.duration = null;
       copyConObj.unit = "";
     }
@@ -145,86 +143,82 @@ class Condition extends React.Component {
     copyConObj.isOpen = false;
 
     // If the dialog is the add dialog, create new condition to server, else just update
-    if(isAdd){
+    if (isAdd) {
       this.props.onAddCondition(copyConObj);
     } else {
-      this.props.onUpdateCondition(index, copyConObj, this.state.conditionList[index].name);
+      this.props.onUpdateCondition(
+        index,
+        copyConObj,
+        this.state.conditionList[index].name
+      );
     }
-    this.setState({newDialogIsOpen: false});
+    this.setState({ newDialogIsOpen: false });
+  };
 
-  }
-  
   // Handle Error snackbar closing
   handleClose = () => {
     this.setState({
-      proccessingState:{
+      proccessingState: {
         isLoading: false,
-        isError: false,
+        isError: false
       }
     });
-  }
+  };
 
   render() {
     const { classes } = this.props;
     return (
       <Dashboard>
         <div>
-        
           <Card className={classes.card}>
-            <CardHeader
-              title="Condition"
-            />
+            <CardHeader title="Condition" />
             <CardContent>
-            <List>
-              {
-                _.map(this.state.conditionList, (condition, index) => 
-                <ListItem 
-                  divider 
-                  disableGutters
-                  key={index}
-                >
-                  <ListItemText primary={condition.name}/>
-                  <ListItemSecondaryAction>
-                    <IconButton 
-                      onClick={(e) => this.handleEdit(index)}
-                      disabled={this.state.proccessingState.isLoading}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton 
-                      onClick={(e) => this.handleDelete(index)}
-                      disabled={this.state.proccessingState.isLoading}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                  <ConditionDialog 
-                    conIndex  = {index}
-                    conObj    = {condition}
-                    handleCancel = {this.handleCancel}
-                    handleSave = {this.handleSave}
-                    isOpen = {condition.isOpen}
-                    isAdd = {false}
-                    nameList = {this.state.nameList}
-                  />
-                </ListItem>
-                )
-              }
-              <ConditionDialog 
-                    conIndex  = {this.state.conditionList.length}
-                    conObj    = {defaultCondition}
-                    handleCancel = {() => {this.setState({newDialogIsOpen: false})}}
-                    handleSave = {this.handleSave}
-                    isOpen = {this.state.newDialogIsOpen}
-                    isAdd = {true}
-                    nameList = {this.state.nameList}
-              />
-            </List>
+              <List>
+                {_.map(this.state.conditionList, (condition, index) => (
+                  <ListItem divider disableGutters key={index}>
+                    <ListItemText primary={condition.name} />
+                    <ListItemSecondaryAction>
+                      <IconButton
+                        onClick={e => this.handleEdit(index)}
+                        disabled={this.state.proccessingState.isLoading}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        onClick={e => this.handleDelete(index)}
+                        disabled={this.state.proccessingState.isLoading}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                    <ConditionDialog
+                      conIndex={index}
+                      conObj={condition}
+                      handleCancel={this.handleCancel}
+                      handleSave={this.handleSave}
+                      isOpen={condition.isOpen}
+                      isAdd={false}
+                      nameList={this.state.nameList}
+                    />
+                  </ListItem>
+                ))}
+                <ConditionDialog
+                  conIndex={this.state.conditionList.length}
+                  conObj={defaultCondition}
+                  handleCancel={() => {
+                    this.setState({ newDialogIsOpen: false });
+                  }}
+                  handleSave={this.handleSave}
+                  isOpen={this.state.newDialogIsOpen}
+                  isAdd={true}
+                  nameList={this.state.nameList}
+                />
+              </List>
             </CardContent>
             <CardActions className={classes.actions}>
-              <Button 
-                variant="contained" 
-                color="secondary" 
+              <Button
+                variant="contained"
+                color="secondary"
                 className={classes.margin}
                 onClick={this.handleAdd}
                 disabled={this.state.proccessingState.isLoading}
@@ -234,29 +228,29 @@ class Condition extends React.Component {
             </CardActions>
           </Card>
           <Snackbar
-            className='proccessingBar'
+            className="proccessingBar"
             anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
+              vertical: "bottom",
+              horizontal: "left"
             }}
-            open={
-              this.state.proccessingState.isLoading
-            }
+            open={this.state.proccessingState.isLoading}
             autoHideDuration={6000}
             message={[
-              <span className="messageid">
-                Proccessing, please wait...
-              </span>
+              <span className="messageid">Proccessing, please wait...</span>
             ]}
             action={[
-              <CircularProgress className={classes.progress} size={15} color="secondary"/>
+              <CircularProgress
+                className={classes.progress}
+                size={15}
+                color="secondary"
+              />
             ]}
           />
           <Snackbar
-            className='errorBar'
+            className="errorBar"
             anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
+              vertical: "bottom",
+              horizontal: "left"
             }}
             onClose={this.handleClose}
             open={this.state.proccessingState.isError}
@@ -266,11 +260,8 @@ class Condition extends React.Component {
                 Something Wrong, please try again
               </span>
             ]}
-            action={[
-              <ErrorIcon color="secondary" />
-            ]}
+            action={[<ErrorIcon color="secondary" />]}
           />
-          
         </div>
       </Dashboard>
     );
@@ -278,15 +269,20 @@ class Condition extends React.Component {
 }
 
 Condition.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = store => ({ 
+const mapStateToProps = store => ({
   conditionStore: store.conditionData
 });
 
-const mapDispatchToProps = (dispatch) =>(
-  bindActionCreators({ onInitCondition, onAddCondition, onUpdateCondition, onDeleteCondition }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    { onInitCondition, onAddCondition, onUpdateCondition, onDeleteCondition },
+    dispatch
+  );
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Condition));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Condition));

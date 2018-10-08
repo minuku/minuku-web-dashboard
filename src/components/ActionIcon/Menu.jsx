@@ -1,37 +1,34 @@
-import React from 'react'
-import IconButton from '@material-ui/core/IconButton'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
+import React from "react";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-const ITEM_HEIGHT = 24
+const ITEM_HEIGHT = 24;
 
 export default class MenuComponent extends React.Component {
   state = {
     anchorEl: null,
-    options: [
-      'edit',
-      'delete'
-    ]
-  }
+    options: ["edit", "delete"]
+  };
   handleMenuClick = event => {
-    this.setState({ anchorEl: event.currentTarget })
-  }
+    this.setState({ anchorEl: event.currentTarget });
+  };
 
   handleMenuClose = (f = null) => {
-    this.setState({ anchorEl: null })
-    if (f !== null) f()
-  }
+    this.setState({ anchorEl: null });
+    if (f !== null) f();
+  };
 
-  componentDidMount () {}
-  render () {
-    const { anchorEl } = this.state
+  componentDidMount() {}
+  render() {
+    const { anchorEl } = this.state;
 
     return (
       <div>
         <IconButton
           aria-label="More"
-          aria-owns={anchorEl ? 'long-menu' : null}
+          aria-owns={anchorEl ? "long-menu" : null}
           aria-haspopup="true"
           onClick={this.handleMenuClick}
         >
@@ -45,17 +42,20 @@ export default class MenuComponent extends React.Component {
           PaperProps={{
             style: {
               maxHeight: ITEM_HEIGHT * 4,
-              width: 100,
-            },
+              width: 100
+            }
           }}
         >
           {this.props.list.map(option => (
-            <MenuItem key={option.name} onClick={() => this.handleMenuClose(option.function)}>
+            <MenuItem
+              key={option.name}
+              onClick={() => this.handleMenuClose(option.function)}
+            >
               {option.name}
             </MenuItem>
           ))}
         </Menu>
       </div>
-    )
+    );
   }
 }

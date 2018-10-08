@@ -51,26 +51,26 @@ class DataRow extends React.Component {
     data: []
   };
   updateCard = (deviceName, data) => {
-    let name = this.props.section.title
-    this.props.updateDevice(name, deviceName, data)
-  }
+    let name = this.props.section.title;
+    this.props.updateDevice(name, deviceName, data);
+  };
 
-  deleteCard = (deviceName) => {
-    let collectionName = this.props.section.title
-    this.props.deleteDevice(collectionName, deviceName)
+  deleteCard = deviceName => {
+    let collectionName = this.props.section.title;
+    this.props.deleteDevice(collectionName, deviceName);
   };
 
   deleteDatacollection = title => {
-    this.props.deleteDatacollection(title)
+    this.props.deleteDatacollection(title);
   };
 
-  componentDidMount () {
-    this.getAllDevice()
+  componentDidMount() {
+    this.getAllDevice();
   }
 
-  componentWillReceiveProps = nextProps => {}
+  componentWillReceiveProps = nextProps => {};
 
-  getAllDevice = () => {}
+  getAllDevice = () => {};
   render() {
     const { classes, section } = this.props;
     return (

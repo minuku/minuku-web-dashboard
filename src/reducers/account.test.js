@@ -1,21 +1,21 @@
-import account from './account'
+import account from "./account";
 
-describe('Account reducer', () => {
-  it('should return the initial state, empty', () => {
-    expect(account(undefined, {})).toEqual([])
-  })
+describe("Account reducer", () => {
+  it("should return the initial state, empty", () => {
+    expect(account(undefined, {})).toEqual([]);
+  });
 
-  it('should handle LOGIN_REQUEST', () => {
+  it("should handle LOGIN_REQUEST", () => {
     expect(
       account([], {
-        type: 'LOGIN_REQUEST'
+        type: "LOGIN_REQUEST"
       })
-    ).toEqual([])
+    ).toEqual([]);
 
     expect(
       account([], {
-        type: 'LOGIN_SUCCESS'
+        type: "LOGIN_SUCCESS"
       })
-    ).toEqual({})
-  })
-})
+    ).toEqual({});
+  });
+});

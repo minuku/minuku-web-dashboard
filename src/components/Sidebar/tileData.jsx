@@ -1,38 +1,38 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
+import React from "react";
+import { Link } from "react-router-dom";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
-import InboxIcon from '@material-ui/icons/Inbox'
-import AccountBoxIcon  from '@material-ui/icons/AccountBox'
-import DateRangeIcon from '@material-ui/icons/DateRange'
-import LinearScaleIcon from '@material-ui/icons/LinearScale'
-import DomainIcon from '@material-ui/icons/Domain'
-import PersonalVideoIcon from '@material-ui/icons/PersonalVideo'
-import ViewListIcon from '@material-ui/icons/ViewList'
+import InboxIcon from "@material-ui/icons/Inbox";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import LinearScaleIcon from "@material-ui/icons/LinearScale";
+import DomainIcon from "@material-ui/icons/Domain";
+import PersonalVideoIcon from "@material-ui/icons/PersonalVideo";
+import ViewListIcon from "@material-ui/icons/ViewList";
 
 export const mailFolderListItems = (
   <div>
-    <ListItem button component={Link} to='/dashboard/profile'>
+    <ListItem button component={Link} to="/dashboard/profile">
       <ListItemIcon>
         <AccountBoxIcon />
       </ListItemIcon>
       <ListItemText primary="profile" />
     </ListItem>
 
-    <ListItem button component={Link} to='/dashboard/project'>
+    <ListItem button component={Link} to="/dashboard/project">
       <ListItemIcon>
         <InboxIcon />
       </ListItemIcon>
       <ListItemText primary="Project List" />
     </ListItem>
   </div>
-)
+);
 
 export const otherMailFolderListItems = (
   <div>
-    <ListItem button component={Link} to='/dashboard/condition'>
+    <ListItem button component={Link} to="/dashboard/condition">
       <ListItemIcon>
         <LinearScaleIcon />
       </ListItemIcon>
@@ -50,7 +50,7 @@ export const otherMailFolderListItems = (
       </ListItemIcon>
       <ListItemText primary="Schedule" />
     </ListItem>
-    <ListItem button component={Link} to='/dashboard/data'>
+    <ListItem button component={Link} to="/dashboard/data">
       <ListItemIcon>
         <ViewListIcon />
       </ListItemIcon>
@@ -63,4 +63,4 @@ export const otherMailFolderListItems = (
       <ListItemText primary="monitor" />
     </ListItem>
   </div>
-)
+);

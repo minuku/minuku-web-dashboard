@@ -5,7 +5,7 @@ import SectionHeader from "components/Header/SectionHeader";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
-import DataRow from './Row.jsx';
+import DataRow from "./Row.jsx";
 import Dialog from "components/Dialog";
 import DataCollectionElm from "components/Dialog/DataCollectionElm";
 
@@ -38,12 +38,12 @@ class DataSection extends React.Component {
     elementType: `collection`,
     isDialogShow: false
   };
-  addCard = (name) => {
+  addCard = name => {
     let info = {
       title: this.state.dataCollectionTitle,
       category: this.state.dataCollectionCategory
-    }
-    this.props.addDevice(name, info)
+    };
+    this.props.addDevice(name, info);
   };
 
   createElement = () => {
@@ -69,37 +69,38 @@ class DataSection extends React.Component {
   };
 
   getcollection = () => {
-    this.props.getDatacollections()
-  }
+    this.props.getDatacollections();
+  };
 
   addCollection = title => {
     this.props.addDatacollection({
       title: title,
       dataCollectionCategory: this.state.dataCollectionCategory
-    })
+    });
   };
 
   deleteCollection = title => {
-    this.props.deleteDatacollection(title)
+    this.props.deleteDatacollection(title);
   };
 
-  componentDidMount () {
-    this.getcollection()
+  componentDidMount() {
+    this.getcollection();
   }
 
   componentWillReceiveProps = nextProps => {
-    let _data = nextProps.data, list = []
+    let _data = nextProps.data,
+      list = [];
     if (_data) {
       _.map(_data, (datum, id) => {
         list.push({
           title: datum.collection,
           type: ``,
           content: datum
-        })
-      })
-      this.setState({ list })
+        });
+      });
+      this.setState({ list });
     }
-  }
+  };
   render() {
     const { classes } = this.props;
     return (

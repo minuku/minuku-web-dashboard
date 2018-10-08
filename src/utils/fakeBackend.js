@@ -26,7 +26,6 @@ export function configureFakeBackend() {
               token: "QpwL5tke4Pnpja7X"
             };
             resolve({ ok: true, json: () => Promise.resolve(responseJson) });
-
           } else {
             // else return error
             reject("Username or password is incorrect, or not yet register");
@@ -52,7 +51,10 @@ export function configureFakeBackend() {
         // get user by id
         if (url.match(/\/users\/\d+$/) && opts.method === "GET") {
           // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
-          if (opts.headers && opts.headers.Authorization === 'Bearer QpwL5tke4Pnpja7X') {
+          if (
+            opts.headers &&
+            opts.headers.Authorization === "Bearer QpwL5tke4Pnpja7X"
+          ) {
             // find user by id in users array
             let urlParts = url.split("/");
             let id = parseInt(urlParts[urlParts.length - 1], 10);
@@ -62,30 +64,35 @@ export function configureFakeBackend() {
             let user = matchedUsers.length ? matchedUsers[0] : null;
 
             // respond 200 OK with user
-            resolve({ ok: true, json: () => Promise.resolve(user)})
+            resolve({ ok: true, json: () => Promise.resolve(user) });
           } else {
             // return 401 not authorised if token is null or invalid
-            reject('Unauthorised')
+            reject("Unauthorised");
           }
-          return
+          return;
         }
 
         // update user by id
-        if (url.match(/\/users\/\d+$/) && opts.method === 'POST') {
+        if (url.match(/\/users\/\d+$/) && opts.method === "POST") {
           // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
-          if (opts.headers && opts.headers.Authorization === 'Bearer QpwL5tke4Pnpja7X') {
+          if (
+            opts.headers &&
+            opts.headers.Authorization === "Bearer QpwL5tke4Pnpja7X"
+          ) {
             // find user by id in users array
-            let urlParts = url.split('/')
-            let id = parseInt(urlParts[urlParts.length - 1], 10)
-            let matchedUsers = users.filter(user => { return user.id === id; })
-            let user = matchedUsers.length ? matchedUsers[0] : null
+            let urlParts = url.split("/");
+            let id = parseInt(urlParts[urlParts.length - 1], 10);
+            let matchedUsers = users.filter(user => {
+              return user.id === id;
+            });
+            let user = matchedUsers.length ? matchedUsers[0] : null;
 
-            user.displayName = JSON.parse(opts.body).displayName
-            users[id] = user
-            localStorage.setItem('users', JSON.stringify(users))
+            user.displayName = JSON.parse(opts.body).displayName;
+            users[id] = user;
+            localStorage.setItem("users", JSON.stringify(users));
 
             // respond 200 OK with user
-            resolve({ ok: true, json: () => Promise.resolve(user)})
+            resolve({ ok: true, json: () => Promise.resolve(user) });
           } else {
             // return 401 not authorised if token is null or invalid
             reject("Unauthorised");

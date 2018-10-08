@@ -1,5 +1,3 @@
-import DataSectionLabelCard from './DataSectionLabelCard'
+import DataSectionLabelCard from "./DataSectionLabelCard";
 
-export {
-  DataSectionLabelCard
-}
+export { DataSectionLabelCard };

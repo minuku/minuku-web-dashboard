@@ -25,21 +25,21 @@ export const login = user => {
         password: user.password
       })
     })
-    .then(resp => {
-      try {
-        return resp.json();
-      } catch (err) {}
-      return resp.text();
-    })
-    .then(data => {
-      dispatch(success(user));
-      localStorage.setItem("token", data.access_token);
-      history.push("/dashboard/");
-    })
-    .catch(err => {
-      dispatch(failure(err));
-      console.log(`err`, err)
-    });
+      .then(resp => {
+        try {
+          return resp.json();
+        } catch (err) {}
+        return resp.text();
+      })
+      .then(data => {
+        dispatch(success(user));
+        localStorage.setItem("token", data.access_token);
+        history.push("/dashboard/");
+      })
+      .catch(err => {
+        dispatch(failure(err));
+        console.log(`err`, err);
+      });
     // userService.login(user).then(
     //   user => {
     //     dispatch(success(user));
@@ -88,7 +88,7 @@ export const register = user => {
         history.push("/login");
       })
       .catch(err => {
-        console.log(err)
+        console.log(err);
         dispatch(failure(err));
       });
     // userService.register(user).then(

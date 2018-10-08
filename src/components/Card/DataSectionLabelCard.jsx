@@ -92,7 +92,7 @@ class DataSectionDialog extends React.Component {
     let _labelingData = this.state._labelingData;
     this.props.updateCard(this.props.cardTitle, _labelingData);
     this.toggleModal();
-  }
+  };
   handleChange = ({ sectionId, labelId }) => event => {
     let _labelingData = this.state._labelingData;
     let labelCounter = this.state.labelCounter;
@@ -107,12 +107,14 @@ class DataSectionDialog extends React.Component {
   componentDidMount() {
     let _labelingData = {};
     let labelCounter = 0;
-    let _data = _.isEmpty(this.props.data) ? this.props.defaultData : this.props.data
+    let _data = _.isEmpty(this.props.data)
+      ? this.props.defaultData
+      : this.props.data;
 
     _.map(_data, (sec, secId) => {
       _labelingData[secId] = {};
       _.map(sec, (datum, id) => {
-        labelCounter += datum.active ? 1 : 0
+        labelCounter += datum.active ? 1 : 0;
         _labelingData[secId][id] = {
           active: datum.active,
           value: datum.value,
