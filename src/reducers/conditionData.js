@@ -4,6 +4,8 @@ import { initConditionRequest, initConditionSuccess, initConditionFail,
   deleteConditionRequest, deleteConditionSuccess, deleteConditionFail
 }  from "../constants/constants.js";
 import _ from 'lodash';
+/* The reducer contain two data; One is dataList, which contain all the configuration of condition.
+Another is dataState, wich identify if the data is loading or not. */
 
 /* The reducer contain two data; One is dataList, which contain all the configuration of condition.
 Another is dataState, wich identify if the data is loading or not. */

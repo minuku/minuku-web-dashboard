@@ -14,7 +14,6 @@ const styles = theme => ({
     marginLeft: '10px'
   },
 });
-
 const streamGenMenu = ['transportation', 'accelerometer', 'rotation', 'gravity', 'gyroscope', 'light', 'magnetic', 'pressure', 'proximity', 'temperature', 'humidity',];
 
 class Rule extends React.Component{
@@ -41,6 +40,7 @@ class Rule extends React.Component{
               className: classes.menu,
             },
           }}
+          label='Sensor Type'
           margin="normal"
         >
           {
@@ -52,6 +52,7 @@ class Rule extends React.Component{
           }
         </TextField>
         {
+          // TODO: Add different input form for different stream generator
           <TextField
             className={classes.textField}
             margin="normal"
