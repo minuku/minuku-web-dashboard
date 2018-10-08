@@ -1,14 +1,15 @@
 import React from "react";
 
-import PrivateRoute from "containers/PrivateRoute.jsx";
 import { history } from "utils/history";
 import { Route, Router, Switch, Redirect } from "react-router-dom";
 
-import Profile from "layouts/Profile";
-import Condition from "layouts/Condition";
-import Project from "layouts/Project";
-import Data from "layouts/Project";
-import * as Account from "layouts/Account";
+import Profile from "pages/Profile";
+import Condition from "pages/Condition";
+import Project from "pages/Project";
+import Monitor from "pages/Monitor";
+import Situation from "pages/Situation";
+import Data from "containers/Data";
+import * as Account from "containers/Account";
 
 const RootRouter = () => (
   <Router history={history}>
@@ -18,6 +19,8 @@ const RootRouter = () => (
       <Route path="/dashboard/condition" component={Condition} />
       <Route path="/dashboard/project" component={Project} />
       <Route path="/dashboard/data" component={Data} />
+      <Route path="/dashboard/situation" component={Situation} />
+      <Route path="/dashboard/monitor" component={Monitor} />
       {/* Account routes */}
       <Route path="/login" component={Account.Login} />
       <Route path="/signup" component={Account.Signup} />

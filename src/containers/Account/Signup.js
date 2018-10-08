@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import SignupComponent from "layouts/Account/Signup";
+import SignupComponent from "pages/Account/Signup";
 import { register } from "actions/account";
 
 const mapDispatchToProps = dispatch => ({

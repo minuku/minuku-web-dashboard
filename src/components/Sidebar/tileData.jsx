@@ -38,13 +38,13 @@ export const otherMailFolderListItems = (
       </ListItemIcon>
       <ListItemText primary="Condition" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to="/dashboard/situation">
       <ListItemIcon>
         <DomainIcon />
       </ListItemIcon>
       <ListItemText primary="Situation" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to="/dashboard/schedule">
       <ListItemIcon>
         <DateRangeIcon />
       </ListItemIcon>
@@ -56,11 +56,11 @@ export const otherMailFolderListItems = (
       </ListItemIcon>
       <ListItemText primary="Data" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to="/dashboard/monitor">
       <ListItemIcon>
         <PersonalVideoIcon />
       </ListItemIcon>
-      <ListItemText primary="monitor" />
+      <ListItemText primary="Monitor" />
     </ListItem>
   </div>
 );

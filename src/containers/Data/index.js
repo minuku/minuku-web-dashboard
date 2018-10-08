@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import DataComponent from "layouts/Data/index.jsx";
+import DataComponent from "pages/Data/index";
 import {
   getDatacollections,
   addDatacollection,
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(updateDevice(collectionName, deviceName, data))
 });
 
-export const Data = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(DataComponent);

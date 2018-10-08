@@ -9,7 +9,7 @@ import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 import { DataSectionLabelCard } from "components/Card";
-import { mobileLabelData } from "./labelFormat.js";
+import { mobileLabelData } from "constants";
 
 import _ from "lodash";
 
