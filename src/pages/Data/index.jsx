@@ -5,9 +5,10 @@ import SectionHeader from "components/Header/SectionHeader";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
-import DataRow from './Row.jsx';
+import DataRow from "./Row.jsx";
 import Dialog from "components/Dialog";
 import DataCollectionElm from "components/Dialog/DataCollectionElm";
+import Dashboard from "layouts/Dashboard";
 
 import _ from "lodash";
 
@@ -38,12 +39,12 @@ class DataSection extends React.Component {
     elementType: `collection`,
     isDialogShow: false
   };
-  addCard = (name) => {
+  addCard = name => {
     let info = {
       title: this.state.dataCollectionTitle,
       category: this.state.dataCollectionCategory
-    }
-    this.props.addDevice(name, info)
+    };
+    this.props.addDevice(name, info);
   };
 
   createElement = () => {
@@ -69,89 +70,92 @@ class DataSection extends React.Component {
   };
 
   getcollection = () => {
-    this.props.getDatacollections()
-  }
+    this.props.getDatacollections();
+  };
 
   addCollection = title => {
     this.props.addDatacollection({
       title: title,
       dataCollectionCategory: this.state.dataCollectionCategory
-    })
+    });
   };
 
   deleteCollection = title => {
-    this.props.deleteDatacollection(title)
+    this.props.deleteDatacollection(title);
   };
 
-  componentDidMount () {
-    this.getcollection()
+  componentDidMount() {
+    this.getcollection();
   }
 
   componentWillReceiveProps = nextProps => {
-    let _data = nextProps.data, list = []
+    let _data = nextProps.data,
+      list = [];
     if (_data) {
       _.map(_data, (datum, id) => {
         list.push({
           title: datum.collection,
           type: ``,
           content: datum
-        })
-      })
-      this.setState({ list })
+        });
+      });
+      this.setState({ list });
     }
-  }
+  };
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <SectionHeader title={`Data Section 專案資料設定`} />
+      <Dashboard>
+        <div className={classes.root}>
+          <SectionHeader title={`Data Section 專案資料設定`} />
 
-        <div className={classes.sectionList}>
-          {_.map(this.state.list, (section, sid) => (
-            <DataRow
-              key={sid}
-              rowId={sid}
-              section={section}
-              toggleDialog={this.toggleDialog}
-              getDevices={this.props.getDevices}
-              updateDevice={this.props.updateDevice}
-              deleteDevice={this.props.deleteDevice}
-              deleteDatacollection={this.deleteCollection}
-            />
-          ))}
+          <div className={classes.sectionList}>
+            {_.map(this.state.list, (section, sid) => (
+              <DataRow
+                key={sid}
+                rowId={sid}
+                section={section}
+                toggleDialog={this.toggleDialog}
+                getDevices={this.props.getDevices}
+                updateDevice={this.props.updateDevice}
+                deleteDevice={this.props.deleteDevice}
+                deleteDatacollection={this.deleteCollection}
+              />
+            ))}
 
-          <Grid
-            container
-            justify={"center"}
-            className={classes.addSectionWrapper}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.addSectionButton}
-              onClick={() => this.toggleDialog(`collection`)}
+            <Grid
+              container
+              justify={"center"}
+              className={classes.addSectionWrapper}
             >
-              <AddIcon className={classes.addButtonIcon} />
-              add collection
-            </Button>
-          </Grid>
-        </div>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.addSectionButton}
+                onClick={() => this.toggleDialog(`collection`)}
+              >
+                <AddIcon className={classes.addButtonIcon} />
+                add collection
+              </Button>
+            </Grid>
+          </div>
 
-        <Dialog
-          isOpen={this.state.isDialogShow}
-          title={`New ${this.state.elementType} Setting`}
-          content={
-            <DataCollectionElm
-              dataCollectionTitle={this.state.dataCollectionTitle}
-              dataCollectionCategory={this.state.dataCollectionCategory}
-              type={this.state.elementType}
-              handleChange={this.handleChange}
-            />
-          }
-          handleSubmit={this.createElement}
-          handleClose={this.toggleDialog}
-        />
-      </div>
+          <Dialog
+            isOpen={this.state.isDialogShow}
+            title={`New ${this.state.elementType} Setting`}
+            content={
+              <DataCollectionElm
+                dataCollectionTitle={this.state.dataCollectionTitle}
+                dataCollectionCategory={this.state.dataCollectionCategory}
+                type={this.state.elementType}
+                handleChange={this.handleChange}
+              />
+            }
+            handleSubmit={this.createElement}
+            handleClose={this.toggleDialog}
+          />
+        </div>
+      </Dashboard>
     );
   }
 }

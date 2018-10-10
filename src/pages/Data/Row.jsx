@@ -9,7 +9,7 @@ import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 import { DataSectionLabelCard } from "components/Card";
-import { mobileLabelData } from "./labelFormat.js";
+import { mobileLabelData } from "constants";
 
 import _ from "lodash";
 
@@ -51,26 +51,26 @@ class DataRow extends React.Component {
     data: []
   };
   updateCard = (deviceName, data) => {
-    let name = this.props.section.title
-    this.props.updateDevice(name, deviceName, data)
-  }
+    let name = this.props.section.title;
+    this.props.updateDevice(name, deviceName, data);
+  };
 
-  deleteCard = (deviceName) => {
-    let collectionName = this.props.section.title
-    this.props.deleteDevice(collectionName, deviceName)
+  deleteCard = deviceName => {
+    let collectionName = this.props.section.title;
+    this.props.deleteDevice(collectionName, deviceName);
   };
 
   deleteDatacollection = title => {
-    this.props.deleteDatacollection(title)
+    this.props.deleteDatacollection(title);
   };
 
-  componentDidMount () {
-    this.getAllDevice()
+  componentDidMount() {
+    this.getAllDevice();
   }
 
-  componentWillReceiveProps = nextProps => {}
+  componentWillReceiveProps = nextProps => {};
 
-  getAllDevice = () => {}
+  getAllDevice = () => {};
   render() {
     const { classes, section } = this.props;
     return (
@@ -82,7 +82,7 @@ class DataRow extends React.Component {
           alignItems="center"
           pacing={4}
         >
-          <Button className={classes.labelBtn}>{`this.state.sectionType`}</Button>
+          <Button className={classes.labelBtn}>{`Data Collection`}</Button>
           <Typography variant="headline">{section.title}</Typography>
           <IconButton onClick={() => this.deleteDatacollection(section.title)}>
             <DeleteIcon />

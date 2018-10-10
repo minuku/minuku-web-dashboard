@@ -1,5 +1,3 @@
-import MenuIcon from './Menu'
+import MenuIcon from "./Menu";
 
-export {
-  MenuIcon
-}
+export { MenuIcon };

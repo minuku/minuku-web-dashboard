@@ -1,20 +1,20 @@
 const account = (state = [], action) => {
   switch (action.type) {
     case "REGISTER_REQUEST":
-      return state
+      return state;
     case "REGISTER_SUCCESS":
-      return {...state, ...action.payload}
+      return { ...state, ...action.payload };
     case "REGISTER_ERROR":
-      return state
+      return state;
     case "LOGIN_REQUEST":
-      return state
+      return state;
     case "LOGIN_SUCCESS":
-      return {...state, ...action.payload}
+      return { ...state, ...action.payload };
     case "LOGIN_ERROR":
-      return state
+      return state;
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default account
+export default account;

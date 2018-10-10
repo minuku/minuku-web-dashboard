@@ -12,29 +12,32 @@ export const getDatacollections = () => {
   };
   return dispatch => {
     dispatch(request());
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "GET",
-    })
-    .then(res => res.json())
-    .then(collections => {
-      console.log(`collections ->`, collections);
-      for (let i in collections) {
-        dispatch(getDevices(collections[i]))
+    let token = localStorage.getItem(`token`);
+    fetch(
+      `${url}/project/project1/situation/situation1/datacollection?token=${token}`,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "GET"
       }
-      dispatch(success(collections));
-    })
-    .catch(err => {
-      console.log("error", err)
-      dispatch(failure(err));
-    })
-  }
-}
+    )
+      .then(res => res.json())
+      .then(collections => {
+        console.log(`collections ->`, collections);
+        for (let i in collections) {
+          dispatch(getDevices(collections[i]));
+        }
+        dispatch(success(collections));
+      })
+      .catch(err => {
+        console.log("error", err);
+        dispatch(failure(err));
+      });
+  };
+};
 
-export const addDatacollection = (data) => {
+export const addDatacollection = data => {
   const request = () => {
     return { type: "ADD_DATACOLLECTION" };
   };
@@ -46,30 +49,33 @@ export const addDatacollection = (data) => {
   };
   return dispatch => {
     dispatch(request());
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        "datacollectionName": data.title,
-        "datacollectionType": data.dataCollectionCategory
-      }),
-      method: "POST",
-    })
-    .then(res => res.json())
-    .then(res => {
-      dispatch(success(res));
-    })
-    .then(() => dispatch(getDatacollections()) )
-    .catch(err => {
-      console.log("error", err)
-      dispatch(failure(err));
-    })
-  }
-}
+    let token = localStorage.getItem(`token`);
+    fetch(
+      `${url}/project/project1/situation/situation1/datacollection?token=${token}`,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          datacollectionName: data.title,
+          datacollectionType: data.dataCollectionCategory
+        }),
+        method: "POST"
+      }
+    )
+      .then(res => res.json())
+      .then(res => {
+        dispatch(success(res));
+      })
+      .then(() => dispatch(getDatacollections()))
+      .catch(err => {
+        console.log("error", err);
+        dispatch(failure(err));
+      });
+  };
+};
 
-export const deleteDatacollection = (title) => {
+export const deleteDatacollection = title => {
   const request = () => {
     return { type: "DELETE_DATACOLLECTION" };
   };
@@ -82,26 +88,29 @@ export const deleteDatacollection = (title) => {
   };
   return dispatch => {
     dispatch(request());
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${title}?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "DELETE",
-    })
-    .then(res => res.json())
-    .then(res => {
-      dispatch(success(title));
-    })
-    .then(() => dispatch(getDatacollections()) )
-    .catch(err => {
-      console.log("error", err)
-      dispatch(failure(err));
-    })
-  }
-}
+    let token = localStorage.getItem(`token`);
+    fetch(
+      `${url}/project/project1/situation/situation1/datacollection/${title}?token=${token}`,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "DELETE"
+      }
+    )
+      .then(res => res.json())
+      .then(res => {
+        dispatch(success(title));
+      })
+      .then(() => dispatch(getDatacollections()))
+      .catch(err => {
+        console.log("error", err);
+        dispatch(failure(err));
+      });
+  };
+};
 
-export const getDevices = (name) => {
+export const getDevices = name => {
   const request = () => {
     return { type: "GET_DEVICES" };
   };
@@ -113,24 +122,27 @@ export const getDevices = (name) => {
   };
   return dispatch => {
     dispatch(request());
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${name}?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "GET",
-    })
-    .then(res => res.json())
-    .then(res => {
-      let obj = { collection: name, devices: res.devices }
-      dispatch(success(obj));
-    })
-    .catch(err => {
-      console.log("error", err)
-      dispatch(failure(err));
-    })
-  }
-}
+    let token = localStorage.getItem(`token`);
+    fetch(
+      `${url}/project/project1/situation/situation1/datacollection/${name}?token=${token}`,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "GET"
+      }
+    )
+      .then(res => res.json())
+      .then(res => {
+        let obj = { collection: name, devices: res.devices };
+        dispatch(success(obj));
+      })
+      .catch(err => {
+        console.log("error", err);
+        dispatch(failure(err));
+      });
+  };
+};
 
 export const addDevice = (name, info) => {
   const request = () => {
@@ -144,27 +156,30 @@ export const addDevice = (name, info) => {
   };
   return dispatch => {
     dispatch(request());
-    let token = localStorage.getItem(`token`)
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${name}/device?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        "deviceName": info.title,
-        "deviceType": info.category,
-        "deviceContent": []
-      }),
-      method: "POST",
-    })
-    .then(res => res.json())
-    .then(res => dispatch(success(res)))
-    .then(() => dispatch(getDatacollections()))
-    .catch(err => {
-      console.log("error", err)
-      dispatch(failure(err));
-    })
-  }
-}
+    let token = localStorage.getItem(`token`);
+    fetch(
+      `${url}/project/project1/situation/situation1/datacollection/${name}/device?token=${token}`,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          deviceName: info.title,
+          deviceType: info.category,
+          deviceContent: []
+        }),
+        method: "POST"
+      }
+    )
+      .then(res => res.json())
+      .then(res => dispatch(success(res)))
+      .then(() => dispatch(getDatacollections()))
+      .catch(err => {
+        console.log("error", err);
+        dispatch(failure(err));
+      });
+  };
+};
 
 export const deleteDevice = (collectionName, deviceName) => {
   const request = () => {
@@ -178,25 +193,28 @@ export const deleteDevice = (collectionName, deviceName) => {
   };
   return dispatch => {
     dispatch(request());
-    let token = localStorage.getItem(`token`)
+    let token = localStorage.getItem(`token`);
 
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${collectionName}/device/${deviceName}?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "DELETE",
-    })
-    .then(res => res.json())
-    .then(res => {
-      dispatch(success(res));
-    })
-    .then(() => dispatch(getDevices(collectionName)))
-    .catch(err => {
-      console.log("error", err)
-      dispatch(failure(err));
-    })
-  }
-}
+    fetch(
+      `${url}/project/project1/situation/situation1/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        method: "DELETE"
+      }
+    )
+      .then(res => res.json())
+      .then(res => {
+        dispatch(success(res));
+      })
+      .then(() => dispatch(getDevices(collectionName)))
+      .catch(err => {
+        console.log("error", err);
+        dispatch(failure(err));
+      });
+  };
+};
 
 export const updateDevice = (collectionName, deviceName, data) => {
   const request = () => {
@@ -210,24 +228,27 @@ export const updateDevice = (collectionName, deviceName, data) => {
   };
   return dispatch => {
     dispatch(request());
-    let token = localStorage.getItem(`token`)
+    let token = localStorage.getItem(`token`);
 
-    fetch(`${url}/project/project1/situation/situation1/datacollection/${collectionName}/device/${deviceName}?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        "deviceContent": data
-      }),
-      method: "PUT",
-    })
-    .then(res => res.json())
-    .then(res => {
-      dispatch(success(res));
-    })
-    .catch(err => {
-      console.log("error", err)
-      dispatch(failure(err));
-    })
-  }
-}
+    fetch(
+      `${url}/project/project1/situation/situation1/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          deviceContent: data
+        }),
+        method: "PUT"
+      }
+    )
+      .then(res => res.json())
+      .then(res => {
+        dispatch(success(res));
+      })
+      .catch(err => {
+        console.log("error", err);
+        dispatch(failure(err));
+      });
+  };
+};

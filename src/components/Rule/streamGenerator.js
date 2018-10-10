@@ -1,36 +1,36 @@
 export const streamGenerator = {
   transportation: {
-    inputType: 'DropDown',
-    menu: ['in a vehicle', 'on bicycle', 'on foot', 'static'],
+    inputType: "DropDown",
+    menu: ["in a vehicle", "on bicycle", "on foot", "static"]
   },
   accelerometer: {
-    inputType: 'ThreeInput',
+    inputType: "ThreeInput"
   },
   rotation: {
-    inputType: 'FourInput',
+    inputType: "FourInput"
   },
   gravity: {
-    inputType: 'ThreeInput',
+    inputType: "ThreeInput"
   },
   gyroscope: {
-    inputType: 'ThreeInput',
+    inputType: "ThreeInput"
   },
   light: {
-    inputType: 'OneInput',
+    inputType: "OneInput"
   },
   magnetic: {
-    inputType: 'ThreeInput',
+    inputType: "ThreeInput"
   },
   pressure: {
-    inputType: 'OneInput',
+    inputType: "OneInput"
   },
   proximity: {
-    inputType: 'OneInput',
+    inputType: "OneInput"
   },
   temperature: {
-    inputType: 'OneInput',
+    inputType: "OneInput"
   },
   humidity: {
-    inputType: 'OneInput',
-  },
-}
+    inputType: "OneInput"
+  }
+};
