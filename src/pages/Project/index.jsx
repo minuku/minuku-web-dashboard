@@ -12,6 +12,8 @@ import { saveAs } from "file-saver/FileSaver";
 
 import Dashboard from "layouts/Dashboard";
 
+import removeEmptyObjects from "utils/removeEmptyObjects";
+
 let url = `https://minukutest.nctu.me/minukutest`;
 
 const styles = theme => ({
@@ -41,14 +43,15 @@ const styles = theme => ({
   }
 });
 
+
 class Porfile extends React.Component {
   state = {
     data: []
   };
 
   downloadJSON = () => {
-    console.log(this.state.data);
-    let blob = new Blob([JSON.stringify(this.state.data)], {
+    const data = removeEmptyObjects(this.state.data)
+    let blob = new Blob([JSON.stringify(data)], {
       type: "text/plain;charset=utf-8"
     });
     saveAs(blob, "minuku-config.json");
