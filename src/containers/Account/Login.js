@@ -6,7 +6,7 @@ const mapDispatchToProps = dispatch => ({
   login: user => dispatch(login(user))
 });
 
-export const Login = connect(
+export default connect(
   () => ({}),
   mapDispatchToProps
 )(LoginComponent);

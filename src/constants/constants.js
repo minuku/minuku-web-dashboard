@@ -18,16 +18,8 @@ export const mobileLabelData = {
   creationTime: {
     creationTime: "long"
   },
-  ImageDataRecord: {
-    base64Data: "String"
-  },
   TransportationModeDataRecord: {
     ConfirmedActivityType: "String"
-  },
-  LocationNoGoogleDataRecord: {
-    latitude: "float",
-    longitude: "float",
-    Accuracy: "float"
   },
   ActivityRecognitionDataRecord: {
     MostProbableActivity: "String",
