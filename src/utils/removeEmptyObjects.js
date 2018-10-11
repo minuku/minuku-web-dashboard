@@ -1,4 +1,3 @@
-
 import _ from "lodash";
 
 // copy from here: https://stackoverflow.com/questions/38275753/how-to-remove-empty-values-from-object-using-lodash
@@ -11,4 +10,4 @@ function removeEmptyObjects(obj) {
     .value();
 }
 
-export default removeEmptyObjects
+export default removeEmptyObjects;
