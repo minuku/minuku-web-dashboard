@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import SectionHeader from "components/Header/SectionHeader";
 import ReactJson from "react-json-view";
 import { userService } from "utils/userService";
-import { saveAs } from "file-saver/FileSaver";
+import saveAs from "file-saver";
 
 import Dashboard from "layouts/Dashboard";
 
