@@ -4,8 +4,6 @@ describe("Account reducer", () => {
   it("should return the initial state, empty", () => {
     expect(account(undefined, {})).toEqual([]);
   });
-  // temporarily skip this test
-  /*
   it("should handle LOGIN_REQUEST", () => {
     expect(
       account([], {
@@ -19,5 +17,4 @@ describe("Account reducer", () => {
       })
     ).toEqual({});
   });
-  */
 });

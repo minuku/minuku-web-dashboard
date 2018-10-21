@@ -50,7 +50,6 @@ class Rule extends React.Component {
                 className: classes.menu
               }
             }}
-            label="Sensor Type"
             margin="normal"
           >
             {streamGenMenu.map(option => (
