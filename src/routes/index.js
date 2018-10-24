@@ -8,6 +8,7 @@ import Condition from "pages/Condition";
 import Project from "pages/Project";
 import Monitor from "pages/Monitor";
 import Situation from "pages/Situation";
+import Schedule from "pages/Schedule";
 import Data from "containers/Data";
 import * as Account from "containers/Account";
 
@@ -16,10 +17,11 @@ const RootRouter = () => (
     <Switch>
       <Route exact path="/dashboard" component={Profile} />
       <Route path="/dashboard/profile" component={Profile} />
-      <Route path="/dashboard/condition" component={Condition} />
       <Route path="/dashboard/project" component={Project} />
-      <Route path="/dashboard/data" component={Data} />
+      <Route path="/dashboard/condition" component={Condition} />
       <Route path="/dashboard/situation" component={Situation} />
+      <Route path="/dashboard/schedule" component={Schedule} />
+      <Route path="/dashboard/data" component={Data} />
       <Route path="/dashboard/monitor" component={Monitor} />
       {/* Account routes */}
       <Route path="/login" component={Account.Login} />
