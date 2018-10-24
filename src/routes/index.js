@@ -9,6 +9,7 @@ import Project from "pages/Project";
 import Monitor from "pages/Monitor";
 import Situation from "pages/Situation";
 import Schedule from "pages/Schedule";
+import Questionnaire from "pages/Questionnaire";
 import Data from "containers/Data";
 import * as Account from "containers/Account";
 
@@ -20,6 +21,7 @@ const RootRouter = () => (
       <Route path="/dashboard/project" component={Project} />
       <Route path="/dashboard/condition" component={Condition} />
       <Route path="/dashboard/situation" component={Situation} />
+      <Route path="/dashboard/questionnaire" component={Questionnaire} />
       <Route path="/dashboard/schedule" component={Schedule} />
       <Route path="/dashboard/data" component={Data} />
       <Route path="/dashboard/monitor" component={Monitor} />

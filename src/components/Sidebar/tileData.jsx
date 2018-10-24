@@ -11,6 +11,7 @@ import LinearScaleIcon from "@material-ui/icons/LinearScale";
 import DomainIcon from "@material-ui/icons/Domain";
 import PersonalVideoIcon from "@material-ui/icons/PersonalVideo";
 import ViewListIcon from "@material-ui/icons/ViewList";
+import FormatAlignLeftIcon from "@material-ui/icons/FormatAlignLeft";
 
 export const mailFolderListItems = (
   <div>
@@ -43,6 +44,12 @@ export const otherMailFolderListItems = (
         <DomainIcon />
       </ListItemIcon>
       <ListItemText primary="Situation" />
+    </ListItem>
+    <ListItem button component={Link} to="/dashboard/questionnaire">
+      <ListItemIcon>
+        <FormatAlignLeftIcon />
+      </ListItemIcon>
+      <ListItemText primary="Questionnaire" />
     </ListItem>
     <ListItem button component={Link} to="/dashboard/schedule">
       <ListItemIcon>
