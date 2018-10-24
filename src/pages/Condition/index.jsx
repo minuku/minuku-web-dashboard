@@ -31,8 +31,9 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import Dashboard from "layouts/Dashboard";
 import ConditionDialog from "components/ConditionDialog";
+
+import Dashboard from "layouts/Dashboard";
 
 const styles = theme => ({
   card: {
@@ -168,7 +169,7 @@ class Condition extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Dashboard>
+      <Dashboard title="Condition 條件設定">
         <div>
           <Card className={classes.card}>
             <CardHeader title="Condition" />

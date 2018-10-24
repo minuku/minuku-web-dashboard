@@ -70,7 +70,7 @@ class Profile extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Dashboard>
+      <Dashboard title="User Profile Section 使用者資料設定">
         <div className={classes.root}>
           <Card className={classes.card}>
             <CardContent>
