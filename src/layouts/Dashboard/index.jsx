@@ -2,6 +2,8 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
 import { Header, Sidebar } from "components";
+import SectionHeader from "components/Header/SectionHeader";
+
 
 const styles = theme => ({
   root: {
@@ -47,7 +49,7 @@ class Dashboard extends React.Component {
     this.refs.mainPanel.scrollTop = 0;
   }
   render() {
-    const { classes, children } = this.props;
+    const { classes, children, title } = this.props;
     return (
       <div className={classes.root}>
         <Header
@@ -61,7 +63,10 @@ class Dashboard extends React.Component {
         />
 
         <main className={classes.content} ref="mainPanel">
-          <div className={classes.container}>{children}</div>
+          <div className={classes.container}>
+            <SectionHeader>{ title }</SectionHeader>
+            {children}
+          </div>
         </main>
       </div>
     );

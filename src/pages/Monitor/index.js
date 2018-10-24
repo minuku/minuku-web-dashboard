@@ -5,7 +5,7 @@ import Dashboard from "layouts/Dashboard";
 const styles = theme => ({});
 
 const Monitor = () => (
-  <Dashboard>
+  <Dashboard title="Monitor Section 監控面板">
     <div />
   </Dashboard>
 );

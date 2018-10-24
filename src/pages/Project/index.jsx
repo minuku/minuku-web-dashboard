@@ -5,7 +5,6 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import SectionHeader from "components/Header/SectionHeader";
 import ReactJson from "react-json-view";
 import { userService } from "utils/userService";
 import saveAs from "file-saver";
@@ -78,10 +77,8 @@ class Porfile extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Dashboard>
+      <Dashboard title="Project Section 專案列表">
         <div className={classes.root}>
-          <SectionHeader title={`Project Section 專案設定`} />
-
           <Card className={classes.card}>
             <CardContent style={{ flex: 1 }}>
               <Typography className={classes.title} color="textSecondary">

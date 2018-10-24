@@ -16,25 +16,20 @@ const styles = theme => ({
   }
 });
 
-class SectionHeader extends React.Component {
-  render() {
-    const { classes } = this.props;
-    return (
-      <AppBar
-        className={classes.barContainer}
-        position="static"
-        color="default"
-      >
-        <Divider />
-        <Toolbar className={classes.bar}>
-          <Typography variant="headline" color="inherit">
-            Data Section 專案資料設定
-          </Typography>
-        </Toolbar>
-        <Divider />
-      </AppBar>
-    );
-  }
-}
+const SectionHeader = ({ classes, children }) => (
+  <AppBar
+    className={classes.barContainer}
+    position="static"
+    color="default"
+  >
+    <Divider />
+    <Toolbar className={classes.bar}>
+      <Typography variant="headline" color="inherit">
+        { children }
+      </Typography>
+    </Toolbar>
+    <Divider />
+  </AppBar>
+)
 
 export default withStyles(styles)(SectionHeader);

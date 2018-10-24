@@ -1,6 +1,5 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import SectionHeader from "components/Header/SectionHeader";
 
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -105,10 +104,8 @@ class DataSection extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Dashboard>
+      <Dashboard title="Data Section 專案資料設定">
         <div className={classes.root}>
-          <SectionHeader title={`Data Section 專案資料設定`} />
-
           <div className={classes.sectionList}>
             {_.map(this.state.list, (section, sid) => (
               <DataRow
