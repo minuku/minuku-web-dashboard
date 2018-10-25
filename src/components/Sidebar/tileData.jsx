@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -15,14 +15,14 @@ import FormatAlignLeftIcon from "@material-ui/icons/FormatAlignLeft";
 
 export const mailFolderListItems = (
   <div>
-    <ListItem button component={Link} to="/dashboard/profile">
+    <ListItem button component={NavLink} to="/dashboard/profile">
       <ListItemIcon>
         <AccountBoxIcon />
       </ListItemIcon>
       <ListItemText primary="profile" />
     </ListItem>
 
-    <ListItem button component={Link} to="/dashboard/project">
+    <ListItem button component={NavLink} to="/dashboard/project">
       <ListItemIcon>
         <InboxIcon />
       </ListItemIcon>
@@ -33,37 +33,37 @@ export const mailFolderListItems = (
 
 export const otherMailFolderListItems = (
   <div>
-    <ListItem button component={Link} to="/dashboard/condition">
+    <ListItem button component={NavLink} to="/dashboard/condition">
       <ListItemIcon>
         <LinearScaleIcon />
       </ListItemIcon>
       <ListItemText primary="Condition" />
     </ListItem>
-    <ListItem button component={Link} to="/dashboard/situation">
+    <ListItem button component={NavLink} to="/dashboard/situation">
       <ListItemIcon>
         <DomainIcon />
       </ListItemIcon>
       <ListItemText primary="Situation" />
     </ListItem>
-    <ListItem button component={Link} to="/dashboard/questionnaire">
+    <ListItem button component={NavLink} to="/dashboard/questionnaire">
       <ListItemIcon>
         <FormatAlignLeftIcon />
       </ListItemIcon>
       <ListItemText primary="Questionnaire" />
     </ListItem>
-    <ListItem button component={Link} to="/dashboard/schedule">
+    <ListItem button component={NavLink} to="/dashboard/schedule">
       <ListItemIcon>
         <DateRangeIcon />
       </ListItemIcon>
       <ListItemText primary="Schedule" />
     </ListItem>
-    <ListItem button component={Link} to="/dashboard/data">
+    <ListItem button component={NavLink} to="/dashboard/data">
       <ListItemIcon>
         <ViewListIcon />
       </ListItemIcon>
       <ListItemText primary="Data" />
     </ListItem>
-    <ListItem button component={Link} to="/dashboard/monitor">
+    <ListItem button component={NavLink} to="/dashboard/monitor">
       <ListItemIcon>
         <PersonalVideoIcon />
       </ListItemIcon>
