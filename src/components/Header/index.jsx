@@ -43,7 +43,7 @@ class AppBarComponent extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    const open = this.props.open || false;
+    const open = false;
     return (
       <AppBar
         position="absolute"
@@ -56,7 +56,6 @@ class AppBarComponent extends React.Component {
             onClick={this.handleDrawerToggle}
             className={classNames(classes.menuButton, open && classes.hide)}
           >
-            <MenuIcon />
           </IconButton>
           <Typography variant="title" color="inherit" noWrap>
             Minuku Project

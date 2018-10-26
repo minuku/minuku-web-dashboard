@@ -54,7 +54,8 @@ class Sidebar extends React.Component {
   };
   render() {
     const { classes, theme } = this.props;
-    const open = this.props.open || false;
+    //const open = this.props.open || false;
+    const open = true;
 
     return (
       <Drawer
