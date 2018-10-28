@@ -14,6 +14,9 @@ const styles = (theme, drawerWidth = 240) => ({
   drawerPaper: {
     position: "relative",
     whiteSpace: "nowrap",
+    [theme.breakpoints.down("xs")]: {
+      width: 180,
+    },
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
