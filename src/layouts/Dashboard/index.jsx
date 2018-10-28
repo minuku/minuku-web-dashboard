@@ -12,7 +12,8 @@ const styles = theme => ({
     zIndex: 1,
     overflow: "hidden",
     position: "relative",
-    display: "flex"
+    display: "flex",
+    minHeight: "100vh"
   },
   toolbar: {
     display: "flex",

@@ -19,7 +19,7 @@ export const mailFolderListItems = (
       <ListItemIcon>
         <AccountBoxIcon />
       </ListItemIcon>
-      <ListItemText primary="profile" />
+      <ListItemText primary="Profile" />
     </ListItem>
 
     <ListItem button component={NavLink} to="/dashboard/project">
