@@ -23,6 +23,9 @@ const styles = theme => ({
     flexWrap: "wrap"
   },
   card: {
+    [theme.breakpoints.down("xs")]: {
+      maxWidth: 200
+    },
     minWidth: 275
   },
   bullet: {

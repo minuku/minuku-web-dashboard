@@ -32,9 +32,12 @@ const styles = theme => ({
     marginTop: "50px",
     left: "50%",
     transform: "translateX(-50%)",
-
     display: `flex`,
-    flexDirection: `column`
+    flexDirection: `column`,
+    [theme.breakpoints.down("xs")]:{
+      maxWidth: 300,
+      transform: "translateX(-40%)",
+    },
   },
   title: {
     marginBottom: 16,
