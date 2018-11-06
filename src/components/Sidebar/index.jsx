@@ -4,11 +4,10 @@ import { withStyles } from "@material-ui/core/styles";
 
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import { mailFolderListItems, otherMailFolderListItems } from "./tileData";
+import ListItems from "./tileData";
 
 const styles = (theme, drawerWidth = 240) => ({
   drawerPaper: {
@@ -77,10 +76,7 @@ class Sidebar extends React.Component {
             )}
           </IconButton>
         </div>
-        <Divider />
-        <List>{mailFolderListItems}</List>
-        <Divider />
-        <List>{otherMailFolderListItems}</List>
+        <List>{ListItems}</List>
       </Drawer>
     );
   }

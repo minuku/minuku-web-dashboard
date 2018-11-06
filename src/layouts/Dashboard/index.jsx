@@ -40,12 +40,6 @@ const styles = theme => ({
 });
 
 class Dashboard extends React.Component {
-  state = {
-    open: false
-  };
-  handleDrawerToggle = () => {
-    this.setState({ open: !this.state.open });
-  };
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
@@ -53,15 +47,9 @@ class Dashboard extends React.Component {
     const { classes, children, title } = this.props;
     return (
       <div className={classes.root}>
-        <Header
-          handleDrawerToggle={this.handleDrawerToggle}
-          open={this.state.open}
-        />
+        <Header open={true} />
 
-        <Sidebar
-          handleDrawerToggle={this.handleDrawerToggle}
-          open={this.state.open}
-        />
+        <Sidebar open={true} />
 
         <main className={classes.content} ref="mainPanel">
           <div className={classes.container}>
