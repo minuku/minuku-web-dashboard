@@ -37,18 +37,16 @@ import Dashboard from "layouts/Dashboard";
 
 const styles = theme => ({
   card: {
-    position: "absolute",
     width: 600,
     marginTop: "50px",
-    left: "50%",
-    transform: "translateX(-50%)",
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    [theme.breakpoints.down("md")]:{
+      maxWidth: 450,
+    },
     [theme.breakpoints.down("xs")]:{
       maxWidth: 300,
-      transform: "translateX(-41%)",
     },
-    [theme.breakpoints.down("md")]:{
-      transform: "translateX(-45%)",
-    }
   },
   media: {
     height: 0,

@@ -9,12 +9,15 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 
 
-const styles = () => ({
+const styles = (theme) => ({
   body: {
     minWidth: 500,
     overflow: `scroll`,
     display: `flex`,
-    flexDirection: `column`
+    flexDirection: `column`,
+    [theme.breakpoints.down("sm")]: {
+      minWidth: 300
+    },
   },
   title: {
     marginBottom: 16,

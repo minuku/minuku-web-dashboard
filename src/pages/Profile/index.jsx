@@ -26,7 +26,9 @@ const styles = theme => ({
     [theme.breakpoints.down("xs")]: {
       maxWidth: 200
     },
-    minWidth: 275
+    minWidth: 275,
+    marginRight: 'auto',
+    marginLeft: 'auto'
   },
   bullet: {
     display: "inline-block",
