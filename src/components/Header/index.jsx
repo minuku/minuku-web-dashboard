@@ -33,6 +33,9 @@ const styles = (theme, drawerWidth = 240) => ({
   },
   hide: {
     display: "none"
+  },
+  title: {
+    marginLeft: -70
   }
 });
 
@@ -56,7 +59,7 @@ class AppBarComponent extends React.Component {
             className={classNames(classes.menuButton, open && classes.hide)}
           >
           </IconButton>
-          <Typography variant="title" color="inherit" noWrap>
+          <Typography variant="title" color="inherit" className={classes.title} noWrap>
             Minuku Project
           </Typography>
         </Toolbar>
