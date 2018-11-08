@@ -52,4 +52,3 @@ const ListItems = (
   </div>
 );
 export default ListItems;
-

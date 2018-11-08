@@ -1,5 +1,4 @@
-
-import React from 'react'
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
 import Typography from "@material-ui/core/Typography";
@@ -24,9 +23,9 @@ const styles = (theme) => ({
     fontSize: 14
   },
   questions: {
-    minHeight: '50vh'
-  },
-})
+    minHeight: "50vh"
+  }
+});
 
 const Body = ({ classes, children }) => (
   <Card className={classes.body}>
@@ -34,20 +33,14 @@ const Body = ({ classes, children }) => (
       <Typography className={classes.title} color="textSecondary">
         Questionnaire setting
       </Typography>
-      <div className={classes.questions}>
-        { children }
-      </div>
+      <div className={classes.questions}>{children}</div>
     </CardContent>
     <CardActions>
-      <Button
-        variant="contained"
-        size="small"
-        color="primary"
-      >
+      <Button variant="contained" size="small" color="primary">
         update
       </Button>
     </CardActions>
   </Card>
-)
+);
 
-export default withStyles(styles)(Body)
+export default withStyles(styles)(Body);

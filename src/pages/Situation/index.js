@@ -5,7 +5,7 @@ import Dashboard from "layouts/Dashboard";
 const styles = theme => ({});
 
 const Situation = () => (
-  <Dashboard  title="Situation Section 資料收集場合設定">
+  <Dashboard title="Situation Section 資料收集場合設定">
     <div />
   </Dashboard>
 );

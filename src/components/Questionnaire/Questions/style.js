@@ -1,33 +1,32 @@
-
 const styles = theme => ({
   order: {
-    position: 'relative',
-    display: 'inline-block',
+    position: "relative",
+    display: "inline-block",
     width: 18,
     height: 18,
-    lineHeight: '20px',
-    borderRadius: '2px',
-    textAlign: 'center',
+    lineHeight: "20px",
+    borderRadius: "2px",
+    textAlign: "center",
     backgroundColor: theme.palette.primary.main,
-    verticalAlign: 'baseline',
+    verticalAlign: "baseline",
     margin: 3,
-    color: '#ffffff',
-    cursor: 'pointer'
+    color: "#ffffff",
+    cursor: "pointer"
   },
   required: {
-    '&:after':{
+    "&:after": {
       content: '"*"',
       fontSize: 12,
-      color: '#ffffff',
-      position: 'absolute',
+      color: "#ffffff",
+      position: "absolute",
       left: 12,
-      top: -2,
+      top: -2
     }
   },
   delete: {
-    cursor: 'pointer',
-    opacity: .5
+    cursor: "pointer",
+    opacity: 0.5
   }
-})
+});
 
-export default styles
+export default styles;

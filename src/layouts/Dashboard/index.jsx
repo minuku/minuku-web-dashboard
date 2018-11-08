@@ -4,7 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { Header, Sidebar } from "components";
 import SectionHeader from "components/Header/SectionHeader";
 
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -53,7 +52,7 @@ class Dashboard extends React.Component {
 
         <main className={classes.content} ref="mainPanel">
           <div className={classes.container}>
-            <SectionHeader>{ title }</SectionHeader>
+            <SectionHeader>{title}</SectionHeader>
             {children}
           </div>
         </main>
