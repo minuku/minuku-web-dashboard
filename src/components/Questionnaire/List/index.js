@@ -26,13 +26,14 @@ const List = ({ classes }) => (
       Question List
     </Typography>
     <div>
-      <Entry icon={<ShortTextIcon />}>Short Text</Entry>
-      <Entry icon={<FormatAlignLeftIcon />}>Long Text</Entry>
-      <Entry icon={<CheckBoxIcon />}>Multiple Choice</Entry>
-      <Entry icon={<RadioButtonCheckedIcon />}>Matrix Questions</Entry>
-      <Entry icon={<FormatQuoteIcon />}>Statement</Entry>
+      <Entry dragType="SHORT_TEXT" icon={<ShortTextIcon />}>Short Text</Entry>
+      <Entry dragType="LONG_TEXT" icon={<FormatAlignLeftIcon />}>Long Text</Entry>
+      <Entry dragType="MULTIPLE_CHOICE" icon={<CheckBoxIcon />}>Multiple Choice</Entry>
+      <Entry dragType="MATRIX_QUESTIONS" icon={<RadioButtonCheckedIcon />}>Matrix Questions</Entry>
+      <Entry dragType="STATEMENT" icon={<FormatQuoteIcon />}>Statement</Entry>
     </div>
   </div>
 )
 
-export default withStyles(styles)(List)
+
+export default withStyles(styles)(List);
