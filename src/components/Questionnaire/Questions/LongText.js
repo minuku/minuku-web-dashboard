@@ -5,6 +5,7 @@ import classNames from 'classnames'
 
 import TextField from "@material-ui/core/TextField";
 import FormatAlignLeftIcon from "@material-ui/icons/FormatAlignLeft";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import styles from './style'
 
@@ -22,6 +23,10 @@ class LongText extends React.Component {
           >
             { String.fromCharCode(A + order) }
           </div>
+          <DeleteIcon
+            className={classes.delete}
+            onClick={() => onChange(null)}
+          />
 
         </div>
         <div className="ml-2 col">

@@ -4,8 +4,10 @@ import { withStyles } from "@material-ui/core/styles";
 import classNames from 'classnames'
 
 import TextField from "@material-ui/core/TextField";
+import Button from '@material-ui/core/Button';
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import AddIcon from "@material-ui/icons/Add";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import sharedStyles from './style'
 
@@ -13,12 +15,9 @@ const A = 65
 const a = 97
 
 const styles = theme => ({
-  add: {
-    border: `4px ${theme.palette.primary.main} dotted`,
-    textAlign: 'center',
-    cursor: 'pointer',
-    color: theme.palette.primary.main
-  }
+  leftIcon: {
+    fontSize: 20
+  },
 })
 
 const combinedStyles = theme => ({
@@ -41,7 +40,6 @@ const Option = ({ order, value, onChange }) => (
 )
 
 class MultipleChoice extends React.Component {
-
   render(){
     const { order = 0, title, classes, required, onChange, options } = this.props
     const updateOptions = (index, value) => {
@@ -59,6 +57,10 @@ class MultipleChoice extends React.Component {
           >
             { String.fromCharCode(A + order) }
           </div>
+          <DeleteIcon
+            className={classes.delete}
+            onClick={() => onChange(null)}
+          />
 
         </div>
         <div className="ml-2 col">
@@ -81,12 +83,15 @@ class MultipleChoice extends React.Component {
                 )
               : null
             }
-            <div
-              className={`mt-2 ${classes.add}`}
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              className="mt-2"
               onClick={e => updateOptions(options ? options.length : 0 ,'')}
             >
-              <AddIcon />
-            </div>
+              <AddIcon className={classes.leftIcon}/> Add Options
+            </Button>
           </div>
         </div>
       </div>

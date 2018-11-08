@@ -23,6 +23,10 @@ const styles = theme => ({
       left: 12,
       top: -2,
     }
+  },
+  delete: {
+    cursor: 'pointer',
+    opacity: .5
   }
 })
 

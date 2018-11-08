@@ -5,6 +5,7 @@ import classNames from 'classnames'
 
 import TextField from "@material-ui/core/TextField";
 import ShortTextIcon from "@material-ui/icons/ShortText";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import styles from './style'
 
@@ -15,6 +16,7 @@ class ShortText extends React.Component {
     return (
       <div className="question d-flex">
         <div className="mt-1 d-flex">
+
           <ShortTextIcon color="primary"/>
           <div
             className={classNames(classes.order, required && classes.required)}
@@ -22,6 +24,10 @@ class ShortText extends React.Component {
           >
             { String.fromCharCode(A + order) }
           </div>
+          <DeleteIcon
+            className={classes.delete}
+            onClick={() => onChange(null)}
+          />
 
         </div>
         <div className="ml-2 col">

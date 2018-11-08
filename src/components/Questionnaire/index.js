@@ -24,8 +24,14 @@ class Questionnaire  extends React.Component{
     const { questions } = this.state
     const updatedQuestions = [ ...questions ]
     return props => {
-      updatedQuestions[order].props = { ...updatedQuestions[order].props, ...props }
+      if(props !== null){
+        updatedQuestions[order].props = { ...updatedQuestions[order].props, ...props }
+      }
+      else {
+        updatedQuestions.splice(order, 1)
+      }
       this.setState({ questions: updatedQuestions })
+
     }
   }
   buildQuestionnaire(){
@@ -80,7 +86,6 @@ class Questionnaire  extends React.Component{
   }
   render(){
     const { connectDropTarget } = this.props
-    console.log(this.state.questions)
     return connectDropTarget(
       <div className="d-flex justify-content-center">
         <div className="px-4">

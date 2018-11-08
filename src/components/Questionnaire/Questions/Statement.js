@@ -5,6 +5,7 @@ import classNames from 'classnames'
 
 import TextField from "@material-ui/core/TextField";
 import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import styles from './style'
 
@@ -22,6 +23,10 @@ class Statement extends React.Component {
           >
             { String.fromCharCode(A + order) }
           </div>
+          <DeleteIcon
+            className={classes.delete}
+            onClick={() => onChange(null)}
+          />
 
         </div>
         <div className="ml-2 col">
@@ -31,13 +36,6 @@ class Statement extends React.Component {
             onChange={e => onChange({ title: e.target.value })}
             fullWidth
           />
-          <div className="my-3">
-            <textarea
-              className="w-100"
-              placeholder="Answer..."
-              rows={5}
-            ></textarea>
-          </div>
         </div>
       </div>
     )
