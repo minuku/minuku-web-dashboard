@@ -13,42 +13,36 @@ class PrivateRoute extends React.Component {
     component: PropTypes.any.isRequired
   };
 
-  checkAuth = async () => {
-    let isAuthed = false;
-    const { isLogin } = this.props;
+  checkAuth = () => {
+    const token = localStorage.getItem('token')
 
-    if (isLogin) {
+    if (token) {
       this.setState(state => ({ ...state, isLoading: true }));
-
-      isAuthed = localStorage.getItem(`token`);
     }
-    if (!isAuthed) {
+    else {
       console.log(`not authed`);
     }
 
-    this.setState(state => ({
-      ...state,
-      isAuthed: isAuthed,
+    this.setState(({
+      isAuthed: !!token,
       isLoading: false
     }));
   };
 
-  componentWillMount = async () => {
-    await this.checkAuth();
+  componentWillMount = () => {
+    this.checkAuth();
   };
 
-  componentWillReceiveProps = async nextProps => {
+  componentWillReceiveProps = nextProps => {
     if (nextProps.location.pathname !== this.props.location.pathname) {
-      await this.checkAuth();
+     this.checkAuth();
     }
   };
 
   render() {
     const { component: Component, ...rest } = this.props;
-    const { isLoading, isAuthed } = this.state;
-    return isLoading === true ? (
-      <div>isloading...</div>
-    ) : (
+    const { isAuthed } = this.state;
+    return (
       <Route
         {...rest}
         render={props =>
@@ -61,17 +55,8 @@ class PrivateRoute extends React.Component {
           )
         }
       />
-    );
+    )
   }
 }
 
-const mapStateToProps = state => ({
-  isLogin: localStorage.getItem(`token`)
-});
-
-const mapDispatchToProps = dispatch => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PrivateRoute);
+export default PrivateRoute;

@@ -56,7 +56,7 @@ class AppBarComponent extends React.Component {
             color="inherit"
             aria-label="open drawer"
             onClick={this.handleDrawerToggle}
-            className={classNames(classes.menuButton, open && classes.hide)}
+            className={classNames(classes.menuButton)}
           >
           </IconButton>
           <Typography variant="title" color="inherit" className={classes.title} noWrap>
