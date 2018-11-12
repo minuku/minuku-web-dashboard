@@ -16,9 +16,9 @@ const styles = (theme, drawerWidth = 240) => ({
     })
   },
   appBarShift: {
-    [theme.breakpoints.down("xs")]:{
+    [theme.breakpoints.down("xs")]: {
       marginLeft: 180,
-      width: `calc(100% - 180px)`,
+      width: `calc(100% - 180px)`
     },
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,

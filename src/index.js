@@ -7,6 +7,9 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reducers from "./reducers";
 
+import HTML5Backend from "react-dnd-html5-backend";
+import { DragDropContextProvider } from "react-dnd";
+
 import RootRouter from "routes";
 
 import { configureFakeBackend } from "utils/fakeBackend";
@@ -31,7 +34,9 @@ const theme = createMuiTheme(customizeTheme);
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <Provider store={store}>
-      <RootRouter />
+      <DragDropContextProvider backend={HTML5Backend}>
+        <RootRouter />
+      </DragDropContextProvider>
     </Provider>
   </MuiThemeProvider>,
   document.getElementById("root")

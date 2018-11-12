@@ -1,28 +1,42 @@
-
-import React from 'react'
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import classNames from "classnames";
 
 import TextField from "@material-ui/core/TextField";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
+import FormatQuoteIcon from "@material-ui/icons/FormatQuote";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-const styles = () => ({
+import styles from "./style";
 
-})
-
-const Statement = () => (
-  <div className="question d-flex">
-    <div className="mt-1">
-      <CheckBoxIcon />
-      <RadioButtonCheckedIcon />
-    </div>
-    <div className="ml-2 col">
-      <TextField placeholder="Statement Question ..." fullWidth />
-      <div>
-        <label htmlFor=""></label>
+class Statement extends React.Component {
+  render() {
+    const { order = 0, title, classes, required, onChange } = this.props;
+    const A = 65;
+    return (
+      <div className="question d-flex">
+        <div className="mt-1 d-flex">
+          <FormatQuoteIcon color="primary" />
+          <div
+            className={classNames(classes.order, required && classes.required)}
+            onClick={() => onChange({ required: !required })}
+          >
+            {String.fromCharCode(A + order)}
+          </div>
+          <DeleteIcon
+            className={classes.delete}
+            onClick={() => onChange(null)}
+          />
+        </div>
+        <div className="ml-2 col">
+          <TextField
+            value={title || ""}
+            placeholder="Statement Question ..."
+            onChange={e => onChange({ title: e.target.value })}
+            fullWidth
+          />
+        </div>
       </div>
-    </div>
-  </div>
-)
-
-export default withStyles(styles)(Statement)
+    );
+  }
+}
+export default withStyles(styles)(Statement);

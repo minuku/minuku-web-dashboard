@@ -5,7 +5,7 @@ import Dashboard from "layouts/Dashboard";
 const styles = theme => ({});
 
 const Scehdule = () => (
-  <Dashboard  title="Schedule Section 行程設定">
+  <Dashboard title="Schedule Section 行程設定">
     <div />
   </Dashboard>
 );
