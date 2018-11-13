@@ -76,7 +76,7 @@ class Sidebar extends React.Component {
             )}
           </IconButton>
         </div>
-        <List>{ListItems}</List>
+        <List><ListItems /></List>
       </Drawer>
     );
   }
