@@ -35,7 +35,8 @@ import ConditionDialog from "components/ConditionDialog";
 
 import Dashboard from "layouts/Dashboard";
 
-const styles = theme => ({
+const styles = theme => {
+  return {
   card: {
     width: 600,
     marginTop: "50px",
@@ -63,7 +64,7 @@ const styles = theme => ({
     justifyContent: "flex-start",
     display: "flex"
   }
-});
+}};
 
 const defaultCondition = {
   isOpen: true,
