@@ -30,17 +30,22 @@ class ChildComponent extends React.Component {
 
   render() {
     const { classes, name } = this.props;
+    const { open } = this.state;
+
     return (
       <Fragment>
         <ListItem button onClick={this.handleClick} className="pl-5">
           <ListItemIcon>
             <ArrowRightIcon />
           </ListItemIcon>
-          <ListItemText inset primary={name} />
-          {this.state.open ? <ExpandLess /> : <ExpandMore />}
+          <ListItemText 
+            inset 
+            primary={name} 
+            />
+          {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
 
-        <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+        <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className={classes.nested} component={NavLink} to="/dashboard/condition">
               <ListItemIcon>
@@ -51,7 +56,7 @@ class ChildComponent extends React.Component {
           </List>
         </Collapse>
 
-        <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+        <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className={classes.nested} component={NavLink} to="/dashboard/questionnaire">
               <ListItemIcon>
@@ -62,7 +67,7 @@ class ChildComponent extends React.Component {
           </List>
         </Collapse>
 
-        <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+        <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className={classes.nested} component={NavLink} to="/dashboard/data">
                 <ListItemIcon>
@@ -73,7 +78,7 @@ class ChildComponent extends React.Component {
           </List>
         </Collapse>
 
-        <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+        <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className={classes.nested} component={NavLink} to="/dashboard/monitor">
               <ListItemIcon>

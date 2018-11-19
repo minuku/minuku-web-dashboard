@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { NavLink } from "react-router-dom";
+
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -7,35 +9,117 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import LinearScaleIcon from "@material-ui/icons/LinearScale";
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
-import ChildrenComponent from './ChildrenComponent'
+import ChildrenComponent from './childrenComponent'
 
-const ParentComponent = ({ addItem, toggleList, open, items }) => (
-  <div className="card calculator">
-    <ListItem button>
-      <ListItemIcon>
-        <LinearScaleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Project List" />
-      <Typography color="textSecondary">
-        <AddIcon onClick={addItem} />
-        <span onClick={toggleList}>
-          {
-            open
-              ? <ExpandLessIcon />
-              : <ExpandMoreIcon />
-          }
-        </span>
-      </Typography>
+class ParentComponent extends Component {
 
-    </ListItem>
-    {
-
-      open && items && items.length
-        ? items.map((item, id) => <ChildrenComponent {...item} key={id}/>)
-        : null
+  state = {
+    open: false,
+    description: {
+      title: ''
     }
-  </div>
-);
+  }
 
-export default ParentComponent
+  handleToggle = () => {
+    const { open } = this.state;
+    this.setState({
+      open: !open
+    })
+  }
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleChange = title => ({ target: { value } }) => {
+    const{ description } = this.state;
+    this.setState({ 
+      description: {
+        ...description,
+        [title]: value
+      }
+    })
+  }
+
+  handleSubmit = () => {
+    const{ items } = this.props;
+    const{ description } = this.state;
+    items.push({ name: description.title});
+  }
+
+  render(){
+
+    const { open,  description: { title } } = this.state;
+    const { toggleList, items, listopen} = this.props;
+
+    return(
+      <div className="card calculator">
+        <ListItem button component={NavLink} to="/dashboard/project">
+          <ListItemIcon>
+            <LinearScaleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Project List" />
+          <Typography color="textSecondary">
+            <AddIcon
+              onClick={this.handleToggle} 
+              color="primary"
+              />
+            <Dialog
+              open={open}
+              onClose={this.handleToggle}
+              aria-labelledby="form-dialog-title"
+            >    
+              <DialogTitle id="form-dialog-title">
+                Create a new project
+              </DialogTitle>
+              <DialogContent>
+                <TextField
+                  label="Title"
+                  value={title}
+                  onChange={this.handleChange('title')}
+                  margin="normal"
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleClose} 
+                  color="primary"
+                >
+                  Close
+                </Button>
+                <Button 
+                  color="primary" 
+                  variant="raised"
+                  onClick={this.handleSubmit}  
+                  autoFocus
+                  >
+                  Create
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <span onClick={toggleList}>
+              {
+                listopen
+                ? <ExpandLessIcon />
+                : <ExpandMoreIcon />
+              }
+            </span>
+          </Typography> 
+        </ListItem>
+        {
+          listopen && items && items.length
+          ? items.map((item, id) => <ChildrenComponent {...item} key={id}/>)
+          : null
+        }
+      </div>
+    )
+  }
+}
+
+export default ParentComponent;

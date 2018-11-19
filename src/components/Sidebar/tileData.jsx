@@ -5,7 +5,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 
-import CreateNewProject from './CreateProject'
+import CreateNewProject from './createProject'
 
 class ListItems extends React.Component{
   render() {
