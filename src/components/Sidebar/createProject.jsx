@@ -1,26 +1,26 @@
 import React, { Component } from 'react'
-import ParentComponent from './parentComponent'
-import ChildComponent from './childrenComponent'
+import ParentComponent from './ParentComponent'
 
 class CreateNewProject extends Component {
+  constructor(props){
+    super(props)
+    this.state = { items: [], open: true  }
+  }
 
-  state = {
-    num: 0
-  };
-
-  appendChild = () => {
-    this.setState({
-      num: this.state.num + 1
-    });
+  appendItem = () => {
+    const { items } = this.state
+    this.setState({ items: [...items, { name: "New Project" } ] });
   };
 
   render(){
-    const children = [];
-    for (var i = 0; i < this.state.num; i += 1) {
-      children.push(<ChildComponent key={i} number={i} />);
-    }
+    const { open, items } = this.state
     return(
-      <ParentComponent addChild={this.appendChild}>{children}</ParentComponent>
+      <ParentComponent
+        addItem={this.appendItem}
+        toggleList={() => this.setState({ open: !open })}
+        open={open}
+        items={items}
+      />
     )
   }
 }

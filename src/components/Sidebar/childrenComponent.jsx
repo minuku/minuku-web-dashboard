@@ -3,12 +3,12 @@ import { NavLink } from "react-router-dom";
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import SendIcon from '@material-ui/icons/Send';
+import ArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core/styles';
 import Collapse from '@material-ui/core/Collapse';
 import List from '@material-ui/core/List';
-import StarBorder from '@material-ui/icons/StarBorder';
+import SettingsIcon from '@material-ui/icons/Settings';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 
@@ -29,14 +29,14 @@ class ChildComponent extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, name } = this.props;
     return (
       <Fragment>
         <ListItem button onClick={this.handleClick} className="pl-5">
           <ListItemIcon>
-            <SendIcon />
+            <ArrowRightIcon />
           </ListItemIcon>
-          <ListItemText inset primary={"Project " + this.props.number} />
+          <ListItemText inset primary={name} />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
 
@@ -44,7 +44,7 @@ class ChildComponent extends React.Component {
           <List component="div" disablePadding>
             <ListItem button className={classes.nested} component={NavLink} to="/dashboard/condition">
               <ListItemIcon>
-                <StarBorder />
+                <SettingsIcon />
               </ListItemIcon>
               <ListItemText inset primary="Condition" />
             </ListItem>
@@ -55,7 +55,7 @@ class ChildComponent extends React.Component {
           <List component="div" disablePadding>
             <ListItem button className={classes.nested} component={NavLink} to="/dashboard/questionnaire">
               <ListItemIcon>
-                <StarBorder />
+                <SettingsIcon />
               </ListItemIcon>
               <ListItemText inset primary="Questionnaire" />
             </ListItem>
@@ -66,7 +66,7 @@ class ChildComponent extends React.Component {
           <List component="div" disablePadding>
             <ListItem button className={classes.nested} component={NavLink} to="/dashboard/data">
                 <ListItemIcon>
-                  <StarBorder />
+                  <SettingsIcon />
                 </ListItemIcon>
               <ListItemText inset primary="Data Collection" />
             </ListItem>
@@ -77,7 +77,7 @@ class ChildComponent extends React.Component {
           <List component="div" disablePadding>
             <ListItem button className={classes.nested} component={NavLink} to="/dashboard/monitor">
               <ListItemIcon>
-                <StarBorder />
+                <SettingsIcon />
               </ListItemIcon>
               <ListItemText inset primary="My Data" />
             </ListItem>
@@ -89,4 +89,3 @@ class ChildComponent extends React.Component {
 }
 
 export default withStyles(styles)(ChildComponent);
-

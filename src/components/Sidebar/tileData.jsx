@@ -5,7 +5,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 
-import CreateNewProject from './createProject'
+import CreateNewProject from './CreateProject'
+
 class ListItems extends React.Component{
   render() {
     return(
@@ -15,7 +16,7 @@ class ListItems extends React.Component{
             <AccountBoxIcon />
           </ListItemIcon>
           <ListItemText primary="Profile" />
-        </ListItem>   
+        </ListItem>
         <CreateNewProject />
       </div>
     )
