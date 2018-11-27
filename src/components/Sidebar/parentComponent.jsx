@@ -23,8 +23,10 @@ class ParentComponent extends Component {
   state = {
     open: false,
     description: {
-      title: ''
-    }
+      title: '',
+      id: ''
+    },
+    items:[]
   }
 
   handleToggle = () => {
@@ -49,15 +51,29 @@ class ParentComponent extends Component {
   }
 
   handleSubmit = () => {
-    const{ items } = this.props;
-    const{ description } = this.state;
-    items.push({ name: description.title});
+    const{ description, items } = this.state;
+    items.push({ 
+      name: description.title,
+      id: description.title
+    });
+    this.setState({ 
+      open: false,
+      description: {
+        title: ''
+      }
+     });
+  }
+
+  handleDelete = (id) => {
+    this.setState(({items})=>({
+      items: items.filter(ex => ex.id !== id),
+    }))
   }
 
   render(){
 
-    const { open,  description: { title } } = this.state;
-    const { toggleList, items, listopen} = this.props;
+    const { open,  description: { title, id }, items } = this.state;
+    const { toggleList,  listopen} = this.props;
 
     return(
       <div className="card calculator">
@@ -88,11 +104,6 @@ class ParentComponent extends Component {
                 />
               </DialogContent>
               <DialogActions>
-                <Button onClick={this.handleClose} 
-                  color="primary"
-                >
-                  Close
-                </Button>
                 <Button 
                   color="primary" 
                   variant="raised"
@@ -114,7 +125,7 @@ class ParentComponent extends Component {
         </ListItem>
         {
           listopen && items && items.length
-          ? items.map((item, id) => <ChildrenComponent {...item} key={id}/>)
+          ? items.map((item, id) => <ChildrenComponent onDelete={this.handleDelete} {...item} key={id} />)
           : null
         }
       </div>
