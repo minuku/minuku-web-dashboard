@@ -1,6 +1,6 @@
 let url = `https://minukutest.nctu.me/minukutest`;
 
-export const getDatacollections = ({ projectName }) => {
+export const getDatacollections = projectName => {
   console.log(projectName);
   const request = () => {
     return { type: "GET_DATACOLLECTIONS" };
