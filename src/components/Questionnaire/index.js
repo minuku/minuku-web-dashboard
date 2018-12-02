@@ -1,5 +1,4 @@
 import React from "react";
-import { findDOMNode } from "react-dom";
 import { DropTarget } from "react-dnd";
 
 import * as Questions from "./Questions";
