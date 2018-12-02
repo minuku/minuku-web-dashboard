@@ -19,7 +19,10 @@ const RootRouter = () => (
     <Switch>
       <PrivateRoute exact path="/dashboard" component={Profile} />
       <PrivateRoute path="/dashboard/profile" component={Profile} />
-      <PrivateRoute path="/dashboard/projects" component={Project} />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/schema"
+        component={Project}
+      />
       <PrivateRoute
         path="/dashboard/project/:projectName/condition"
         component={Condition}
