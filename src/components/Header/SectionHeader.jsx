@@ -39,7 +39,7 @@ const SectionHeader = ({ classes, children }) => (
     <Toolbar className={classes.bar}>
       <MuiThemeProvider theme={theme}>
         <Typography variant="headline" color="inherit" noWrap>
-          { children }
+          {children}
         </Typography>
       </MuiThemeProvider>
     </Toolbar>

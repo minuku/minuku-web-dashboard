@@ -14,19 +14,18 @@ class PrivateRoute extends React.Component {
   };
 
   checkAuth = () => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token");
 
     if (token) {
       this.setState(state => ({ ...state, isLoading: true }));
-    }
-    else {
+    } else {
       console.log(`not authed`);
     }
 
-    this.setState(({
+    this.setState({
       isAuthed: !!token,
       isLoading: false
-    }));
+    });
   };
 
   componentWillMount = () => {
@@ -35,7 +34,7 @@ class PrivateRoute extends React.Component {
 
   componentWillReceiveProps = nextProps => {
     if (nextProps.location.pathname !== this.props.location.pathname) {
-     this.checkAuth();
+      this.checkAuth();
     }
   };
 
@@ -55,7 +54,7 @@ class PrivateRoute extends React.Component {
           )
         }
       />
-    )
+    );
   }
 }
 

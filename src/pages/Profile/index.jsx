@@ -27,8 +27,8 @@ const styles = theme => ({
       maxWidth: 200
     },
     minWidth: 275,
-    marginRight: 'auto',
-    marginLeft: 'auto'
+    marginRight: "auto",
+    marginLeft: "auto"
   },
   bullet: {
     display: "inline-block",

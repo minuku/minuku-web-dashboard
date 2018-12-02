@@ -19,13 +19,31 @@ const RootRouter = () => (
     <Switch>
       <PrivateRoute exact path="/dashboard" component={Profile} />
       <PrivateRoute path="/dashboard/profile" component={Profile} />
-      <PrivateRoute path="/dashboard/project" component={Project} />
-      <PrivateRoute path="/dashboard/condition" component={Condition} />
-      <PrivateRoute path="/dashboard/situation" component={Situation} />
-      <PrivateRoute path="/dashboard/questionnaire" component={Questionnaire} />
-      <PrivateRoute path="/dashboard/schedule" component={Schedule} />
-      <PrivateRoute path="/dashboard/data" component={Data} />
-      <PrivateRoute path="/dashboard/monitor" component={Monitor} />
+      <PrivateRoute path="/dashboard/projects" component={Project} />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/condition"
+        component={Condition}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/situation"
+        component={Situation}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/questionnaire"
+        component={Questionnaire}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/schedule"
+        component={Schedule}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/data"
+        component={Data}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/monitor"
+        component={Monitor}
+      />
       {/* Account routes */}
       <Route path="/login" component={Account.Login} />
       <Route path="/signup" component={Account.Signup} />

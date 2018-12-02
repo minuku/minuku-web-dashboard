@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getDatacollections: () => dispatch(getDatacollections()),
+  getDatacollections: (...args) => dispatch(getDatacollections(args)),
   addDatacollection: data => dispatch(addDatacollection(data)),
   deleteDatacollection: data => dispatch(deleteDatacollection(data)),
   getDevices: name => dispatch(getDevices(name)),

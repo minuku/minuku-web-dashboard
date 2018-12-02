@@ -34,10 +34,10 @@ const styles = theme => ({
     transform: "translateX(-50%)",
     display: `flex`,
     flexDirection: `column`,
-    [theme.breakpoints.down("xs")]:{
+    [theme.breakpoints.down("xs")]: {
       maxWidth: 300,
-      transform: "translateX(-40%)",
-    },
+      transform: "translateX(-40%)"
+    }
   },
   title: {
     marginBottom: 16,

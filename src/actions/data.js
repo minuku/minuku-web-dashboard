@@ -1,6 +1,7 @@
 let url = `https://minukutest.nctu.me/minukutest`;
 
-export const getDatacollections = () => {
+export const getDatacollections = ({ projectName }) => {
+  console.log(projectName);
   const request = () => {
     return { type: "GET_DATACOLLECTIONS" };
   };
@@ -14,7 +15,7 @@ export const getDatacollections = () => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
     fetch(
-      `${url}/project/project1/situation/situation1/datacollection?token=${token}`,
+      `${url}/project/${projectName}/situation/situation1/datacollection?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"

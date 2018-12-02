@@ -1,20 +1,26 @@
 import React from "react";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
+import { NavLink } from "react-router-dom";
 
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItems from "./tileData";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+
+import CreateNewProject from "./createProject";
 
 const styles = (theme, drawerWidth = 240) => ({
   drawerPaper: {
     position: "relative",
     whiteSpace: "nowrap",
     [theme.breakpoints.down("xs")]: {
-      width: 60,
+      width: 60
     },
     width: drawerWidth,
     transition: theme.transitions.create("width", {
@@ -48,24 +54,22 @@ const styles = (theme, drawerWidth = 240) => ({
 });
 
 class Sidebar extends React.Component {
+  componentDidMount() {
+    this.props.getProjects();
+  }
   handleDrawerToggle = () => {
     this.props.handleDrawerToggle();
   };
   render() {
-    const { classes, theme } = this.props;
-    //const open = this.props.open || false;
-    const open = true;
+    const { classes, theme, projects } = this.props;
 
     return (
       <Drawer
         variant="permanent"
         classes={{
-          paper: classNames(
-            classes.drawerPaper,
-            !open && classes.drawerPaperClose
-          )
+          paper: classNames(classes.drawerPaper)
         }}
-        open={open}
+        open={true}
       >
         <div className={classes.toolbar}>
           <IconButton onClick={this.handleDrawerToggle}>
@@ -76,7 +80,15 @@ class Sidebar extends React.Component {
             )}
           </IconButton>
         </div>
-        <List><ListItems /></List>
+        <List>
+          <ListItem button component={NavLink} to="/dashboard/profile">
+            <ListItemIcon>
+              <AccountBoxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Profile" />
+          </ListItem>
+          <CreateNewProject projects={projects} />
+        </List>
       </Drawer>
     );
   }

@@ -57,9 +57,13 @@ class AppBarComponent extends React.Component {
             aria-label="open drawer"
             onClick={this.handleDrawerToggle}
             className={classNames(classes.menuButton)}
+          />
+          <Typography
+            variant="title"
+            color="inherit"
+            className={classes.title}
+            noWrap
           >
-          </IconButton>
-          <Typography variant="title" color="inherit" className={classes.title} noWrap>
             Minuku Project
           </Typography>
         </Toolbar>
