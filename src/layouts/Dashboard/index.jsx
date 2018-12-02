@@ -1,7 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
-import { Header, Sidebar } from "components";
+import { Header } from "components";
+import Sidebar from "containers/Sidebar";
 import SectionHeader from "components/Header/SectionHeader";
 
 const styles = theme => ({

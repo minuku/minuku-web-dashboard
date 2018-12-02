@@ -2,6 +2,7 @@ import React from "react";
 
 import { history } from "utils/history";
 import { Route, Router, Switch, Redirect } from "react-router-dom";
+import PrivateRoute from "containers/PrivateRoute";
 
 import Profile from "pages/Profile";
 import Condition from "pages/Condition";
@@ -16,15 +17,33 @@ import * as Account from "containers/Account";
 const RootRouter = () => (
   <Router history={history}>
     <Switch>
-      <Route exact path="/dashboard" component={Profile} />
-      <Route path="/dashboard/profile" component={Profile} />
-      <Route path="/dashboard/project" component={Project} />
-      <Route path="/dashboard/condition" component={Condition} />
-      <Route path="/dashboard/situation" component={Situation} />
-      <Route path="/dashboard/questionnaire" component={Questionnaire} />
-      <Route path="/dashboard/schedule" component={Schedule} />
-      <Route path="/dashboard/data" component={Data} />
-      <Route path="/dashboard/monitor" component={Monitor} />
+      <PrivateRoute exact path="/dashboard" component={Profile} />
+      <PrivateRoute path="/dashboard/profile" component={Profile} />
+      <PrivateRoute path="/dashboard/projects" component={Project} />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/condition"
+        component={Condition}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/situation"
+        component={Situation}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/questionnaire"
+        component={Questionnaire}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/schedule"
+        component={Schedule}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/data"
+        component={Data}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/monitor"
+        component={Monitor}
+      />
       {/* Account routes */}
       <Route path="/login" component={Account.Login} />
       <Route path="/signup" component={Account.Signup} />

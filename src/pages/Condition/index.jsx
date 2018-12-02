@@ -37,34 +37,35 @@ import Dashboard from "layouts/Dashboard";
 
 const styles = theme => {
   return {
-  card: {
-    width: 600,
-    marginTop: "50px",
-    marginRight: 'auto',
-    marginLeft: 'auto',
-    [theme.breakpoints.down("md")]:{
-      maxWidth: 450,
+    card: {
+      width: 600,
+      marginTop: "50px",
+      marginRight: "auto",
+      marginLeft: "auto",
+      [theme.breakpoints.down("md")]: {
+        maxWidth: 450
+      },
+      [theme.breakpoints.down("xs")]: {
+        maxWidth: 300
+      }
     },
-    [theme.breakpoints.down("xs")]:{
-      maxWidth: 300,
+    media: {
+      height: 0,
+      paddingTop: "56.25%" // 16:9
     },
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%" // 16:9
-  },
-  actions: {
-    justifyContent: "center",
-    marginBottom: "10px"
-  },
-  timePick: {
-    width: 82
-  },
-  listItem: {
-    justifyContent: "flex-start",
-    display: "flex"
-  }
-}};
+    actions: {
+      justifyContent: "center",
+      marginBottom: "10px"
+    },
+    timePick: {
+      width: 82
+    },
+    listItem: {
+      justifyContent: "flex-start",
+      display: "flex"
+    }
+  };
+};
 
 const defaultCondition = {
   isOpen: true,
