@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
 
 import AddIcon from "@material-ui/icons/Add";
 import Typography from "@material-ui/core/Typography";
@@ -22,10 +21,8 @@ class ParentComponent extends Component {
   state = {
     open: false,
     description: {
-      title: "",
-      id: ""
-    },
-    items: []
+      title: ""
+    }
   };
 
   handleToggle = () => {
@@ -50,11 +47,9 @@ class ParentComponent extends Component {
   };
 
   handleSubmit = () => {
-    const { description, items } = this.state;
-    items.push({
-      name: description.title,
-      id: description.title
-    });
+    const { description } = this.state;
+    const { addProject } = this.props;
+    addProject(description.title);
     this.setState({
       open: false,
       description: {
@@ -63,10 +58,9 @@ class ParentComponent extends Component {
     });
   };
 
-  handleDelete = id => {
-    this.setState(({ items }) => ({
-      items: items.filter(ex => ex.id !== id)
-    }));
+  handleDelete = name => {
+    const { deleteProject } = this.props;
+    deleteProject(name);
   };
 
   render() {
@@ -78,7 +72,7 @@ class ParentComponent extends Component {
 
     return (
       <div className="card calculator">
-        <ListItem button component={NavLink} to="/dashboard/project">
+        <ListItem button>
           <ListItemIcon>
             <LinearScaleIcon />
           </ListItemIcon>

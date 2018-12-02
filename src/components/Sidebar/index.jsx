@@ -61,7 +61,7 @@ class Sidebar extends React.Component {
     this.props.handleDrawerToggle();
   };
   render() {
-    const { classes, theme, projects } = this.props;
+    const { classes, theme, projects, addProject, deleteProject } = this.props;
 
     return (
       <Drawer
@@ -87,7 +87,11 @@ class Sidebar extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Profile" />
           </ListItem>
-          <CreateNewProject projects={projects} />
+          <CreateNewProject
+            projects={projects}
+            addProject={addProject}
+            deleteProject={deleteProject}
+          />
         </List>
       </Drawer>
     );

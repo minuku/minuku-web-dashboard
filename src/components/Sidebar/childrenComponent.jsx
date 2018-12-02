@@ -43,9 +43,9 @@ class ChildComponent extends React.Component {
   };
 
   handleDelete = () => {
-    const { onDelete, id } = this.props;
+    const { onDelete, id, name } = this.props;
     this.setState(state => ({ open: !state.open }));
-    onDelete(id);
+    onDelete(name);
   };
 
   render() {
