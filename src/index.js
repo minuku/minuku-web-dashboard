@@ -12,7 +12,6 @@ import { DragDropContextProvider } from "react-dnd";
 
 import RootRouter from "routes";
 
-import { configureFakeBackend } from "utils/fakeBackend";
 import registerServiceWorker from "./registerServiceWorker";
 
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
@@ -24,9 +23,6 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(thunk)
 );
-
-// setup fake backend
-configureFakeBackend();
 
 // customize mui theme
 const theme = createMuiTheme(customizeTheme);

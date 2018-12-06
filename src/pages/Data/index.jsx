@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { withRouter } from "react-router";
 
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -69,7 +70,8 @@ class DataSection extends React.Component {
   };
 
   getcollection = () => {
-    this.props.getDatacollections();
+    const { getDatacollections, match } = this.props;
+    getDatacollections(match.params.projectName);
   };
 
   addCollection = title => {
@@ -157,4 +159,4 @@ class DataSection extends React.Component {
   }
 }
 
-export default withStyles(styles)(DataSection);
+export default withRouter(withStyles(styles)(DataSection));
