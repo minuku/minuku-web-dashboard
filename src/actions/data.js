@@ -15,7 +15,7 @@ export const getDatacollections = projectName => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
     fetch(
-      `${url}/project/${projectName}/situation/situation1/datacollection?token=${token}`,
+      `${url}/project/${projectName}/datacollection?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"
@@ -52,7 +52,7 @@ export const addDatacollection = data => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
     fetch(
-      `${url}/project/project1/situation/situation1/datacollection?token=${token}`,
+      `${url}/project/project1/datacollection?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"
@@ -91,7 +91,7 @@ export const deleteDatacollection = title => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
     fetch(
-      `${url}/project/project1/situation/situation1/datacollection/${title}?token=${token}`,
+      `${url}/project/project1/datacollection/${title}?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"
@@ -125,7 +125,7 @@ export const getDevices = name => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
     fetch(
-      `${url}/project/project1/situation/situation1/datacollection/${name}?token=${token}`,
+      `${url}/project/project1/datacollection/${name}?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"
@@ -159,7 +159,7 @@ export const addDevice = (name, info) => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
     fetch(
-      `${url}/project/project1/situation/situation1/datacollection/${name}/device?token=${token}`,
+      `${url}/project/project1/datacollection/${name}/device?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"
@@ -197,7 +197,7 @@ export const deleteDevice = (collectionName, deviceName) => {
     let token = localStorage.getItem(`token`);
 
     fetch(
-      `${url}/project/project1/situation/situation1/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
+      `${url}/project/project1/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"
@@ -232,7 +232,7 @@ export const updateDevice = (collectionName, deviceName, data) => {
     let token = localStorage.getItem(`token`);
 
     fetch(
-      `${url}/project/project1/situation/situation1/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
+      `${url}/project/project1/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"
