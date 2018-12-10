@@ -2,6 +2,8 @@ import React from "react";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 
+import { Link } from 'react-router-dom'
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -39,6 +41,11 @@ const styles = (theme, drawerWidth = 240) => ({
   title: {
     marginLeft: -70,
     flexGrow: 1
+  },
+  loginButtonText: {
+    marginLeft: 1 * theme.spacing.unit,
+    color: 'white',
+    textDecoration: 'none',
   }
 });
 
@@ -77,12 +84,16 @@ class AppBarComponent extends React.Component {
           {user && user.username ? (
             <Button color="inherit" className="mr-2">
               <AccountBoxIcon />
-              <span className="mx-2">{user.username}</span>
+              <Link className={classes.loginButtonText} to="/profile">
+                { user.username }
+              </Link>
             </Button>
           ) : (
             <Button color="inherit" className="mr-2">
               <AccountBoxIcon />
-              <span className="mx-2">Login</span>
+              <Link className={classes.loginButtonText} to="/login">
+                Login
+              </Link>
             </Button>
           )}
         </Toolbar>
