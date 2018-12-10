@@ -6,6 +6,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import Button from "@material-ui/core/Button";
 
 const styles = (theme, drawerWidth = 240) => ({
   appBar: {
@@ -35,16 +37,22 @@ const styles = (theme, drawerWidth = 240) => ({
     display: "none"
   },
   title: {
-    marginLeft: -70
+    marginLeft: -70,
+    flexGrow: 1
   }
 });
 
 class AppBarComponent extends React.Component {
+  state = { user: null };
   handleDrawerToggle = () => {
     this.props.handleDrawerToggle();
   };
+  componentDidMount() {
+    const { getUser } = this.props;
+    getUser();
+  }
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
     const open = false;
     return (
       <AppBar
@@ -66,6 +74,17 @@ class AppBarComponent extends React.Component {
           >
             Minuku Project
           </Typography>
+          {user && user.username ? (
+            <Button color="inherit" className="mr-2">
+              <AccountBoxIcon />
+              <span className="mx-2">{user.username}</span>
+            </Button>
+          ) : (
+            <Button color="inherit" className="mr-2">
+              <AccountBoxIcon />
+              <span className="mx-2">Login</span>
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     );

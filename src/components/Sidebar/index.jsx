@@ -1,17 +1,12 @@
 import React from "react";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
-import { NavLink } from "react-router-dom";
 
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import IconButton from "@material-ui/core/IconButton";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
 
 import CreateNewProject from "./createProject";
 
@@ -81,12 +76,6 @@ class Sidebar extends React.Component {
           </IconButton>
         </div>
         <List>
-          <ListItem button component={NavLink} to="/dashboard/profile">
-            <ListItemIcon>
-              <AccountBoxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Profile" />
-          </ListItem>
           <CreateNewProject
             projects={projects}
             addProject={addProject}

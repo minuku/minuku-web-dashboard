@@ -12,6 +12,12 @@ const account = (state = [], action) => {
       return { ...state, ...action.payload };
     case "LOGIN_ERROR":
       return state;
+    case "GET_USER_REQUEST":
+      return state;
+    case "GET_USER_SUCCESS":
+      return { ...state, ...action.payload };
+    case "GET_USER_ERROR":
+      return state;
     default:
       return state;
   }
