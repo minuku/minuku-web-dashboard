@@ -14,15 +14,12 @@ export const getDatacollections = projectName => {
   return dispatch => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
-    fetch(
-      `${url}/project/${projectName}/situation/situation1/datacollection?token=${token}`,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: "GET"
-      }
-    )
+    fetch(`${url}/project/${projectName}/datacollection?token=${token}`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "GET"
+    })
       .then(res => res.json())
       .then(collections => {
         console.log(`collections ->`, collections);
@@ -51,19 +48,16 @@ export const addDatacollection = data => {
   return dispatch => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
-    fetch(
-      `${url}/project/project1/situation/situation1/datacollection?token=${token}`,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          datacollectionName: data.title,
-          datacollectionType: data.dataCollectionCategory
-        }),
-        method: "POST"
-      }
-    )
+    fetch(`${url}/project/project1/datacollection?token=${token}`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        datacollectionName: data.title,
+        datacollectionType: data.dataCollectionCategory
+      }),
+      method: "POST"
+    })
       .then(res => res.json())
       .then(res => {
         dispatch(success(res));
@@ -90,15 +84,12 @@ export const deleteDatacollection = title => {
   return dispatch => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
-    fetch(
-      `${url}/project/project1/situation/situation1/datacollection/${title}?token=${token}`,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: "DELETE"
-      }
-    )
+    fetch(`${url}/project/project1/datacollection/${title}?token=${token}`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "DELETE"
+    })
       .then(res => res.json())
       .then(res => {
         dispatch(success(title));
@@ -124,15 +115,12 @@ export const getDevices = name => {
   return dispatch => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
-    fetch(
-      `${url}/project/project1/situation/situation1/datacollection/${name}?token=${token}`,
-      {
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: "GET"
-      }
-    )
+    fetch(`${url}/project/project1/datacollection/${name}?token=${token}`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "GET"
+    })
       .then(res => res.json())
       .then(res => {
         let obj = { collection: name, devices: res.devices };
@@ -159,7 +147,7 @@ export const addDevice = (name, info) => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
     fetch(
-      `${url}/project/project1/situation/situation1/datacollection/${name}/device?token=${token}`,
+      `${url}/project/project1/datacollection/${name}/device?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"
@@ -197,7 +185,7 @@ export const deleteDevice = (collectionName, deviceName) => {
     let token = localStorage.getItem(`token`);
 
     fetch(
-      `${url}/project/project1/situation/situation1/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
+      `${url}/project/project1/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"
@@ -232,7 +220,7 @@ export const updateDevice = (collectionName, deviceName, data) => {
     let token = localStorage.getItem(`token`);
 
     fetch(
-      `${url}/project/project1/situation/situation1/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
+      `${url}/project/project1/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
       {
         headers: {
           "Content-Type": "application/json"

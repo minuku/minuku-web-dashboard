@@ -1,4 +1,3 @@
-// import { userService } from "utils/userService";
 import { history } from "utils/history";
 let url = `https://minukutest.nctu.me/minukutest`;
 
@@ -40,15 +39,6 @@ export const login = user => {
         dispatch(failure(err));
         console.log(`err`, err);
       });
-    // userService.login(user).then(
-    //   user => {
-    //     dispatch(success(user));
-    //     history.push("/dashboard/");
-    //   },
-    //   error => {
-    //     dispatch(failure(error));
-    //   }
-    // );
   };
 };
 
@@ -91,20 +81,45 @@ export const register = user => {
         console.log(err);
         dispatch(failure(err));
       });
-    // userService.register(user).then(
-    //   user => {
-    //     dispatch(success(user));
-    //     history.push("/login");
-    //     // dispatch(alertActions.success('Registration successful'));
-    //   },
-    //   error => {
-    //     dispatch(failure(error));
-    //     // dispatch(alertActions.error(error))
-    //   }
-    // );
   };
 };
 
 export const logout = () => {
   return { type: "LOGOUT" };
+};
+
+export const getUser = () => {
+  const request = () => {
+    return { type: "GET_USER_REQUEST" };
+  };
+  const success = payload => {
+    return { type: "GET_USER_SUCCESS", payload };
+  };
+  const failure = error => {
+    return { type: "GET_USER_ERROR", error };
+  };
+
+  const token = localStorage.getItem("token");
+
+  return dispatch => {
+    dispatch(request());
+    fetch(`${url}/profile?token=${token}`, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(resp => {
+        try {
+          return resp.json();
+        } catch (err) {}
+        return resp.text();
+      })
+      .then(data => {
+        dispatch(success(data));
+      })
+      .catch(err => {
+        dispatch(failure(err));
+        console.log(`err`, err);
+      });
+  };
 };

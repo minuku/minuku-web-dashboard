@@ -4,13 +4,13 @@ import { history } from "utils/history";
 import { Route, Router, Switch, Redirect } from "react-router-dom";
 import PrivateRoute from "containers/PrivateRoute";
 
-import Profile from "pages/Profile";
 import Condition from "pages/Condition";
 import Project from "pages/Project";
 import Monitor from "pages/Monitor";
 import Situation from "pages/Situation";
 import Schedule from "pages/Schedule";
 import Questionnaire from "pages/Questionnaire";
+import Profile from "containers/Profile";
 import Data from "containers/Data";
 import * as Account from "containers/Account";
 

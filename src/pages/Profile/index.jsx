@@ -9,9 +9,6 @@ import TextField from "@material-ui/core/TextField";
 
 import Dashboard from "layouts/Dashboard";
 
-// fake apiUrl
-import { userService } from "utils/userService";
-
 const styles = theme => ({
   root: {
     display: "flex",
@@ -50,7 +47,7 @@ const styles = theme => ({
 
 class Profile extends React.Component {
   state = {
-    displayName: ``,
+    username: ``,
     email: ``
   };
   handleChange = name => event => {
@@ -58,22 +55,13 @@ class Profile extends React.Component {
       [name]: event.target.value
     });
   };
-  updateProfile = () => {
-    userService
-      .updateProfile({ displayName: this.state.displayName })
-      .then(res => {
-        console.log(res);
-      });
-  };
+  updateProfile = () => {};
   componentDidMount() {
-    userService.queryProfile().then(res => {
-      this.setState({
-        displayName: res.displayName
-      });
-    });
+    const { getUser } = this.props;
+    getUser();
   }
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
     return (
       <Dashboard title="User Profile Section 使用者資料設定">
         <div className={classes.root}>
@@ -88,8 +76,8 @@ class Profile extends React.Component {
                   id="displayName"
                   label="display name"
                   className={classes.textField}
-                  value={this.state.displayName}
-                  onChange={this.handleChange("displayName")}
+                  value={user.username || ""}
+                  onChange={this.handleChange("username")}
                   margin="normal"
                 />
 
@@ -98,7 +86,7 @@ class Profile extends React.Component {
                   id="email"
                   label="email"
                   className={classes.textField}
-                  value={this.state.email}
+                  value={this.state.email || ""}
                   onChange={this.handleChange("email")}
                   margin="normal"
                 />
