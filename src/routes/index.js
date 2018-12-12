@@ -12,13 +12,14 @@ import Schedule from "pages/Schedule";
 import Questionnaire from "pages/Questionnaire";
 import Profile from "containers/Profile";
 import Data from "containers/Data";
+import UserProfile from 'pages/UserProfile';
 import * as Account from "containers/Account";
 
 const RootRouter = () => (
   <Router history={history}>
     <Switch>
       <PrivateRoute exact path="/dashboard" component={Profile} />
-      <PrivateRoute path="/dashboard/profile" component={Profile} />
+      <PrivateRoute path="/dashboard/profile" component={UserProfile} />
       <PrivateRoute
         path="/dashboard/project/:projectName/schema"
         component={Project}

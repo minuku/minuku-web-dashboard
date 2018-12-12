@@ -84,7 +84,7 @@ class AppBarComponent extends React.Component {
           {user && user.username ? (
             <Button color="inherit" className="mr-2">
               <AccountBoxIcon />
-              <Link className={classes.loginButtonText} to="/profile">
+              <Link className={classes.loginButtonText} to="/dashboard/profile">
                 { user.username }
               </Link>
             </Button>
