@@ -63,7 +63,7 @@ class AppBarComponent extends React.Component {
     const open = false;
     return (
       <AppBar
-        position="absolute"
+        position="fixed"
         className={classNames(classes.appBar, open && classes.appBarShift)}
       >
         <Toolbar disableGutters={!open}>
@@ -79,7 +79,9 @@ class AppBarComponent extends React.Component {
             className={classes.title}
             noWrap
           >
-            Minuku Project
+            <Link to="/dashboard" className={classes.loginButtonText}>
+              Minuku Project
+            </Link>    
           </Typography>
           {user && user.username ? (
             <Button color="inherit" className="mr-2">
