@@ -14,7 +14,7 @@ const styles = {
   },
   photo:{
     position: 'relative',
-    height: '40%',
+    height: '60%',
     width:'100%', 
     display: 'flex',
     justifyContent: 'center',
@@ -22,20 +22,20 @@ const styles = {
   },
   menu:{
     position: 'relative',
-    height: '60%',
     width: '100%',
     display: 'block',
   },
   avatar:{
     height: '60%',
-    width: '50%',
+    width: '75%',
     borderRadius: '50%'
   },
   list:{
     display: 'table',
     marginLeft: 'auto',
     marginRight: 'auto',
-    listStyleType: 'none'
+    listStyleType: 'none',
+    marginTop: '-20px'
   },
   item:{
     cursor: 'pointer',
