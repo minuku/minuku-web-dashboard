@@ -4,15 +4,15 @@ import { history } from "utils/history";
 import { Route, Router, Switch, Redirect } from "react-router-dom";
 import PrivateRoute from "containers/PrivateRoute";
 
-import Condition from "pages/Condition";
 import Project from "pages/Project";
 import Monitor from "pages/Monitor";
-import Situation from "pages/Situation";
+import Situation from "containers/Situation";
+import Condition from "pages/Condition";
 import Schedule from "pages/Schedule";
 import Questionnaire from "pages/Questionnaire";
 import Profile from "containers/Profile";
 import Data from "containers/Data";
-import UserProfile from 'pages/UserProfile';
+import UserProfile from "pages/UserProfile";
 import * as Account from "containers/Account";
 
 const RootRouter = () => (
@@ -25,12 +25,12 @@ const RootRouter = () => (
         component={Project}
       />
       <PrivateRoute
-        path="/dashboard/project/:projectName/condition"
-        component={Condition}
-      />
-      <PrivateRoute
         path="/dashboard/project/:projectName/situation"
         component={Situation}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/condition"
+        component={Condition}
       />
       <PrivateRoute
         path="/dashboard/project/:projectName/questionnaire"

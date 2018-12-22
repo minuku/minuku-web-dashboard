@@ -1,50 +1,50 @@
-import React from 'react'
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import FormControl from '@material-ui/core/FormControl';
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
 
-const styles = theme =>( {
+const styles = theme => ({
   content: {
-    position: 'absolute',
-    right: '0',
-    top: '300%',
-    width: '75%',
-    height:'100vh',
-    borderLeft: '1px solid black',
-    padding: '5%'
+    position: "absolute",
+    right: "0",
+    top: "300%",
+    width: "75%",
+    height: "100vh",
+    borderLeft: "1px solid black",
+    padding: "5%"
   },
   formControl: {
     margin: theme.spacing.unit,
     width: 600
   }
-})
+});
 
-class Localization extends React.Component{
+class Localization extends React.Component {
   state = {
-    region: '',
-    time:'',
-    language: ''
+    region: "",
+    time: "",
+    language: ""
   };
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  render(){
-    const {classes} = this.props
-    return(
+  render() {
+    const { classes } = this.props;
+    return (
       <div className={classes.content} id="localization">
-        <h1>Localization</h1> 
+        <h1>Localization</h1>
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="regionDefine">Choose your region</InputLabel>
           <Select
             value={this.state.region}
             onChange={this.handleChange}
             inputProps={{
-              name: 'region',
-              id: 'regionDefine',
+              name: "region",
+              id: "regionDefine"
             }}
           >
             <MenuItem value="">
@@ -62,8 +62,8 @@ class Localization extends React.Component{
             value={this.state.time}
             onChange={this.handleChange}
             inputProps={{
-              name: 'time',
-              id: 'regionDefine',
+              name: "time",
+              id: "regionDefine"
             }}
           >
             <MenuItem value="">
@@ -75,14 +75,14 @@ class Localization extends React.Component{
           </Select>
         </FormControl>
 
-         <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl}>
           <InputLabel htmlFor="regionDefine">Choose your language</InputLabel>
           <Select
             value={this.state.language}
             onChange={this.handleChange}
             inputProps={{
-              name: 'language',
-              id: 'regionDefine',
+              name: "language",
+              id: "regionDefine"
             }}
           >
             <MenuItem value="">
@@ -93,8 +93,8 @@ class Localization extends React.Component{
           </Select>
         </FormControl>
       </div>
-    )
+    );
   }
 }
 
-export default withStyles(styles)(Localization)
+export default withStyles(styles)(Localization);
