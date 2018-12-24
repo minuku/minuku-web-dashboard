@@ -5,12 +5,11 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = theme => ({
   content: {
     position: "absolute",
-    right: "0",
+    left: "15%",
     top: "0",
-    width: "75%",
+    width: "60%",
     height: "100vh",
-    borderLeft: "1px solid black",
-    padding: "5%"
+    padding: "10%"
   },
   textField: {
     width: 200

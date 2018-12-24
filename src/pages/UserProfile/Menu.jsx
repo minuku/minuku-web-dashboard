@@ -6,7 +6,7 @@ import img from "./avatar.png";
 const styles = {
   bar: {
     position: "fixed",
-    left: 0,
+    right: '10%',
     top: 0,
     width: "25%",
     height: "100vh",
@@ -14,7 +14,8 @@ const styles = {
   },
   photo: {
     position: "relative",
-    height: "60%",
+    top: 64,
+    height: "40%",
     width: "100%",
     display: "flex",
     justifyContent: "center",
@@ -26,8 +27,8 @@ const styles = {
     display: "block"
   },
   avatar: {
-    height: "60%",
-    width: "75%",
+    height: "70%",
+    width: "70%",
     borderRadius: "50%"
   },
   list: {
@@ -35,7 +36,7 @@ const styles = {
     marginLeft: "auto",
     marginRight: "auto",
     listStyleType: "none",
-    marginTop: "-20px"
+    paddingTop: "10px"
   },
   item: {
     cursor: "pointer",
@@ -44,6 +45,7 @@ const styles = {
   },
   size: {
     fontSize: 20,
+    margin: 10,
     "&:hover": {
       color: "grey"
     }

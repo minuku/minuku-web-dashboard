@@ -6,12 +6,11 @@ import Checkbox from "@material-ui/core/Checkbox";
 const styles = {
   content: {
     position: "absolute",
-    right: "0",
+    left: "15%",
     top: "200%",
-    width: "75%",
+    width: "60%",
     height: "100vh",
-    borderLeft: "1px solid black",
-    padding: "5%"
+    padding: "10%"
   }
 };
 class Notification extends React.Component {

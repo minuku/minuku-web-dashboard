@@ -26,7 +26,8 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     // padding: theme.spacing.unit * 3,
-
+    position: 'relative',
+    left: 240,
     marginTop: 64,
     [theme.breakpoints.down("sm")]: {
       marginTop: 56

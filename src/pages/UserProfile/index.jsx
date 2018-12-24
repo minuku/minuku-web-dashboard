@@ -6,12 +6,14 @@ import Account from "./Account";
 import Preference from "./Preference";
 import Notification from "./Notification";
 import Localization from "./Localization";
+import SideBar from '../../containers/Sidebar'
 
 class UserProfile extends React.Component {
   render() {
     return (
       <div>
         <Header />
+        <SideBar open={true} />
         <Menu />
         <Account />
         <Preference />

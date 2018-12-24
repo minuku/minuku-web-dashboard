@@ -12,8 +12,9 @@ import CreateNewProject from "./createProject";
 
 const styles = (theme, drawerWidth = 240) => ({
   drawerPaper: {
-    position: "relative",
+    position: "fixed",
     whiteSpace: "nowrap",
+    height: '100vh',
     [theme.breakpoints.down("xs")]: {
       width: 60
     },

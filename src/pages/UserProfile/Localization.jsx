@@ -8,16 +8,15 @@ import FormControl from "@material-ui/core/FormControl";
 const styles = theme => ({
   content: {
     position: "absolute",
-    right: "0",
+    left: "15%",
     top: "300%",
-    width: "75%",
+    width: "60%",
     height: "100vh",
-    borderLeft: "1px solid black",
-    padding: "5%"
+    padding: "10%"
   },
   formControl: {
     margin: theme.spacing.unit,
-    width: 600
+    width: 500
   }
 });
 
