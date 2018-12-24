@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -44,8 +44,8 @@ const styles = (theme, drawerWidth = 240) => ({
   },
   loginButtonText: {
     marginLeft: 1 * theme.spacing.unit,
-    color: 'white',
-    textDecoration: 'none',
+    color: "white",
+    textDecoration: "none"
   }
 });
 
@@ -81,13 +81,13 @@ class AppBarComponent extends React.Component {
           >
             <Link to="/dashboard" className={classes.loginButtonText}>
               Minuku Project
-            </Link>    
+            </Link>
           </Typography>
           {user && user.username ? (
             <Button color="inherit" className="mr-2">
               <AccountBoxIcon />
               <Link className={classes.loginButtonText} to="/dashboard/profile">
-                { user.username }
+                {user.username}
               </Link>
             </Button>
           ) : (

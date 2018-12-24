@@ -102,6 +102,21 @@ class ChildComponent extends React.Component {
               button
               className={classes.nested}
               component={NavLink}
+              to={`${urlPrefix}/situation`}
+            >
+              <ListItemIcon>
+                <SettingsIcon />
+              </ListItemIcon>
+              <ListItemText inset primary="Situation" />
+            </ListItem>
+          </List>
+        </Collapse>
+        <Collapse in={isOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem
+              button
+              className={classes.nested}
+              component={NavLink}
               to={`${urlPrefix}/condition`}
             >
               <ListItemIcon>

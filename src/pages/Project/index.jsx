@@ -6,7 +6,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import ReactJson from "react-json-view";
-import { userService } from "utils/userService";
 import saveAs from "file-saver";
 
 import Dashboard from "layouts/Dashboard";
@@ -58,11 +57,6 @@ class Porfile extends React.Component {
     saveAs(blob, "minuku-config.json");
   };
   componentDidMount() {
-    userService.queryProfile().then(res => {
-      this.setState({
-        displayName: res.displayName
-      });
-    });
     let token = localStorage.getItem(`token`);
     fetch(`${url}/project/project1/situation/situation1?token=${token}`, {
       headers: {
