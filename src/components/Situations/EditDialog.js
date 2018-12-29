@@ -16,7 +16,7 @@ class EditDialog extends React.Component {
     const { onSubmit, onClose } = this.props;
     const { name } = this.state;
     onSubmit(name);
-    this.setState({ name: '' })
+    this.setState({ name: "" });
     onClose();
   };
   render() {
@@ -40,7 +40,7 @@ class EditDialog extends React.Component {
             onClick={this.submitAndClose}
             autoFocus
           >
-            { propsName ? 'Update' : 'Create' }
+            {propsName ? "Update" : "Create"}
           </Button>
         </DialogActions>
       </Dialog>
@@ -48,4 +48,4 @@ class EditDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(EditDialog)
+export default withStyles(styles)(EditDialog);

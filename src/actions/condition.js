@@ -1,9 +1,13 @@
-import { getSituations } from './situations'
+import { getSituations } from "./situations";
 
 const url = `https://minukutest.nctu.me/minukutest`;
 
-export const updateCondition = (projectName, situationName, conditionName, payload) => {
-
+export const updateCondition = (
+  projectName,
+  situationName,
+  conditionName,
+  payload
+) => {
   const token = localStorage.getItem(`token`);
 
   return dispatch => {
@@ -53,10 +57,10 @@ export const addCondition = (projectName, situationName, payload) => {
         method: "POST"
       }
     )
-    .then(response => {
-      if (response.ok) dispatch(getSituations(projectName));
-      else throw Error(response.statusText);
-    })
+      .then(response => {
+        if (response.ok) dispatch(getSituations(projectName));
+        else throw Error(response.statusText);
+      })
       .catch(error => {
         console.error(error);
       });
@@ -76,10 +80,10 @@ export const deleteCondition = (projectName, situationName, conditionName) => {
         method: "DELETE"
       }
     )
-    .then(response => {
-      if (response.ok) dispatch(getSituations(projectName));
-      else throw Error(response.statusText);
-    })
+      .then(response => {
+        if (response.ok) dispatch(getSituations(projectName));
+        else throw Error(response.statusText);
+      })
       .catch(error => {
         console.error(error);
       });

@@ -75,13 +75,16 @@ export const updateSituation = (projectName, situationName, data) => {
   return dispatch => {
     dispatch(request());
     let token = localStorage.getItem(`token`);
-    fetch(`${url}/project/${projectName}/situation/${situationName}?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data),
-      method: "PUT"
-    })
+    fetch(
+      `${url}/project/${projectName}/situation/${situationName}?token=${token}`,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data),
+        method: "PUT"
+      }
+    )
       .then(json => {
         dispatch(success({ data: json }));
         dispatch(getSituations(projectName));

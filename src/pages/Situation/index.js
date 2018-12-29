@@ -8,7 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
 
-import * as Situations from 'components/Situations';
+import * as Situations from "components/Situations";
 
 const styles = theme => ({});
 
@@ -20,25 +20,37 @@ class Situation extends React.Component {
   }
 
   editSituation = situationName => {
-    this.setState({ openCreateSituationDialog: true, editingSituation: situationName })
-  }
+    this.setState({
+      openCreateSituationDialog: true,
+      editingSituation: situationName
+    });
+  };
 
   addSituation = situationName => {
-    const { addSituation, match } = this.props
-    addSituation(match.params.projectName, { situationName })
-  }
+    const { addSituation, match } = this.props;
+    addSituation(match.params.projectName, { situationName });
+  };
 
   updateSituation = newSituationName => {
-    const { editingSituation } = this.state
-    const { updateSituation, match } = this.props
-    console.log(newSituationName)
-    updateSituation(match.params.projectName, editingSituation, { newSituationName })
-  }
-
+    const { editingSituation } = this.state;
+    const { updateSituation, match } = this.props;
+    console.log(newSituationName);
+    updateSituation(match.params.projectName, editingSituation, {
+      newSituationName
+    });
+  };
 
   render() {
     const { openCreateSituationDialog, editingSituation } = this.state;
-    const { deleteSituation, addSituation, situations, addCondition, updateCondition, deleteCondition, match } = this.props;
+    const {
+      deleteSituation,
+      addSituation,
+      situations,
+      addCondition,
+      updateCondition,
+      deleteCondition,
+      match
+    } = this.props;
     return (
       <Dashboard title="Situation Section 資料收集場合設定">
         <div className="d-flex justify-content-center">

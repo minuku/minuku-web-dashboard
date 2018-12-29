@@ -46,7 +46,7 @@ const styles = theme => ({
 
 class Schema extends React.Component {
   downloadJSON = () => {
-    const { data } = this.props
+    const { data } = this.props;
     const cookedData = removeEmptyObjects(data);
     let blob = new Blob([JSON.stringify(cookedData)], {
       type: "text/plain;charset=utf-8"
@@ -54,11 +54,11 @@ class Schema extends React.Component {
     saveAs(blob, "minuku-config.json");
   };
   componentDidMount() {
-    const { match, getData } = this.props
-    getData(match.params.projectName)
+    const { match, getData } = this.props;
+    getData(match.params.projectName);
   }
   render() {
-    const { classes, data  } = this.props;
+    const { classes, data } = this.props;
     return (
       <Dashboard title="Project Section 專案列表">
         <div className={classes.root}>

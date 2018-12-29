@@ -13,7 +13,7 @@ import {
   deleteCondition
 } from "actions/condition";
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   situations: state.situations
 });
 
@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
   deleteSituation: (...args) => dispatch(deleteSituation(...args)),
   addCondition: (...args) => dispatch(addCondition(...args)),
   updateCondition: (...args) => dispatch(updateCondition(...args)),
-  deleteCondition: (...args) => dispatch(deleteCondition(...args)),
+  deleteCondition: (...args) => dispatch(deleteCondition(...args))
 });
 
 export default connect(
