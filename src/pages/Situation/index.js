@@ -13,22 +13,32 @@ import * as Situations from 'components/Situations';
 const styles = theme => ({});
 
 class Situation extends React.Component {
-  state = { openCreateSituationDialog: false };
+  state = { openCreateSituationDialog: false, editingSituation: null };
   componentDidMount() {
     const { getSituations, match } = this.props;
     getSituations(match.params.projectName);
   }
+
+  editSituation = situationName => {
+    this.setState({ openCreateSituationDialog: true, editingSituation: situationName })
+  }
+
   addSituation = situationName => {
-    const { addSituation, match } = this.props;
-    addSituation(match.params.projectName, { situationName });
-  };
-  deleteSituation = situationName => {
-    const { deleteSituation, match } = this.props;
-    deleteSituation(match.params.projectName, situationName);
-  };
+    const { addSituation, match } = this.props
+    addSituation(match.params.projectName, { situationName })
+  }
+
+  updateSituation = newSituationName => {
+    const { editingSituation } = this.state
+    const { updateSituation, match } = this.props
+    console.log(newSituationName)
+    updateSituation(match.params.projectName, editingSituation, { newSituationName })
+  }
+
+
   render() {
-    const { openCreateSituationDialog } = this.state;
-    const { situations } = this.props;
+    const { openCreateSituationDialog, editingSituation } = this.state;
+    const { deleteSituation, addSituation, situations, addCondition, updateCondition, deleteCondition, match } = this.props;
     return (
       <Dashboard title="Situation Section 資料收集場合設定">
         <div className="d-flex justify-content-center">
@@ -38,7 +48,12 @@ class Situation extends React.Component {
               <CardContent>
                 <Situations.List
                   situations={situations}
-                  deleteSituation={this.deleteSituation}
+                  deleteSituation={deleteSituation}
+                  editSituation={this.editSituation}
+                  addCondition={addCondition}
+                  updateCondition={updateCondition}
+                  deleteCondition={deleteCondition}
+                  projectName={match.params.projectName}
                 />
                 <Button
                   variant="fab"
@@ -57,8 +72,9 @@ class Situation extends React.Component {
         </div>
         <Situations.EditDialog
           open={openCreateSituationDialog}
-          addSituation={this.addSituation}
           onClose={() => this.setState({ openCreateSituationDialog: false })}
+          onSubmit={editingSituation ? this.updateSituation : this.addSituation}
+          name={editingSituation}
         />
       </Dashboard>
     );

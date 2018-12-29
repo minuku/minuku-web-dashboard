@@ -6,14 +6,16 @@ import ListItem from './ListItem'
 
 const styles = theme => ({});
 
-const SituationsList = ({ situations, deleteSituation }) => (
+const SituationsList = ({ situations, deleteSituation, projectName, ...rest }) => (
   <List component="nav" disablePadding>
     {situations && situations.length ? (
       situations.map(situation => (
         <ListItem
           key={situation.situationName}
           deleteSituation={deleteSituation}
+          projectName={projectName}
           {...situation}
+          {...rest}
         />
       ))
     ) : (

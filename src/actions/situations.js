@@ -62,6 +62,37 @@ export const addSituation = (projectName, data) => {
   };
 };
 
+export const updateSituation = (projectName, situationName, data) => {
+  const request = () => {
+    return { type: "UPDATE_SITUATION" };
+  };
+  const success = payload => {
+    return { type: "UPDATE_SITUATION_SUCCESS", payload };
+  };
+  const failure = error => {
+    return { type: "UPDATE_SITUATION_ERROR", error };
+  };
+  return dispatch => {
+    dispatch(request());
+    let token = localStorage.getItem(`token`);
+    fetch(`${url}/project/${projectName}/situation/${situationName}?token=${token}`, {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data),
+      method: "PUT"
+    })
+      .then(json => {
+        dispatch(success({ data: json }));
+        dispatch(getSituations(projectName));
+      })
+      .catch(err => {
+        console.log("error", err);
+        dispatch(failure(err));
+      });
+  };
+};
+
 export const deleteSituation = (projectName, situationName) => {
   const request = () => {
     return { type: "DELETE_SITUATION" };

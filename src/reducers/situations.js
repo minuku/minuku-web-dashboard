@@ -1,3 +1,5 @@
+
+
 const situations = (state = [], action) => {
   switch (action.type) {
     case "GET_SITUATIONS":
@@ -12,6 +14,11 @@ const situations = (state = [], action) => {
       return [ ...state, action.payload.data ];
     case "ADD_SITUATION_ERROR":
       return state;
+    case "UPDATE_SITUATION":
+      return state;
+    case "UPDATE_SITUATION_SUCCESS":
+      return [ ...state, action.payload.data ];
+    case "UPDATE_SITUATION_ERROR":
     case "DELETE_SITUATION":
       return state;
     case "DELETE_SITUATION_SUCCESS":

@@ -17,7 +17,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 const styles = theme => ({
   dialog: {
-    width: `100%`
+    width: `100%`,
   },
   listItemGroup: {
     width: "760px"
@@ -42,20 +42,12 @@ const minInterval = Array(60)
   .map((value, index) => index);
 const timeUnit = ["hour", "minute", "second"];
 
-class ConditionDialog extends React.Component {
-  // Every time when open the dialog, this function will be called.
-  componentWillReceiveProps(nextProps) {
-    let tmpConObj = _.cloneDeep(nextProps.conObj);
-    let tmpConIndex = nextProps.conIndex;
-    this.setState({
-      conObj: tmpConObj,
-      conIndex: tmpConIndex
-    });
-  }
 
+
+
+class ConditionDialog extends React.Component {
   state = {
-    conObj: {},
-    conIndex: -1,
+    value: {},
     nameError: false,
     startTimeError: false,
     endTimeError: false,
@@ -64,140 +56,110 @@ class ConditionDialog extends React.Component {
     nameRepeat: false
   };
 
-  /* Event Handle Function */
-  handleChange = type => event => {
-    let tmp = _.cloneDeep(this.state.conObj);
-    tmp[type] = event.target.value;
-    this.setState({ conObj: tmp });
-  };
-
-  handleCheck = type => event => {
-    let tmp = _.cloneDeep(this.state.conObj);
-    tmp[type] = event.target.checked;
-    this.setState({ conObj: tmp });
-  };
-
-  handleTimeChange = ({ event, mode }) => {
-    event.persist();
-    let tmp = _.cloneDeep(this.state.conObj);
-    tmp[mode] = event.target.value;
-    this.setState({ conObj: tmp });
-  };
-
-  handleChangeRule = (ruleIndex, e) => {
-    let tmp = _.cloneDeep(this.state.conObj);
-    tmp["rule"][ruleIndex]["name"] = e.target.value;
-    this.setState({ conObj: tmp });
-  };
-  handleChangeRuleParameter = (ruleIndex, e) => {
-    let tmp = _.cloneDeep(this.state.conObj);
-    tmp["rule"][ruleIndex]["parameter"] = e.target.value;
-    this.setState({ conObj: tmp });
-  };
-
-  handleChangeRuleParameter = (ruleIndex, e) => {
-    let tmp = _.cloneDeep(this.state.conObj);
-    tmp["rule"][ruleIndex]["parameter"] = e.target.value;
-    this.setState({ conObj: tmp });
-  };
-
-  handleCross = ruleIndex => {
-    let tmp = _.cloneDeep(this.state.conObj);
-    tmp.rule.splice(ruleIndex, 1);
-    this.setState({ conObj: tmp });
-  };
-
-  handleAddRule = index => {
-    let tmp = _.cloneDeep(this.state.conObj);
-    tmp.rule.push({
-      name: "transportation",
-      parameter: ["on foot"]
-    });
-    this.setState({ conObj: tmp });
-  };
-
-  handleParaChange = (id, ruleId, value) => {
-    let tmp = _.cloneDeep(this.state.conObj);
-    tmp["rule"][ruleId]["parameter"][id] = value;
-    this.setState({ conObj: tmp });
-  };
-
-  handleSave = (conIndex, conObj) => {
-    let hasError = false;
-
-    // if the name is repeated, reject
-    if (conObj.name !== this.props.conObj.name) {
-      for (let i = 0; i < this.props.nameList.length; i++) {
-        if (this.props.nameList[i] === conObj.name) {
-          this.setState({ nameRepeat: true });
-          hasError = true;
-          break;
-        } else {
-          this.setState({ nameRepeat: false });
-        }
-      }
-    }
-
-    // if condition name is empty, reject save event and send an error message
-    if (conObj.name) {
-      this.setState({ nameError: false });
-    } else {
-      this.setState({ nameError: true });
-      hasError = true;
-    }
-
-    // if check box 'schedule_from' is checked, but the input is empty string, reject save event and send an error message
-    if (conObj.schedule_from) {
-      if (!conObj.startTime) {
-        this.setState({ startTimeError: true });
-        hasError = true;
-        //console.log('startTime error');
-      } else {
-        this.setState({ startTimeError: false });
-      }
-      if (!conObj.endTime) {
-        this.setState({ endTimeError: true });
-        hasError = true;
-        //console.log('endTime error');
-      } else {
-        this.setState({ endTimeError: false });
-      }
-    }
-
-    // if check box 'schedule_last' is checked, but the input is empty string, reject save event and send an error message
-    if (conObj.schedule_last) {
-      if (!conObj.duration) {
-        this.setState({ durationError: true });
-        hasError = true;
-        //console.log('duration error');
-      } else {
-        this.setState({ durationError: false });
-      }
-      if (!conObj.unit) {
-        this.setState({ unitError: true });
-        hasError = true;
-        //console.log('unit error');
-      } else {
-        this.setState({ unitError: false });
-      }
-    }
-
-    //No error, save the condition
-    if (!hasError) {
-      this.props.handleSave(conIndex, conObj, this.props.isAdd);
-      // Clear the error message
+  componentDidUpdate(prevProps) {
+    const { value } = this.props
+    if(value !== prevProps.value && value){
       this.setState({
+        value: {
+          name: value.conditionName,
+          ...value.conditionContent
+        },
         nameError: false,
         startTimeError: false,
         endTimeError: false,
         durationError: false,
         unitError: false,
         nameRepeat: false
-      });
+      })
     }
+  }
+
+  /* Event Handle Function */
+  handleChange = type => event => {
+    const { value } = this.state
+    this.setState({ value:  {  ...value, [type]: event.target.value } });
   };
 
-  handleCancel = index => {
+  handleCheck = type => event => {
+    const { value } = this.state
+    this.setState({ value: { ...value, [type]: event.target.checked } });
+  };
+
+  handleTimeChange = ({ event, mode }) => {
+    event.persist();
+    const { value } = this.state
+    this.setState({ value: { ...value, [mode]: event.target.value } });
+  };
+
+  handleChangeRule = (ruleIndex, e) => {
+    const { value } = this.state
+    let tmp = _.cloneDeep(value);
+    tmp["rule"][ruleIndex]["name"] = e.target.value;
+    this.setState({ value: tmp });
+  };
+  handleChangeRuleParameter = (ruleIndex, e) => {
+    const { value } = this.state
+    let tmp = _.cloneDeep(value);
+    tmp["rule"][ruleIndex]["parameter"] = e.target.value;
+    this.setState({ value: tmp });
+  };
+
+  handleCross = index => {
+    const { value } = this.state
+    this.setState({ value: { ...value.slice(0, index), ...value.slice(index+1) } });
+  };
+
+  handleAddRule = () => {
+    const { value } = this.state
+    const { rule = {} } = value
+    const newRule = {
+      name: "transportation",
+      parameter: ["on foot"]
+    }
+    this.setState({
+      value: {
+        ...value,
+        rule: [ ...rule, newRule ]
+      }
+    });
+  };
+
+  handleParaChange = (id, ruleId, v) => {
+    const { value } = this.state
+    let tmp = _.cloneDeep(value);
+    tmp["rule"][ruleId]["parameter"][id] = v;
+    this.setState({ value: tmp });
+  };
+
+  handleSave = () => {
+    const { value } = this.state
+    const { handleSave } = this.props
+    const errors = []
+
+    // if condition name is empty, reject save event and send an error message
+    this.setState({ nameError: !value.name });
+    errors.push(!value.name)
+
+    // if check box 'schedule_from' is checked, but the input is empty string, reject save event and send an error message
+    if (value.schedule_from) {
+      this.setState({ startTimeError: !value.startTime });
+      this.setState({ endTimeError: !value.endTime });
+      errors.push(!value.startTime, !value.endTime)
+    }
+
+    // if check box 'schedule_last' is checked, but the input is empty string, reject save event and send an error message
+    if (value.schedule_last) {
+      this.setState({ durationError: !value.duration });
+      this.setState({ unitError: !value.unit });
+      errors.push(!value.duration, !value.unit)
+    }
+    //No error, save the condition
+    if (errors.includes(true)) return null;
+    handleSave(value);
+  };
+
+  handleCancel = () => {
+    const { handleCancel } = this.props
     this.setState({
       nameError: false,
       startTimeError: false,
@@ -206,32 +168,43 @@ class ConditionDialog extends React.Component {
       unitError: false,
       nameRepeat: false
     });
-    this.props.handleCancel(index);
+    handleCancel();
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, isOpen } = this.props;
+    const {
+      nameError,
+      startTimeError,
+      endTimeError,
+      durationError,
+      unitError,
+      nameRepeat,
+      value
+    } = this.state
+
+    if(!value)return null
 
     return (
       <div>
         <Dialog
-          open={this.props.isOpen}
+          open={isOpen}
           className={classes.dialog}
           maxWidth={`md`}
         >
           <DialogTitle>
             <TextField
-              error={this.state.nameError || this.state.nameRepeat}
+              error={nameError || nameRepeat}
               label={"Name"}
               helperText={
-                this.state.nameError
+                nameError
                   ? "Please enter a name"
-                  : this.state.nameRepeat
+                  : nameRepeat
                     ? "The name has been used"
                     : ""
               }
               className={classes.textField}
-              value={this.state.conObj.name}
+              value={value.name || ''}
               onChange={this.handleChange("name")}
               margin="normal"
             />
@@ -240,7 +213,7 @@ class ConditionDialog extends React.Component {
             <List disablePadding classesName={classes.listItemGroup}>
               <ListItem className={classes.listItem} disableGutters>
                 <Checkbox
-                  checked={this.state.conObj.schedule_from}
+                  checked={value.schedule_from}
                   onChange={this.handleCheck("schedule_from")}
                 />
                 <div className={classes.TimeLabelGroup}>
@@ -250,15 +223,15 @@ class ConditionDialog extends React.Component {
                   />
                   <TextField
                     type="time"
-                    disabled={!this.state.conObj.schedule_from}
-                    error={this.state.startTimeError}
+                    disabled={!value.schedule_from}
+                    error={startTimeError}
                     helperText={
-                      this.state.startTimeError ? "Shouldn't be empty" : ""
+                      startTimeError ? "Shouldn't be empty" : ""
                     }
                     onChange={e =>
                       this.handleTimeChange({ event: e, mode: "startTime" })
                     }
-                    value={this.state.conObj.startTime}
+                    value={value.startTime || ''}
                     className={classes.timePick}
                     InputLabelProps={{
                       shrink: true
@@ -270,15 +243,15 @@ class ConditionDialog extends React.Component {
                   <ListItemText primary="to" className={classes.listItemText} />
                   <TextField
                     type="time"
-                    disabled={!this.state.conObj.schedule_from}
-                    error={this.state.endTimeError}
+                    disabled={!value.schedule_from}
+                    error={endTimeError}
                     helperText={
-                      this.state.endTimeError ? "Shouldn't be empty" : ""
+                      endTimeError ? "Shouldn't be empty" : ""
                     }
                     onChange={e =>
                       this.handleTimeChange({ event: e, mode: "endTime" })
                     }
-                    value={this.state.conObj.endTime}
+                    value={value.endTime || ''}
                     className={classes.timePick}
                     InputLabelProps={{
                       shrink: true
@@ -291,7 +264,7 @@ class ConditionDialog extends React.Component {
               </ListItem>
               <ListItem disableGutters className={classes.listItem}>
                 <Checkbox
-                  checked={this.state.conObj.schedule_last}
+                  checked={value.schedule_last}
                   onChange={this.handleCheck("schedule_last")}
                 />
                 <div className={classes.TimeLabelGroup}>
@@ -301,14 +274,14 @@ class ConditionDialog extends React.Component {
                   />
                   <TextField
                     id="select-currency"
-                    disabled={!this.state.conObj.schedule_last}
-                    error={this.state.durationError}
+                    disabled={!value.schedule_last}
+                    error={durationError}
                     helperText={
-                      this.state.durationError ? "Shouldn't be empty" : ""
+                      durationError ? "Shouldn't be empty" : ""
                     }
                     select
                     className={classes.textField}
-                    value={this.state.conObj.duration}
+                    value={value.duration || ''}
                     onChange={this.handleChange("duration")}
                     SelectProps={{
                       MenuProps: {
@@ -317,28 +290,24 @@ class ConditionDialog extends React.Component {
                     }}
                     margin="normal"
                   >
-                    {this.state.conObj.unit === "hour"
-                      ? hourInterval.map(option => (
-                          <MenuItem key={option} value={option}>
+                    {
+                      (value.unit === "hour" ? hourInterval : minInterval)
+                        .map(option => (
+                          <MenuItem key={option} value={option || ''}>
                             {option}
                           </MenuItem>
-                        ))
-                      : minInterval.map(option => (
-                          <MenuItem key={option} value={option}>
-                            {option}
-                          </MenuItem>
-                        ))}
+                        )
+                      )
+                    }
                   </TextField>
                   <ListItemText primary=" " className={classes.listItemText} />
                   <TextField
                     select
-                    disabled={!this.state.conObj.schedule_last}
-                    error={this.state.unitError}
-                    helperText={
-                      this.state.unitError ? "Shouldn't be empty" : ""
-                    }
+                    disabled={!value.schedule_last}
+                    error={unitError}
+                    helperText={unitError ? "Shouldn't be empty" : ""}
                     className={classes.textField}
-                    value={this.state.conObj.unit}
+                    value={value.unit || ''}
                     onChange={this.handleChange("unit")}
                     SelectProps={{
                       MenuProps: {
@@ -348,7 +317,7 @@ class ConditionDialog extends React.Component {
                     margin="normal"
                   >
                     {timeUnit.map(option => (
-                      <MenuItem key={option} value={option}>
+                      <MenuItem key={option} value={option || ''}>
                         {option}
                       </MenuItem>
                     ))}
@@ -358,25 +327,28 @@ class ConditionDialog extends React.Component {
               <ListItem divider={true}>
                 <Typography variant="subheading">Rule</Typography>
               </ListItem>
-              {_.map(this.state.conObj.rule, (ruleObj, ruleIndex) => (
-                <ListItem disableGutters key={ruleIndex}>
-                  <Rule
-                    ruleObj={ruleObj}
-                    ruleIndex={ruleIndex}
-                    handleChangeRule={this.handleChangeRule}
-                    handleCross={() => this.handleCross(ruleIndex)}
-                    handleParaChange={this.handleParaChange}
-                    handleChangeRuleParameter={this.handleChangeRuleParameter}
-                  />
-                </ListItem>
-              ))}
+              {
+                value.rule && value.rule.length
+                ? value.rule.map((rule, index) => (
+                    <ListItem disableGutters key={index}>
+                      <Rule
+                        ruleObj={rule}
+                        ruleIndex={index}
+                        handleChangeRule={this.handleChangeRule}
+                        handleCross={() => this.handleCross(index)}
+                        handleParaChange={this.handleParaChange}
+                        handleChangeRuleParameter={this.handleChangeRuleParameter}
+                      />
+                    </ListItem>
+                  ))
+                : null
+              }
               <ListItem disableGutters>
                 <Button
                   variant="contained"
                   color="secondary"
-                  aria-owns={this.state.anchorEl ? "simple-menu" : null}
                   aria-haspopup="true"
-                  onClick={() => this.handleAddRule()}
+                  onClick={this.handleAddRule}
                 >
                   + rule
                 </Button>
@@ -385,15 +357,13 @@ class ConditionDialog extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={() => this.handleCancel(this.state.conIndex)}
+              onClick={this.handleCancel}
               color="primary"
             >
               cancel
             </Button>
             <Button
-              onClick={() =>
-                this.handleSave(this.state.conIndex, this.state.conObj)
-              }
+              onClick={this.handleSave}
               color="primary"
               autoFocus
             >

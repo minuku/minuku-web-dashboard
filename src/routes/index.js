@@ -7,7 +7,6 @@ import PrivateRoute from "containers/PrivateRoute";
 import Project from "pages/Project";
 import Monitor from "pages/Monitor";
 import Situation from "containers/Situation";
-import Condition from "pages/Condition";
 import Schedule from "pages/Schedule";
 import Questionnaire from "pages/Questionnaire";
 import Profile from "containers/Profile";
