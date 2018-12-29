@@ -4,7 +4,7 @@ import { history } from "utils/history";
 import { Route, Router, Switch, Redirect } from "react-router-dom";
 import PrivateRoute from "containers/PrivateRoute";
 
-import Project from "pages/Project";
+import Schema from "containers/Schema";
 import Monitor from "pages/Monitor";
 import Situation from "containers/Situation";
 import Schedule from "pages/Schedule";
@@ -21,7 +21,7 @@ const RootRouter = () => (
       <PrivateRoute path="/dashboard/profile" component={UserProfile} />
       <PrivateRoute
         path="/dashboard/project/:projectName/schema"
-        component={Project}
+        component={Schema}
       />
       <PrivateRoute
         path="/dashboard/project/:projectName/situation"

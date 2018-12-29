@@ -44,35 +44,21 @@ const styles = theme => ({
   }
 });
 
-class Porfile extends React.Component {
-  state = {
-    data: []
-  };
-
+class Schema extends React.Component {
   downloadJSON = () => {
-    const data = removeEmptyObjects(this.state.data);
-    let blob = new Blob([JSON.stringify(data)], {
+    const { data } = this.props
+    const cookedData = removeEmptyObjects(data);
+    let blob = new Blob([JSON.stringify(cookedData)], {
       type: "text/plain;charset=utf-8"
     });
     saveAs(blob, "minuku-config.json");
   };
   componentDidMount() {
-    let token = localStorage.getItem(`token`);
-    fetch(`${url}/project/project1/situation/situation1?token=${token}`, {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "GET"
-    })
-      .then(res => res.json())
-      .catch(error => console.log(error))
-      .then(res => {
-        this.setState({ data: res });
-        console.log(res);
-      });
+    const { match, getData } = this.props
+    getData(match.params.projectName)
   }
   render() {
-    const { classes } = this.props;
+    const { classes, data  } = this.props;
     return (
       <Dashboard title="Project Section 專案列表">
         <div className={classes.root}>
@@ -84,7 +70,7 @@ class Porfile extends React.Component {
               <ReactJson
                 collapsed={true}
                 style={{ maxHeight: 450, overflow: `scroll` }}
-                src={this.state.data}
+                src={data}
               />
             </CardContent>
 
@@ -105,4 +91,4 @@ class Porfile extends React.Component {
   }
 }
 
-export default withStyles(styles)(Porfile);
+export default withStyles(styles)(Schema);
