@@ -29,10 +29,6 @@ const RootRouter = () => (
         component={Situation}
       />
       <PrivateRoute
-        path="/dashboard/project/:projectName/condition"
-        component={Condition}
-      />
-      <PrivateRoute
         path="/dashboard/project/:projectName/questionnaire"
         component={Questionnaire}
       />

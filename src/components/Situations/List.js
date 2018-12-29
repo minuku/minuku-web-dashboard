@@ -11,7 +11,7 @@ const SituationsList = ({ situations, deleteSituation }) => (
     {situations && situations.length ? (
       situations.map(situation => (
         <ListItem
-          key={situation.name}
+          key={situation.situationName}
           deleteSituation={deleteSituation}
           {...situation}
         />

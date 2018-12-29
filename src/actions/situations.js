@@ -22,7 +22,7 @@ export const getSituations = projectName => {
       .then(res => res.json())
       .then(json => {
         if (json.error) throw new Error(json.error);
-        dispatch(success({ projectName, data: json }));
+        dispatch(success({ data: json }));
       })
       .catch(err => {
         console.log("error", err);
@@ -52,7 +52,7 @@ export const addSituation = (projectName, data) => {
       method: "POST"
     })
       .then(json => {
-        dispatch(success({ projectName, data: json }));
+        dispatch(success({ data: json }));
         dispatch(getSituations(projectName));
       })
       .catch(err => {

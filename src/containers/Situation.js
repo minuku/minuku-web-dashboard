@@ -6,8 +6,8 @@ import {
   deleteSituation
 } from "actions/situations";
 
-const mapStateToProps = (state, { match }) => ({
-  situations: state.situations[match.params.projectName]
+const mapStateToProps = (state) => ({
+  situations: state.situations
 });
 
 const mapDispatchToProps = dispatch => ({

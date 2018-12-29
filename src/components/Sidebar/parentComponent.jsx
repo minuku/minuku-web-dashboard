@@ -88,14 +88,14 @@ class ParentComponent extends Component {
           <ListItemText inset primary="Project List" />
           <ListItemSecondaryAction className="mr-1">
             <IconButton className={classes.iconButton}>
-              <AddIcon onClick={this.handleToggle} color="primary" fontSize="small" />
+              <AddIcon onClick={this.handleToggle} color="primary" />
             </IconButton>
             {listopen
               ? <IconButton className={classes.iconButton}  onClick={toggleList}>
-                  <ExpandLessIcon fontSize="small" />
+                  <ExpandLessIcon />
                 </IconButton>
               : <IconButton className={classes.iconButton}  onClick={toggleList}>
-                  <ExpandMoreIcon fontSize="small" />
+                  <ExpandMoreIcon />
                 </IconButton>
             }
           </ListItemSecondaryAction>

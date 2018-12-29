@@ -12,35 +12,54 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import LocationOn from "@material-ui/icons/LocationOn";
 import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 
-const styles = theme => ({});
+const styles = theme => ({
+  iconButton: {
+    width: theme.spacing.unit * 4,
+    height: theme.spacing.unit * 4,
+  },
+  nested: {
+    paddingLeft: theme.spacing.unit * 4,
+  }
+});
 
 class SituationsListItem extends React.Component {
   state = { expand: false };
 
   render() {
     const { expand } = this.state;
-    const { name, conditions, deleteSituation } = this.props;
+    const { situationName, conditions, classes, deleteSituation } = this.props;
     return (
       <React.Fragment>
         <ListItem button onClick={() => this.setState({ expand: !expand })}>
-          <ListItemText primary={name} />
+          <ListItemText primary={situationName} />
           <ListItemSecondaryAction>
-            <IconButton aria-label="Edit">
+            <IconButton
+              aria-label="Edit"
+              className={classes.iconButton}
+            >
               <EditIcon />
             </IconButton>
             <IconButton
               aria-label="Delete"
-              onClick={() => deleteSituation(name)}
+              className={classes.iconButton}
+              onClick={() => deleteSituation(situationName)}
             >
               <DeleteIcon />
+            </IconButton>
+            <IconButton
+              aria-label="Add"
+              className={classes.iconButton}
+            >
+              <AddIcon />
             </IconButton>
             {expand ? (
               <IconButton
                 aria-label="Expand Less"
+                className={classes.iconButton}
                 onClick={() => this.setState({ expand: false })}
               >
                 <ExpandLess />
@@ -48,6 +67,7 @@ class SituationsListItem extends React.Component {
             ) : (
               <IconButton
                 aria-label="Expand More"
+                className={classes.iconButton}
                 onClick={() => this.setState({ expand: true })}
               >
                 <ExpandMore />
@@ -59,18 +79,27 @@ class SituationsListItem extends React.Component {
           <List component="div" disablePadding>
             { conditions && conditions.length
               ? conditions.map((condition, index) => (
-                <ListItem button key={index}>
+                <ListItem button key={index} className={classes.nested}>
                   <ListItemAvatar>
                     <Avatar size="small">
                       <LocationOn />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText inset primary={condition.name} />
+                  <ListItemText
+                    inset
+                    primary={condition.conditionName}
+                  />
                   <ListItemSecondaryAction>
-                    <IconButton aria-label="Edit">
+                    <IconButton
+                      aria-label="Edit"
+                      className={classes.iconButton}
+                    >
                       <EditIcon />
                     </IconButton>
-                    <IconButton aria-label="Delete">
+                    <IconButton
+                      aria-label="Delete"
+                      className={classes.iconButton}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
@@ -78,11 +107,6 @@ class SituationsListItem extends React.Component {
               ))
               : null
             }
-            <ListItem className="d-flex justify-content-end">
-              <Button size="small" variant="contained" color="primary" aria-label="Add">
-                Add Condition
-              </Button>
-            </ListItem>
           </List>
         </Collapse>
       </React.Fragment>
