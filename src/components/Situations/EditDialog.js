@@ -12,14 +12,15 @@ const styles = theme => ({});
 
 class EditDialog extends React.Component {
   state = { name: "" };
-  createAndClose = () => {
-    const { addSituation, onClose } = this.props;
+  submitAndClose = () => {
+    const { onSubmit, onClose } = this.props;
     const { name } = this.state;
-    addSituation(name);
+    onSubmit(name);
+    this.setState({ name: "" });
     onClose();
   };
   render() {
-    const { open, onClose } = this.props;
+    const { open, onClose, name: propsName } = this.props;
     const { name } = this.state;
     return (
       <Dialog open={open} onClose={onClose}>
@@ -27,7 +28,7 @@ class EditDialog extends React.Component {
         <DialogContent>
           <TextField
             label="Name"
-            value={name}
+            value={name || propsName}
             onChange={e => this.setState({ name: e.target.value })}
             margin="normal"
           />
@@ -36,10 +37,10 @@ class EditDialog extends React.Component {
           <Button
             color="primary"
             variant="raised"
-            onClick={this.createAndClose}
+            onClick={this.submitAndClose}
             autoFocus
           >
-            Create
+            {propsName ? "Update" : "Create"}
           </Button>
         </DialogActions>
       </Dialog>
@@ -47,4 +48,4 @@ class EditDialog extends React.Component {
   }
 }
 
-export default withStyles(styles)(EditDialog)
+export default withStyles(styles)(EditDialog);

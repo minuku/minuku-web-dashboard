@@ -1,5 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { withRouter } from "react-router-dom";
 
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
@@ -51,26 +52,25 @@ class DataRow extends React.Component {
     data: []
   };
   updateCard = (deviceName, data) => {
-    let name = this.props.section.title;
-    this.props.updateDevice(name, deviceName, data);
+    const { match, updateDevice, section } = this.props;
+    updateDevice(match.params.projectName, section.title, deviceName, data);
   };
 
   deleteCard = deviceName => {
-    let collectionName = this.props.section.title;
-    this.props.deleteDevice(collectionName, deviceName);
+    const { deleteDevice, match, section } = this.props;
+    deleteDevice(match.params.projectName, section.title, deviceName);
   };
 
   deleteDatacollection = title => {
-    this.props.deleteDatacollection(title);
+    const { match, deleteDatacollection } = this.props;
+    deleteDatacollection(match.params.projectName, title);
   };
 
   componentDidMount() {
-    this.getAllDevice();
+    const { getDevices, match, section } = this.props;
+    getDevices(match.params.projectName, section.title);
   }
 
-  componentWillReceiveProps = nextProps => {};
-
-  getAllDevice = () => {};
   render() {
     const { classes, section } = this.props;
     return (
@@ -124,4 +124,4 @@ class DataRow extends React.Component {
   }
 }
 
-export default withStyles(styles)(DataRow);
+export default withRouter(withStyles(styles)(DataRow));

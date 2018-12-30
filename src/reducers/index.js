@@ -3,14 +3,14 @@ import account from "./account";
 import data from "./data";
 import projects from "./projects";
 import situations from "./situations";
-import conditionData from "./conditionData.js";
+import questionnaires from "./questionnaires";
 
 const minuku = combineReducers({
   account,
   data,
-  conditionData,
   projects,
-  situations
+  situations,
+  questionnaires
 });
 
 export default minuku;

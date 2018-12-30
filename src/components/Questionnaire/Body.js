@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 
 import Typography from "@material-ui/core/Typography";
@@ -6,6 +7,7 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 
 const styles = theme => ({
   body: {
@@ -18,7 +20,6 @@ const styles = theme => ({
     }
   },
   title: {
-    marginBottom: 16,
     fontSize: 14
   },
   questions: {
@@ -26,20 +27,35 @@ const styles = theme => ({
   }
 });
 
-const Body = ({ classes, children }) => (
+const Body = ({ classes, children, name, setName, save, history }) => (
   <Card className={classes.body}>
     <CardContent style={{ flex: 1 }}>
       <Typography className={classes.title} color="textSecondary">
         Questionnaire setting
       </Typography>
+      <TextField
+        required
+        label="Name"
+        defaultValue=""
+        value={name}
+        onChange={setName}
+      />
       <div className={classes.questions}>{children}</div>
     </CardContent>
     <CardActions>
-      <Button variant="contained" size="small" color="primary">
+      <Button variant="contained" size="small" color="primary" onClick={save}>
         update
+      </Button>
+      <Button
+        variant="contained"
+        size="small"
+        color="secondary"
+        onClick={() => history.goBack()}
+      >
+        cancel
       </Button>
     </CardActions>
   </Card>
 );
 
-export default withStyles(styles)(Body);
+export default withRouter(withStyles(styles)(Body));

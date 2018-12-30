@@ -1,19 +1,22 @@
-const situations = (state = {}, action) => {
+const situations = (state = [], action) => {
   switch (action.type) {
     case "GET_SITUATIONS":
       return state;
     case "GET_SITUATIONS_SUCCESS":
-      const { data: names } = action.payload;
-      const situations = names.map(name => ({ name }));
-      return { ...state, [action.payload.projectName]: situations };
+      return [...action.payload.data];
     case "GET_SITUATIONS_ERROR":
       return state;
     case "ADD_SITUATION":
       return state;
     case "ADD_SITUATION_SUCCESS":
-      return { ...state, [action.payload.projectName]: action.payload.data };
+      return [...state, action.payload.data];
     case "ADD_SITUATION_ERROR":
       return state;
+    case "UPDATE_SITUATION":
+      return state;
+    case "UPDATE_SITUATION_SUCCESS":
+      return [...state, action.payload.data];
+    case "UPDATE_SITUATION_ERROR":
     case "DELETE_SITUATION":
       return state;
     case "DELETE_SITUATION_SUCCESS":

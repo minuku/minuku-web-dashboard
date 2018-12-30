@@ -1,19 +1,25 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
-import ListItem from './ListItem'
-
+import ListItem from "./ListItem";
 
 const styles = theme => ({});
 
-const SituationsList = ({ situations, deleteSituation }) => (
+const SituationsList = ({
+  situations,
+  deleteSituation,
+  projectName,
+  ...rest
+}) => (
   <List component="nav" disablePadding>
     {situations && situations.length ? (
       situations.map(situation => (
         <ListItem
-          key={situation.name}
+          key={situation.situationName}
           deleteSituation={deleteSituation}
+          projectName={projectName}
           {...situation}
+          {...rest}
         />
       ))
     ) : (
@@ -24,4 +30,4 @@ const SituationsList = ({ situations, deleteSituation }) => (
   </List>
 );
 
-export default withStyles(styles)(SituationsList)
+export default withStyles(styles)(SituationsList);

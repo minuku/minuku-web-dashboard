@@ -3,17 +3,28 @@ import SituationComponent from "pages/Situation";
 import {
   getSituations,
   addSituation,
+  updateSituation,
   deleteSituation
 } from "actions/situations";
 
-const mapStateToProps = (state, { match }) => ({
-  situations: state.situations[match.params.projectName]
+import {
+  addCondition,
+  updateCondition,
+  deleteCondition
+} from "actions/condition";
+
+const mapStateToProps = state => ({
+  situations: state.situations
 });
 
 const mapDispatchToProps = dispatch => ({
   getSituations: (...args) => dispatch(getSituations(...args)),
   addSituation: (...args) => dispatch(addSituation(...args)),
-  deleteSituation: (...args) => dispatch(deleteSituation(...args))
+  updateSituation: (...args) => dispatch(updateSituation(...args)),
+  deleteSituation: (...args) => dispatch(deleteSituation(...args)),
+  addCondition: (...args) => dispatch(addCondition(...args)),
+  updateCondition: (...args) => dispatch(updateCondition(...args)),
+  deleteCondition: (...args) => dispatch(deleteCondition(...args))
 });
 
 export default connect(

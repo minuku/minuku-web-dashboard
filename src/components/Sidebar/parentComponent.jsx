@@ -22,9 +22,9 @@ import { withStyles } from "@material-ui/core";
 const styles = theme => ({
   iconButton: {
     width: theme.spacing.unit * 3,
-    height: theme.spacing.unit * 3,
+    height: theme.spacing.unit * 3
   }
-})
+});
 
 class ParentComponent extends Component {
   state = {
@@ -88,16 +88,17 @@ class ParentComponent extends Component {
           <ListItemText inset primary="Project List" />
           <ListItemSecondaryAction className="mr-1">
             <IconButton className={classes.iconButton}>
-              <AddIcon onClick={this.handleToggle} color="primary" fontSize="small" />
+              <AddIcon onClick={this.handleToggle} color="primary" />
             </IconButton>
-            {listopen
-              ? <IconButton className={classes.iconButton}  onClick={toggleList}>
-                  <ExpandLessIcon fontSize="small" />
-                </IconButton>
-              : <IconButton className={classes.iconButton}  onClick={toggleList}>
-                  <ExpandMoreIcon fontSize="small" />
-                </IconButton>
-            }
+            {listopen ? (
+              <IconButton className={classes.iconButton} onClick={toggleList}>
+                <ExpandLessIcon />
+              </IconButton>
+            ) : (
+              <IconButton className={classes.iconButton} onClick={toggleList}>
+                <ExpandMoreIcon />
+              </IconButton>
+            )}
           </ListItemSecondaryAction>
           <Dialog
             open={open}

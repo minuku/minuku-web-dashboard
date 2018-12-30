@@ -4,13 +4,12 @@ import { history } from "utils/history";
 import { Route, Router, Switch, Redirect } from "react-router-dom";
 import PrivateRoute from "containers/PrivateRoute";
 
-import Project from "pages/Project";
+import Schema from "containers/Schema";
 import Monitor from "pages/Monitor";
 import Situation from "containers/Situation";
-import Condition from "pages/Condition";
 import Schedule from "pages/Schedule";
-import Questionnaire from "pages/Questionnaire";
-import Profile from "containers/Profile";
+import * as Questionnaires from "containers/Questionnaires";
+import Index from "containers/Index";
 import Data from "containers/Data";
 import UserProfile from "pages/UserProfile";
 import * as Account from "containers/Account";
@@ -18,23 +17,27 @@ import * as Account from "containers/Account";
 const RootRouter = () => (
   <Router history={history}>
     <Switch>
-      <PrivateRoute exact path="/dashboard" component={Profile} />
+      <PrivateRoute exact path="/dashboard" component={Index} />
       <PrivateRoute path="/dashboard/profile" component={UserProfile} />
       <PrivateRoute
         path="/dashboard/project/:projectName/schema"
-        component={Project}
+        component={Schema}
       />
       <PrivateRoute
         path="/dashboard/project/:projectName/situation"
         component={Situation}
       />
       <PrivateRoute
-        path="/dashboard/project/:projectName/condition"
-        component={Condition}
+        path="/dashboard/project/:projectName/questionnaire/new"
+        component={Questionnaires.New}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/questionnaire/:questionnaireName"
+        component={Questionnaires.Edit}
       />
       <PrivateRoute
         path="/dashboard/project/:projectName/questionnaire"
-        component={Questionnaire}
+        component={Questionnaires.Index}
       />
       <PrivateRoute
         path="/dashboard/project/:projectName/schedule"
