@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import ProfileComponent from "pages/Profile";
+import IndexComponent from "pages/Index";
 import { getUser } from "actions/account";
 
 const mapStateToProps = state => ({
@@ -13,4 +13,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProfileComponent);
+)(IndexComponent);

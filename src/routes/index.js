@@ -9,7 +9,7 @@ import Monitor from "pages/Monitor";
 import Situation from "containers/Situation";
 import Schedule from "pages/Schedule";
 import Questionnaire from "pages/Questionnaire";
-import Profile from "containers/Profile";
+import Index from "containers/Index";
 import Data from "containers/Data";
 import UserProfile from "pages/UserProfile";
 import * as Account from "containers/Account";
@@ -17,7 +17,7 @@ import * as Account from "containers/Account";
 const RootRouter = () => (
   <Router history={history}>
     <Switch>
-      <PrivateRoute exact path="/dashboard" component={Profile} />
+      <PrivateRoute exact path="/dashboard" component={Index} />
       <PrivateRoute path="/dashboard/profile" component={UserProfile} />
       <PrivateRoute
         path="/dashboard/project/:projectName/schema"
