@@ -53,7 +53,7 @@ class Dashboard extends React.Component {
 
         <main className={classes.content} ref="mainPanel">
           <div className={classes.container}>
-            { title ? <SectionHeader>{title}</SectionHeader> : null }
+            {title ? <SectionHeader>{title}</SectionHeader> : null}
             {children}
           </div>
         </main>

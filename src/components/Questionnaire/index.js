@@ -9,10 +9,21 @@ class Questionnaire extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: "",
       questions: []
     };
     this.buildQuestionnaire = this.buildQuestionnaire.bind(this);
+    this.save = this.save.bind(this);
     this.body = React.createRef();
+  }
+  save() {
+    const { save } = this.props;
+    const { name, questions } = this.state;
+    save({
+      questionnaireName: name,
+      questionnaireType: "questionnaire",
+      questionnaireContent: questions
+    });
   }
   createQuestion(type) {
     const newQuestion = { type, props: {} };
@@ -97,12 +108,20 @@ class Questionnaire extends React.Component {
   }
   render() {
     const { connectDropTarget } = this.props;
+    const { name } = this.state;
     return connectDropTarget(
       <div className="d-flex justify-content-center">
         <div className="px-4">
-          <Body ref={this.body}>{this.buildQuestionnaire()}</Body>
+          <Body
+            ref={this.body}
+            name={name}
+            setName={e => this.setState({ name: e.target.value })}
+            save={this.save}
+          >
+            {this.buildQuestionnaire()}
+          </Body>
         </div>
-        <div className="pt-4">
+        <div className="pt-3">
           <List />
         </div>
       </div>

@@ -8,7 +8,7 @@ import Schema from "containers/Schema";
 import Monitor from "pages/Monitor";
 import Situation from "containers/Situation";
 import Schedule from "pages/Schedule";
-import Questionnaire from "pages/Questionnaire";
+import * as Questionnaires from "containers/Questionnaires";
 import Index from "containers/Index";
 import Data from "containers/Data";
 import UserProfile from "pages/UserProfile";
@@ -28,8 +28,16 @@ const RootRouter = () => (
         component={Situation}
       />
       <PrivateRoute
+        path="/dashboard/project/:projectName/questionnaire/new"
+        component={Questionnaires.New}
+      />
+      <PrivateRoute
+        path="/dashboard/project/:projectName/questionnaire/:questionnaireName"
+        component={Questionnaires.Edit}
+      />
+      <PrivateRoute
         path="/dashboard/project/:projectName/questionnaire"
-        component={Questionnaire}
+        component={Questionnaires.Index}
       />
       <PrivateRoute
         path="/dashboard/project/:projectName/schedule"
