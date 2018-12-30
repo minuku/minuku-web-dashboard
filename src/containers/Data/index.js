@@ -15,14 +15,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getDatacollections: projectName => dispatch(getDatacollections(projectName)),
-  addDatacollection: data => dispatch(addDatacollection(data)),
-  deleteDatacollection: data => dispatch(deleteDatacollection(data)),
-  getDevices: name => dispatch(getDevices(name)),
-  addDevice: (name, info) => dispatch(addDevice(name, info)),
-  deleteDevice: (name, deviceName) => dispatch(deleteDevice(name, deviceName)),
-  updateDevice: (collectionName, deviceName, data) =>
-    dispatch(updateDevice(collectionName, deviceName, data))
+  getDatacollections: (...args) => dispatch(getDatacollections(...args)),
+  addDatacollection: (...args) => dispatch(addDatacollection(...args)),
+  deleteDatacollection: (...args) => dispatch(deleteDatacollection(...args)),
+  getDevices: (...args) => dispatch(getDevices(...args)),
+  addDevice: (...args) => dispatch(addDevice(...args)),
+  deleteDevice: (...args) => dispatch(deleteDevice(...args)),
+  updateDevice: (...args) => dispatch(updateDevice(...args))
 });
 
 export default connect(

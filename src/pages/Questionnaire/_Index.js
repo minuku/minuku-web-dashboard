@@ -70,13 +70,13 @@ class Questionnaire extends React.Component {
                 </Typography>
                 <List component="div" disablePadding>
                   {questionnaires && questionnaires.length ? (
-                    questionnaires.map(questionnaire =>
+                    questionnaires.map(questionnaire => (
                       <QuestionListItem
                         key={questionnaire.questionnaireName}
                         classes={classes}
                         {...questionnaire}
                       />
-                    )
+                    ))
                   ) : (
                     <div className="text-center">
                       No questionnaire created yet.

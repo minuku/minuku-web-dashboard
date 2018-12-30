@@ -40,11 +40,12 @@ class DataSection extends React.Component {
     isDialogShow: false
   };
   addCard = name => {
+    const { match } = this.props;
     let info = {
       title: this.state.dataCollectionTitle,
       category: this.state.dataCollectionCategory
     };
-    this.props.addDevice(name, info);
+    this.props.addDevice(match.params.projectName, name, info);
   };
 
   createElement = () => {
@@ -69,24 +70,23 @@ class DataSection extends React.Component {
     });
   };
 
-  getcollection = () => {
-    const { getDatacollections, match } = this.props;
-    getDatacollections(match.params.projectName);
-  };
-
   addCollection = title => {
-    this.props.addDatacollection({
-      title: title,
-      dataCollectionCategory: this.state.dataCollectionCategory
+    const { addDatacollection, match } = this.props;
+    const { dataCollectionCategory } = this.state;
+    addDatacollection(match.params.projectName, {
+      title,
+      dataCollectionCategory
     });
   };
 
   deleteCollection = title => {
-    this.props.deleteDatacollection(title);
+    const { deleteDatacollection, match } = this.props;
+    deleteDatacollection(match.params.projectName, title);
   };
 
   componentDidMount() {
-    this.getcollection();
+    const { getDatacollections, match } = this.props;
+    getDatacollections(match.params.projectName);
   }
 
   componentWillReceiveProps = nextProps => {
