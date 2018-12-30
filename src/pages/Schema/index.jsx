@@ -12,8 +12,6 @@ import Dashboard from "layouts/Dashboard";
 
 import removeEmptyObjects from "utils/removeEmptyObjects";
 
-let url = `https://minukutest.nctu.me/minukutest`;
-
 const styles = theme => ({
   root: {},
   container: {
