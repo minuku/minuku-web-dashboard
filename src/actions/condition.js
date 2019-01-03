@@ -1,4 +1,5 @@
 import { getSituations } from "./situations";
+import { setSnackbar } from "./snackbar";
 
 const url = `https://minukutest.nctu.me/minukutest`;
 
@@ -19,6 +20,7 @@ export const updateCondition = (
       conditionName: payload.name,
       conditionContent: tmpPayload
     };
+    dispatch(setSnackbar({ message: "Updating conditon..." }));
     fetch(
       `${url}/project/${projectName}/situation/${situationName}/condition/${conditionName}?token=${token}`,
       {
@@ -30,11 +32,13 @@ export const updateCondition = (
       }
     )
       .then(response => {
-        if (response.ok) dispatch(getSituations(projectName));
-        else throw Error(response.statusText);
+        if (response.ok) {
+          dispatch(getSituations(projectName));
+          dispatch(setSnackbar({ message: "Conditon updated successfully!" }));
+        } else throw Error(response.statusText);
       })
       .catch(error => {
-        console.error(error);
+        dispatch(setSnackbar({ message: error.toString() }));
       });
   };
 };
@@ -47,6 +51,8 @@ export const addCondition = (projectName, situationName, payload) => {
       conditionName: payload.name,
       conditionContent: payload
     };
+    dispatch(setSnackbar({ message: "Creating conditon..." }));
+
     fetch(
       `${url}/project/${projectName}/situation/${situationName}/condition?token=${token}`,
       {
@@ -58,11 +64,13 @@ export const addCondition = (projectName, situationName, payload) => {
       }
     )
       .then(response => {
-        if (response.ok) dispatch(getSituations(projectName));
-        else throw Error(response.statusText);
+        if (response.ok) {
+          dispatch(getSituations(projectName));
+          dispatch(setSnackbar({ message: "Conditon created successfully!" }));
+        } else throw Error(response.statusText);
       })
       .catch(error => {
-        console.error(error);
+        dispatch(setSnackbar({ message: error.toString() }));
       });
   };
 };
@@ -71,6 +79,7 @@ export const deleteCondition = (projectName, situationName, conditionName) => {
   const token = localStorage.getItem(`token`);
 
   return dispatch => {
+    dispatch(setSnackbar({ message: "Deleting conditon..." }));
     fetch(
       `${url}/project/${projectName}/situation/${situationName}/condition/${conditionName}?token=${token}`,
       {
@@ -81,11 +90,13 @@ export const deleteCondition = (projectName, situationName, conditionName) => {
       }
     )
       .then(response => {
-        if (response.ok) dispatch(getSituations(projectName));
-        else throw Error(response.statusText);
+        if (response.ok) {
+          dispatch(getSituations(projectName));
+          dispatch(setSnackbar({ message: "Conditon deleted successfully!" }));
+        } else throw Error(response.statusText);
       })
       .catch(error => {
-        console.error(error);
+        dispatch(setSnackbar({ message: error.toString() }));
       });
   };
 };

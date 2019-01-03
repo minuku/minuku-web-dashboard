@@ -1,3 +1,5 @@
+import { setSnackbar } from "./snackbar";
+
 const url = `https://minukutest.nctu.me/minukutest`;
 
 export const getQuestionnaires = projectName => {
@@ -6,6 +8,7 @@ export const getQuestionnaires = projectName => {
   };
   return dispatch => {
     let token = localStorage.getItem(`token`);
+    dispatch(setSnackbar({ message: "Loading Questionnaires..." }));
     fetch(`${url}/project/${projectName}/questionnaire?token=${token}`, {
       headers: {
         "Content-Type": "application/json"
@@ -16,9 +19,12 @@ export const getQuestionnaires = projectName => {
       .then(json => {
         if (json.error) throw new Error(json.error);
         dispatch(success({ data: json }));
+        dispatch(
+          setSnackbar({ message: "Questionnaires loaded Successfully!" })
+        );
       })
       .catch(err => {
-        console.log("error", err);
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };
@@ -26,6 +32,7 @@ export const getQuestionnaires = projectName => {
 export const addQuestionnaire = (projectName, data) => {
   return dispatch => {
     let token = localStorage.getItem(`token`);
+    dispatch(setSnackbar({ message: "Creating Questionnaire..." }));
     fetch(`${url}/project/${projectName}/questionnaire?token=${token}`, {
       headers: {
         "Content-Type": "application/json"
@@ -35,9 +42,12 @@ export const addQuestionnaire = (projectName, data) => {
     })
       .then(json => {
         dispatch(getQuestionnaires(projectName));
+        dispatch(
+          setSnackbar({ message: "Questionnaires created Successfully!" })
+        );
       })
       .catch(err => {
-        console.log("error", err);
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };
@@ -45,6 +55,7 @@ export const addQuestionnaire = (projectName, data) => {
 export const updateQuestionnaire = (projectName, questionnaireName, data) => {
   return dispatch => {
     let token = localStorage.getItem(`token`);
+    dispatch(setSnackbar({ message: "Updating Questionnaire..." }));
     fetch(
       `${url}/project/${projectName}/questionnaire/${questionnaireName}?token=${token}`,
       {
@@ -57,9 +68,12 @@ export const updateQuestionnaire = (projectName, questionnaireName, data) => {
     )
       .then(json => {
         dispatch(getQuestionnaires(projectName));
+        dispatch(
+          setSnackbar({ message: "Questionnaires updated Successfully!" })
+        );
       })
       .catch(err => {
-        console.log("error", err);
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };
@@ -68,6 +82,7 @@ export const deleteQuestionnaire = (projectName, questionnaireName) => {
   return dispatch => {
     let token = localStorage.getItem(`token`);
 
+    dispatch(setSnackbar({ message: "Deleting Questionnaire..." }));
     fetch(
       `${url}/project/${projectName}/questionnaire/${questionnaireName}?token=${token}`,
       {
@@ -80,9 +95,12 @@ export const deleteQuestionnaire = (projectName, questionnaireName) => {
       .then(res => res.json())
       .then(() => {
         dispatch(getQuestionnaires(projectName));
+        dispatch(
+          setSnackbar({ message: "Questionnaires deleted Successfully!" })
+        );
       })
       .catch(err => {
-        console.log("error", err);
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };

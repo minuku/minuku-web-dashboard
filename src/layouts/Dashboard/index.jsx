@@ -1,9 +1,13 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import Snackbar from "@material-ui/core/Snackbar";
 
 import Sidebar from "containers/Sidebar";
 import SectionHeader from "components/Header/SectionHeader";
 import Header from "containers/Header";
+
+import { closeSnackbar } from "actions/snackbar";
 
 const styles = theme => ({
   root: {
@@ -44,7 +48,7 @@ class Dashboard extends React.Component {
     this.refs.mainPanel.scrollTop = 0;
   }
   render() {
-    const { classes, children, title } = this.props;
+    const { classes, children, title, snackbar, closeSnackbar } = this.props;
     return (
       <div className={classes.root}>
         <Header open={true} />
@@ -57,9 +61,32 @@ class Dashboard extends React.Component {
             {children}
           </div>
         </main>
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left"
+          }}
+          open={snackbar.open}
+          autoHideDuration={snackbar.autoHideDuration || 3000}
+          onClose={closeSnackbar}
+          ContentProps={{
+            "aria-describedby": "message-id"
+          }}
+          message={<span id="message-id">{snackbar.message}</span>}
+        />
       </div>
     );
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Dashboard);
+const mapStateToProps = ({ snackbar }) => ({ snackbar });
+
+const mapDispatchToProps = dispatch => ({
+  closeSnackbar: () => dispatch(closeSnackbar())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(Dashboard));

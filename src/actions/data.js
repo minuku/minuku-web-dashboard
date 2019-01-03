@@ -1,17 +1,13 @@
+import { setSnackbar } from "./snackbar";
+
 let url = `https://minukutest.nctu.me/minukutest`;
 
 export const getDatacollections = projectName => {
-  const request = () => {
-    return { type: "GET_DATACOLLECTIONS" };
-  };
   const success = payload => {
     return { type: "GET_DATACOLLECTIONS_SUCCESS", payload };
   };
-  const failure = error => {
-    return { type: "GET_DATACOLLECTIONS_ERROR", error };
-  };
   return dispatch => {
-    dispatch(request());
+    dispatch(setSnackbar({ message: "Loading Data Collections..." }));
     let token = localStorage.getItem(`token`);
     fetch(`${url}/project/${projectName}/datacollection?token=${token}`, {
       headers: {
@@ -25,26 +21,22 @@ export const getDatacollections = projectName => {
           dispatch(getDevices(projectName, collections[i]));
         }
         dispatch(success(collections));
+        dispatch(
+          setSnackbar({ message: "Data Collections loaded successfully!" })
+        );
       })
       .catch(err => {
-        console.log("error", err);
-        dispatch(failure(err));
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };
 
 export const addDatacollection = (projectName, data) => {
-  const request = () => {
-    return { type: "ADD_DATACOLLECTION" };
-  };
   const success = payload => {
     return { type: "ADD_DATACOLLECTION_SUCCESS", payload };
   };
-  const failure = error => {
-    return { type: "ADD_DATACOLLECTION_ERROR", error };
-  };
   return dispatch => {
-    dispatch(request());
+    dispatch(setSnackbar({ message: "Creating Data Collections..." }));
     let token = localStorage.getItem(`token`);
     fetch(`${url}/project/${projectName}/datacollection?token=${token}`, {
       headers: {
@@ -59,28 +51,21 @@ export const addDatacollection = (projectName, data) => {
       .then(res => res.json())
       .then(res => {
         dispatch(success(res));
+        dispatch(getDatacollections(projectName));
       })
-      .then(() => dispatch(getDatacollections(projectName)))
       .catch(err => {
         console.log("error", err);
-        dispatch(failure(err));
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };
 
 export const deleteDatacollection = (projectName, title) => {
-  const request = () => {
-    return { type: "DELETE_DATACOLLECTION" };
-  };
   const success = payload => {
     return { type: "DELETE_DATACOLLECTION_SUCCESS", payload };
   };
-
-  const failure = error => {
-    return { type: "DELETE_DATACOLLECTION_ERROR", error };
-  };
   return dispatch => {
-    dispatch(request());
+    dispatch(setSnackbar({ message: "Deleting Data Collections..." }));
     let token = localStorage.getItem(`token`);
     fetch(
       `${url}/project/${projectName}/datacollection/${title}?token=${token}`,
@@ -94,27 +79,20 @@ export const deleteDatacollection = (projectName, title) => {
       .then(res => res.json())
       .then(res => {
         dispatch(success(title));
+        dispatch(getDatacollections(projectName));
       })
-      .then(() => dispatch(getDatacollections(projectName)))
       .catch(err => {
-        console.log("error", err);
-        dispatch(failure(err));
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };
 
 export const getDevices = (projectName, collectionName) => {
-  const request = () => {
-    return { type: "GET_DEVICES" };
-  };
   const success = obj => {
     return { type: "GET_DEVICES_SUCCESS", payload: obj };
   };
-  const failure = error => {
-    return { type: "GET_DEVICES_ERROR", error };
-  };
   return dispatch => {
-    dispatch(request());
+    dispatch(setSnackbar({ message: "Loading Devices..." }));
     let token = localStorage.getItem(`token`);
     fetch(
       `${url}/project/${projectName}/datacollection/${collectionName}?token=${token}`,
@@ -129,26 +107,21 @@ export const getDevices = (projectName, collectionName) => {
       .then(res => {
         let obj = { collection: collectionName, devices: res.devices };
         dispatch(success(obj));
+        dispatch(setSnackbar({ message: "Devices loaded successfully!" }));
       })
       .catch(err => {
         console.log("error", err);
-        dispatch(failure(err));
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };
 
 export const addDevice = (projectName, collectionName, info) => {
-  const request = () => {
-    return { type: "ADD_DEVICE" };
-  };
   const success = payload => {
     return { type: "ADD_DEVICE_SUCCESS", payload };
   };
-  const failure = error => {
-    return { type: "ADD_DEVICE_ERROR", error };
-  };
   return dispatch => {
-    dispatch(request());
+    dispatch(setSnackbar({ message: "Creating Devices..." }));
     let token = localStorage.getItem(`token`);
     fetch(
       `${url}/project/${projectName}/datacollection/${collectionName}/device?token=${token}`,
@@ -165,29 +138,25 @@ export const addDevice = (projectName, collectionName, info) => {
       }
     )
       .then(res => res.json())
-      .then(res => dispatch(success(res)))
-      .then(() => dispatch(getDatacollections(projectName)))
+      .then(res => {
+        dispatch(success(res));
+        dispatch(getDatacollections(projectName));
+        dispatch(setSnackbar({ message: "Devices created successfully!" }));
+      })
       .catch(err => {
-        console.log("error", err);
-        dispatch(failure(err));
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };
 
 export const deleteDevice = (projectName, collectionName, deviceName) => {
-  const request = () => {
-    return { type: "DELETE_DEVICE" };
-  };
   const success = payload => {
     return { type: "DELETE_DEVICE_SUCCESS", payload };
   };
-  const failure = error => {
-    return { type: "DELETE_DEVICE_ERROR", error };
-  };
   return dispatch => {
-    dispatch(request());
     let token = localStorage.getItem(`token`);
 
+    dispatch(setSnackbar({ message: "Deleting Devices..." }));
     fetch(
       `${url}/project/${projectName}/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
       {
@@ -200,28 +169,22 @@ export const deleteDevice = (projectName, collectionName, deviceName) => {
       .then(res => res.json())
       .then(res => {
         dispatch(success(res));
+        dispatch(getDevices(projectName, collectionName));
+        dispatch(setSnackbar({ message: "Devices Deleted successfully!" }));
       })
-      .then(() => dispatch(getDevices(projectName, collectionName)))
       .catch(err => {
-        console.log("error", err);
-        dispatch(failure(err));
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };
 
 export const updateDevice = (projectName, collectionName, deviceName, data) => {
-  const request = () => {
-    return { type: "UPDATE_DEVICE" };
-  };
   const success = payload => {
     return { type: "UPDATE_DEVICE_SUCCESS", payload };
   };
-  const failure = error => {
-    return { type: "UPDATE_DEVICE_ERROR", error };
-  };
   return dispatch => {
-    dispatch(request());
     let token = localStorage.getItem(`token`);
+    dispatch(setSnackbar({ message: "Updating Devices..." }));
 
     fetch(
       `${url}/project/${projectName}/datacollection/${collectionName}/device/${deviceName}?token=${token}`,
@@ -238,10 +201,10 @@ export const updateDevice = (projectName, collectionName, deviceName, data) => {
       .then(res => res.json())
       .then(res => {
         dispatch(success(res));
+        dispatch(setSnackbar({ message: "Devices Updated successfully!" }));
       })
       .catch(err => {
-        console.log("error", err);
-        dispatch(failure(err));
+        dispatch(setSnackbar({ message: err.toString() }));
       });
   };
 };
