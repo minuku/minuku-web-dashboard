@@ -8,7 +8,8 @@ const New = ({ addQuestionnaire, match }) => (
     <div className="d-flex justify-content-center">
       <div className="col-6 mt-5">
         <QuestionnaireComponent
-          save={data => addQuestionnaire(match.params.projectName, data)}
+          submit={data => addQuestionnaire(match.params.projectName, data)}
+          isNew={true}
         />
       </div>
     </div>

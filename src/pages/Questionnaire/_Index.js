@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -28,28 +29,45 @@ const styles = theme => ({
   }
 });
 
-const QuestionListItem = ({
-  classes,
-  questionnareName,
-  questionnaireContent
-}) => (
-  <ListItem>
-    <ListItemAvatar>
-      <Avatar size="small">{questionnareName.charAt(0).toUpperCase()}</Avatar>
-    </ListItemAvatar>
-    <ListItemText
-      primary={questionnareName}
-      secondary={`${questionnaireContent.length} questions.`}
-    />
-    <ListItemSecondaryAction>
-      <IconButton aria-label="Edit" className={classes.iconButton}>
-        <EditIcon />
-      </IconButton>
-      <IconButton aria-label="Delete" className={classes.iconButton}>
-        <DeleteIcon />
-      </IconButton>
-    </ListItemSecondaryAction>
-  </ListItem>
+const QuestionListItem = withRouter(
+  ({
+    classes,
+    history,
+    match,
+    questionnaireName,
+    questionnaireContent,
+    deleteQuestionnaire
+  }) => (
+    <ListItem>
+      <ListItemAvatar>
+        <Avatar size="small">
+          {questionnaireName.charAt(0).toUpperCase()}
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText
+        primary={questionnaireName}
+        secondary={`${questionnaireContent.length} questions.`}
+      />
+      <ListItemSecondaryAction>
+        <IconButton
+          aria-label="Edit"
+          className={classes.iconButton}
+          onClick={() => history.push(`${match.url}/${questionnaireName}/edit`)}
+        >
+          <EditIcon />
+        </IconButton>
+        <IconButton
+          aria-label="Delete"
+          className={classes.iconButton}
+          onClick={() =>
+            deleteQuestionnaire(match.params.projectName, questionnaireName)
+          }
+        >
+          <DeleteIcon />
+        </IconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
+  )
 );
 
 class Questionnaire extends React.Component {
@@ -58,7 +76,13 @@ class Questionnaire extends React.Component {
     getQuestionnaires(match.params.projectName);
   }
   render() {
-    const { classes, questionnaires, history, match } = this.props;
+    const {
+      classes,
+      questionnaires,
+      deleteQuestionnaire,
+      history,
+      match
+    } = this.props;
     return (
       <Dashboard title="Questionnaire Section 問卷設定">
         <div className="d-flex justify-content-center">
@@ -74,6 +98,7 @@ class Questionnaire extends React.Component {
                       <QuestionListItem
                         key={questionnaire.questionnaireName}
                         classes={classes}
+                        deleteQuestionnaire={deleteQuestionnaire}
                         {...questionnaire}
                       />
                     ))

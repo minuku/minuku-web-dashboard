@@ -9,18 +9,27 @@ class Questionnaire extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
+      title: "",
       questions: []
     };
     this.buildQuestionnaire = this.buildQuestionnaire.bind(this);
-    this.save = this.save.bind(this);
+    this.submit = this.submit.bind(this);
     this.body = React.createRef();
   }
-  save() {
-    const { save } = this.props;
-    const { name, questions } = this.state;
-    save({
-      questionnaireName: name,
+  componentDidUpdate(prevProps) {
+    const { data } = this.props;
+    if (prevProps.data !== data && data) {
+      this.setState({
+        title: data.questionnaireName,
+        questions: data.questionnaireContent
+      });
+    }
+  }
+  submit() {
+    const { submit } = this.props;
+    const { title, questions } = this.state;
+    submit({
+      questionnaireName: title,
       questionnaireType: "questionnaire",
       questionnaireContent: questions
     });
@@ -107,18 +116,25 @@ class Questionnaire extends React.Component {
     return questionsComponents;
   }
   render() {
-    const { connectDropTarget } = this.props;
-    const { name } = this.state;
+    const { connectDropTarget, isNew } = this.props;
+    const { title, questions } = this.state;
     return connectDropTarget(
       <div className="d-flex justify-content-center">
         <div className="px-4">
           <Body
             ref={this.body}
-            name={name}
-            setName={e => this.setState({ name: e.target.value })}
-            save={this.save}
+            title={title}
+            setName={e => this.setState({ title: e.target.value })}
+            submit={this.submit}
+            isNew={isNew}
           >
-            {this.buildQuestionnaire()}
+            {questions && questions.length ? (
+              this.buildQuestionnaire()
+            ) : (
+              <div className="mt-3">
+                Drag & Drop questions from questions-list to here.
+              </div>
+            )}
           </Body>
         </div>
         <div className="pt-3">

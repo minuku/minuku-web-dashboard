@@ -32,7 +32,7 @@ const RootRouter = () => (
         component={Questionnaires.New}
       />
       <PrivateRoute
-        path="/dashboard/project/:projectName/questionnaire/:questionnaireName"
+        path="/dashboard/project/:projectName/questionnaire/:questionnaireName/edit"
         component={Questionnaires.Edit}
       />
       <PrivateRoute

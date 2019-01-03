@@ -2,7 +2,7 @@ const url = `https://minukutest.nctu.me/minukutest`;
 
 export const getQuestionnaires = projectName => {
   const success = payload => {
-    return { type: "ADD_SITUATION_SUCCESS", payload };
+    return { type: "GET_QUESTIONNAIRES_SUCCESS", payload };
   };
   return dispatch => {
     let token = localStorage.getItem(`token`);

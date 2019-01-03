@@ -27,7 +27,15 @@ const styles = theme => ({
   }
 });
 
-const Body = ({ classes, children, name, setName, save, history }) => (
+const Body = ({
+  classes,
+  children,
+  title,
+  setName,
+  submit,
+  history,
+  isNew
+}) => (
   <Card className={classes.body}>
     <CardContent style={{ flex: 1 }}>
       <Typography className={classes.title} color="textSecondary">
@@ -35,16 +43,24 @@ const Body = ({ classes, children, name, setName, save, history }) => (
       </Typography>
       <TextField
         required
-        label="Name"
+        label="Title"
         defaultValue=""
-        value={name}
+        value={title}
         onChange={setName}
       />
       <div className={classes.questions}>{children}</div>
     </CardContent>
     <CardActions>
-      <Button variant="contained" size="small" color="primary" onClick={save}>
-        update
+      <Button
+        variant="contained"
+        size="small"
+        color="primary"
+        onClick={() => {
+          submit();
+          history.goBack();
+        }}
+      >
+        {isNew ? "save" : "update"}
       </Button>
       <Button
         variant="contained"
